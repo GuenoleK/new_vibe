@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.itepem.vibe",
+      "nativeLanguage": "fr"
+    },
+    "jhipsterVersion": "5.8.2",
+    "applicationType": "monolith",
+    "baseName": "vibe",
+    "packageName": "com.itepem.vibe",
+    "packageFolder": "com/itepem/vibe",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Memory",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "NmUyZWQwYjE5OGRhNzk1NjU3N2I1YjlmMGRkMjMzZTAyZDJkN2VjZDU5MzM3Y2I0ODAzZDhmOWIyNTU5NjIxZTM0YWEzODFjZWZmYTdhOWI1Y2MyOWI0Y2Y5NThiNDU2ZDQyZDQwODE2ZmE4MjU0ZmZhMDM2ZjE2MzgzYzE3YWU=",
+    "clientFramework": "react",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "fr",
+    "languages": ["fr", "en", "es"]
+  }
+}
