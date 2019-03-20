@@ -1,0 +1,24 @@
+{
+  "vibeApp": {
+    "articleMedia": {
+      "home": {
+        "title": "ArticleMedias",
+        "createLabel": "Créer un nouveau Article Media",
+        "createOrEditLabel": "Créer ou éditer un Article Media"
+      },
+      "created": "Un nouveau Article Media a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Article Media avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Article Media avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Article Media {{ id }} ?"
+      },
+      "detail": {
+        "title": "Article Media"
+      },
+      "name": "Name",
+      "articleMediaType": "Article Media Type",
+      "article": "Article",
+      "vibeUser": "Vibe User"
+    }
+  }
+}

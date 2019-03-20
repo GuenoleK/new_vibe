@@ -1,0 +1,10 @@
+{
+  "vibeApp": {
+    "ArticleMediaType": {
+      "null": "",
+      "IMAGE": "IMAGE",
+      "PDF": "PDF",
+      "AUDIO": "AUDIO"
+    }
+  }
+}

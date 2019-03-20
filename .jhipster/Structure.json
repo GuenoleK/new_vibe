@@ -1,0 +1,29 @@
+{
+    "name": "Structure",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "role",
+            "otherEntityRelationshipName": "structure",
+            "relationshipName": "role"
+        }
+    ],
+    "changelogDate": "20190320000309",
+    "entityTableName": "structure",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

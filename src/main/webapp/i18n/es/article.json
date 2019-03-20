@@ -1,0 +1,26 @@
+{
+  "vibeApp": {
+    "article": {
+      "home": {
+        "title": "Articles",
+        "createLabel": "Crear nuevo Article",
+        "createOrEditLabel": "Crear o editar Article"
+      },
+      "created": "Un nuevo Article ha sido creado con el identificador {{ param }}",
+      "updated": "Un Article ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Article ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Article {{ id }}?"
+      },
+      "detail": {
+        "title": "Article"
+      },
+      "title": "Title",
+      "description": "Description",
+      "content": "Content",
+      "creationDate": "Creation Date",
+      "editionDate": "Edition Date",
+      "vibeUser": "Vibe User"
+    }
+  }
+}

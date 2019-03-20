@@ -1,0 +1,22 @@
+{
+  "vibeApp": {
+    "vibeUser": {
+      "home": {
+        "title": "Vibe Users",
+        "createLabel": "Crear nuevo Vibe User",
+        "createOrEditLabel": "Crear o editar Vibe User"
+      },
+      "created": "Un nuevo Vibe User ha sido creado con el identificador {{ param }}",
+      "updated": "Un Vibe User ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Vibe User ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Vibe User {{ id }}?"
+      },
+      "detail": {
+        "title": "Vibe User"
+      },
+      "username": "Username",
+      "user": "User"
+    }
+  }
+}

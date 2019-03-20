@@ -1,0 +1,45 @@
+{
+    "name": "ArticleMedia",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "articleMediaType",
+            "fieldType": "ArticleMediaType",
+            "fieldValues": "IMAGE,PDF,AUDIO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "article",
+            "otherEntityRelationshipName": "articleMedia",
+            "relationshipName": "article",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "vibeUser",
+            "otherEntityRelationshipName": "articleMedia",
+            "relationshipName": "vibeUser",
+            "otherEntityField": "username"
+        }
+    ],
+    "changelogDate": "20190320000312",
+    "entityTableName": "article_media",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

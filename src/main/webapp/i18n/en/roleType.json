@@ -1,0 +1,10 @@
+{
+  "vibeApp": {
+    "RoleType": {
+      "null": "",
+      "ADMIN": "ADMIN",
+      "VIEWER": "VIEWER",
+      "EDITOR": "EDITOR"
+    }
+  }
+}

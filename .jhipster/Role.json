@@ -1,0 +1,37 @@
+{
+    "name": "Role",
+    "fields": [
+        {
+            "fieldName": "roleType",
+            "fieldType": "RoleType",
+            "fieldValues": "ADMIN,VIEWER,EDITOR",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "structure",
+            "otherEntityName": "structure",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "vibeUser",
+            "otherEntityRelationshipName": "role",
+            "relationshipName": "vibeUser",
+            "otherEntityField": "username"
+        }
+    ],
+    "changelogDate": "20190320000310",
+    "entityTableName": "role",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

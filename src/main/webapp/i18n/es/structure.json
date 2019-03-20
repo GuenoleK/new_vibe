@@ -1,0 +1,22 @@
+{
+  "vibeApp": {
+    "structure": {
+      "home": {
+        "title": "Structures",
+        "createLabel": "Crear nuevo Structure",
+        "createOrEditLabel": "Crear o editar Structure"
+      },
+      "created": "Un nuevo Structure ha sido creado con el identificador {{ param }}",
+      "updated": "Un Structure ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Structure ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Structure {{ id }}?"
+      },
+      "detail": {
+        "title": "Structure"
+      },
+      "name": "Name",
+      "role": "Role"
+    }
+  }
+}
