@@ -13,6 +13,7 @@ import Entities from 'app/entities';
 import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import { AUTHORITIES } from 'app/config/constants';
+import { VibeLogin } from './front-office/login/login';
 
 // tslint:disable:space-in-parens
 const Account = Loadable({
@@ -30,6 +31,7 @@ const Routes = () => (
   <div className="view-routes">
     <ErrorBoundaryRoute path="/login" component={Login} />
     <Switch>
+      <ErrorBoundaryRoute path="/test" component={VibeLogin} />
       <ErrorBoundaryRoute path="/logout" component={Logout} />
       <ErrorBoundaryRoute path="/register" component={Register} />
       <ErrorBoundaryRoute path="/activate/:key?" component={Activate} />
