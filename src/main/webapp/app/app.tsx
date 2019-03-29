@@ -17,7 +17,7 @@ import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
 import AppRoutes from 'app/routes';
-import { VibeHeader } from './components/header';
+import { VibeHeader } from 'app/components/layout-components/header';
 
 export interface IAppProps extends StateProps, DispatchProps {}
 

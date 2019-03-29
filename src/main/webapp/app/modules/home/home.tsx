@@ -8,6 +8,8 @@ import { Row, Col, Alert } from 'reactstrap';
 
 import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
+import { Button } from '@material-ui/core';
+import { userStore } from 'app/stores/user-store';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
@@ -18,6 +20,10 @@ export class Home extends React.Component<IHomeProp> {
 
   render() {
     const { account } = this.props;
+
+    const { vibeUser } = userStore;
+    const MyLink = props => <Link to="/test" className="alert-link" {...props} />;
+
     return (
       <Row>
         <Col md="9">
@@ -27,6 +33,15 @@ export class Home extends React.Component<IHomeProp> {
           <p className="lead">
             <Translate contentKey="home.subtitle">This is your homepage</Translate>
           </p>
+          <div>
+            <p>ID: {vibeUser.id}</p>
+            <p>Username: {vibeUser.username}</p>
+            <p>First name: {vibeUser.user.firstName}</p>
+            <p>Last name: {vibeUser.user.lastName}</p>
+            <Button component={MyLink} variant="contained" color="primary">
+              To test
+            </Button>
+          </div>
           {account && account.login ? (
             <div>
               <Alert color="success">

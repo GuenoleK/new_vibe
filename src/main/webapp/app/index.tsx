@@ -12,6 +12,7 @@ import { clearAuthentication } from './shared/reducers/authentication';
 import ErrorBoundary from './shared/error/error-boundary';
 import AppComponent from './app';
 import { loadIcons } from './config/icon-loader';
+import { Container } from 'app/container';
 
 const devTools = process.env.NODE_ENV === 'development' ? <DevTools /> : null;
 
@@ -24,6 +25,16 @@ setupAxiosInterceptors(() => actions.clearAuthentication('login.error.unauthoriz
 loadIcons();
 
 const rootEl = document.getElementById('root');
+
+const vibeRender = () =>
+  ReactDOM.render(
+    <ErrorBoundary>
+      <Container />
+    </ErrorBoundary>,
+    rootEl
+  );
+
+vibeRender();
 
 const render = Component =>
   ReactDOM.render(
@@ -40,13 +51,4 @@ const render = Component =>
     </ErrorBoundary>,
     rootEl
   );
-
-render(AppComponent);
-
-// This is quite unstable
-// if (module.hot) {
-//   module.hot.accept('./app', () => {
-//     const NextApp = require<{ default: typeof AppComponent }>('./app').default;
-//     render(NextApp);
-//   });
-// }
+// render(AppComponent);
