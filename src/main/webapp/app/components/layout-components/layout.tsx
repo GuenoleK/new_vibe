@@ -1,5 +1,5 @@
 import React from 'react';
-import { VibeHeader } from 'app/components/layout-components/header';
+import { VibeHeader } from 'app/components/layout-components/header/vibe-header';
 import './layout.scss';
 
 export class VibeLayout extends React.Component {

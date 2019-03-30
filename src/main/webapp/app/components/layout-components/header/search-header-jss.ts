@@ -52,11 +52,11 @@ export const headerSearchStyles = (theme: any) =>
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('sm')]: {
-        width: 120
+        width: 220,
         // make the bar grow when it's focused
-        // '&:focus': {
-        //   width: 300
-        // }
+        '&:focus': {
+          width: 400
+        }
       }
     }
   });
