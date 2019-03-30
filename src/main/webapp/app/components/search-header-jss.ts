@@ -7,9 +7,6 @@ export const headerSearchStyles = (theme: any) =>
     root: {
       width: '100%'
     },
-    grow: {
-      flexGrow: 1
-    },
     menuButton: {
       marginLeft: -12,
       marginRight: 20
@@ -55,10 +52,11 @@ export const headerSearchStyles = (theme: any) =>
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('sm')]: {
-        width: 120,
-        '&:focus': {
-          width: 200
-        }
+        width: 120
+        // make the bar grow when it's focused
+        // '&:focus': {
+        //   width: 300
+        // }
       }
     }
   });
