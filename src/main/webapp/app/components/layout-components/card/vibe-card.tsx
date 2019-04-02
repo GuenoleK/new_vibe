@@ -4,14 +4,17 @@ import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, 
 import GetApp from '@material-ui/icons/GetApp';
 import './vibe-card.scss';
 import { ButtonLink } from 'app/components/button-link/button-link';
+import { Link } from 'react-router-dom';
 
 export class VibeCard extends React.Component {
   render() {
     return (
       <Card data-component="vibe-card">
-        <CardActionArea>
-          <CardMedia className="media" image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg" />
-        </CardActionArea>
+        <Link to="/article/2">
+          <CardActionArea>
+            <CardMedia className="media" image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg" />
+          </CardActionArea>
+        </Link>
         <CardContent className="content">
           <Typography gutterBottom variant="h5" component="h2">
             Lizard
