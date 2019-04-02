@@ -3,17 +3,14 @@ import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, 
 // tslint:disable-next-line:no-submodule-imports
 import GetApp from '@material-ui/icons/GetApp';
 import './vibe-card.scss';
+import { ButtonLink } from 'app/components/button-link/button-link';
 
 export class VibeCard extends React.Component {
   render() {
     return (
       <Card data-component="vibe-card">
         <CardActionArea>
-          <CardMedia
-            className="media"
-            image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-            title="Contemplative Reptile"
-          />
+          <CardMedia className="media" image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg" />
         </CardActionArea>
         <CardContent className="content">
           <Typography gutterBottom variant="h5" component="h2">
@@ -25,9 +22,7 @@ export class VibeCard extends React.Component {
         </CardContent>
         <CardActions className="actions">
           <div className="button-actions">
-            <Button size="small" color="primary">
-              Voir
-            </Button>
+            <ButtonLink buttonClassName="card-consult-button" label="Voir" link="/article/2" />
             <Button size="small" color="primary">
               Télécharger
             </Button>
