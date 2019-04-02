@@ -14,7 +14,6 @@ export class CardContainer extends React.Component {
         <VibeCard />
         <VibeCard />
         <VibeCard />
-        <VibeCard />
       </div>
     );
   }

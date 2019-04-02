@@ -9,6 +9,12 @@
   margin-right: 10px;
 
   .media {
-    height: 140px;
+    height: 250px;
+  }
+
+  .actions {
+    .button-actions {
+      flex: 1;
+    }
   }
 }
