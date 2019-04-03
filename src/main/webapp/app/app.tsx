@@ -16,7 +16,6 @@ import Footer from 'app/shared/layout/footer/footer';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
-import { VibeHeader } from 'app/components/layout-components/header/vibe-header';
 import { DefaultRoutes } from 'app/routes';
 
 export interface IAppProps extends StateProps, DispatchProps {}
@@ -38,8 +37,6 @@ export class App extends React.Component<IAppProps> {
             className="toastify-container"
             toastClassName="toastify-toast"
           />
-          {/* Search Header */}
-          <VibeHeader />
           {/* <ErrorBoundary>
             <Header
               isAuthenticated={this.props.isAuthenticated}
@@ -57,7 +54,6 @@ export class App extends React.Component<IAppProps> {
                 <DefaultRoutes />
               </ErrorBoundary>
             </Card>
-            <Footer />
           </div>
         </div>
       </Router>
