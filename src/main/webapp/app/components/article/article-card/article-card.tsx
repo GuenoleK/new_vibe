@@ -1,24 +1,13 @@
 import React from 'react';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import './article-card.scss';
-import { Document, Page } from 'react-pdf';
-import { observable, action } from 'mobx';
-import { observer } from 'mobx-react';
+import { VibePdfDocument } from 'app/components/article/article-card/vibe-pdf/vibe-pdf';
 
-@observer
 export class ArticleCard extends React.Component {
-  @observable
-  pageNumber: number;
-
-  @observable
-  pageList = [];
-
   render() {
     return (
       <Card data-component="article-card">
-        <Document file="../content/pdf/wtr10-2b_f.pdf" onLoadSuccess={this.onDocumentLoadSuccess}>
-          <Page pageNumber={1} />
-        </Document>
+        <VibePdfDocument />
         <CardContent className="content">
           <Typography gutterBottom variant="h5" component="h2">
             Lizard
@@ -30,9 +19,4 @@ export class ArticleCard extends React.Component {
       </Card>
     );
   }
-
-  @action
-  onDocumentLoadSuccess = props => {
-    this.pageNumber = props._pdfInfo.numPages;
-  };
 }
