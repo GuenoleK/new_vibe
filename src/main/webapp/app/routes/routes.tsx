@@ -20,10 +20,10 @@ export const AppRoutes = () => (
       <ErrorBoundaryRoute path="/article/:id" component={ArticleView} />
       <ErrorBoundaryRoute path="/" component={ArticleListView} />
     </Switch>
-    <Provider store={store}>
+    {/* <Provider store={store}>
       <div>
         <AppComponent />
       </div>
-    </Provider>
+    </Provider> */}
   </div>
 );
