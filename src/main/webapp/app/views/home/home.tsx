@@ -50,19 +50,24 @@ export class VibeHome extends React.Component {
   handleChange = name => event => {
     if (name === 'username') {
       userStore.vibeUser.user.login = event.target.value;
+      userStore.vibeUser[name] = event.target.value;
+    } else if (name === 'password') {
+      userStore.vibeUser.user.password = event.target.value;
     }
-    userStore.vibeUser[name] = event.target.value;
+    console.log('USER', userStore.vibeUser);
   };
 
   async login() {
-    console.log('Here', userStore.vibeUser.username, 'There', userStore.vibeUser.user.password);
+    console.log('Here', userStore.vibeUser);
 
-    // const result = axios.post('api/authenticate', {
-    //   username: userStore.vibeUser.username,
-    //   password: userStore.vibeUser.user.password,
-    //   rememberMe: false
-    // }).then(data => console.log('Data', data))
-    // .catch(error => console.log('Error', error));
+    const result = axios
+      .post('api/authenticate', {
+        username: userStore.vibeUser.user.login,
+        password: userStore.vibeUser.user.password,
+        rememberMe: false
+      })
+      .then(data => console.log('Data', data))
+      .catch(error => console.log('Error', error));
 
     // const bearerToken = result.value.headers.authorization;
     // if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
