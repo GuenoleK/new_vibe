@@ -26,13 +26,7 @@ loadIcons();
 
 const rootEl = document.getElementById('root');
 
-const vibeRender = () =>
-  ReactDOM.render(
-    <ErrorBoundary>
-      <Container />
-    </ErrorBoundary>,
-    rootEl
-  );
+const vibeRender = () => ReactDOM.render(<Container />, rootEl);
 
 vibeRender();
 

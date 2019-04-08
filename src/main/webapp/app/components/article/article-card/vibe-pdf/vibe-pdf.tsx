@@ -12,7 +12,7 @@ export class VibePdfDocument extends React.Component {
   pageNumber: boolean;
   render() {
     return (
-      <Document file="../content/pdf/wtr10-2b_f.pdf" onLoadSuccess={this.onDocumentLoadSuccess}>
+      <Document file={require('D:/zz_perso/vibe-files/pdf/wtr10-2b_f.pdf')} onLoadSuccess={this.onDocumentLoadSuccess}>
         <Page pageNumber={this.currentPage} />
       </Document>
     );

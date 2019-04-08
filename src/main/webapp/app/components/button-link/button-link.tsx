@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import { ButtonProps } from '@material-ui/core/Button';
 
-interface IButtonLinkProps {
+interface IButtonLinkProps extends ButtonProps {
   link: string;
   buttonClassName?: string;
   label: string;

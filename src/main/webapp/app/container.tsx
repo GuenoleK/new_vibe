@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import { VibeLayout } from 'app/components/layout-components/layout';
 import './container.scss';
 
