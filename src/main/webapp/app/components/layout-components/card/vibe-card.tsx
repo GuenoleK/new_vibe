@@ -1,10 +1,8 @@
-import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, IconButton } from '@material-ui/core';
-// tslint:disable-next-line:no-submodule-imports
-import GetApp from '@material-ui/icons/GetApp';
-import './vibe-card.scss';
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
 import { ButtonLink } from 'app/components/button-link/button-link';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import './vibe-card.scss';
 
 export class VibeCard extends React.Component {
   render() {

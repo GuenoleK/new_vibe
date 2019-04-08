@@ -1,13 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { AppBar, Toolbar, IconButton, Typography, InputBase } from '@material-ui/core';
-// tslint:disable-next-line:no-submodule-imports
+import { AppBar, IconButton, InputBase, Toolbar, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-// tslint:disable-next-line:no-submodule-imports
 import MenuIcon from '@material-ui/icons/Menu';
-// tslint:disable-next-line:no-submodule-imports
 import SearchIcon from '@material-ui/icons/Search';
 import { headerSearchStyles } from 'app/components/layout-components/header/search-header-jss';
+import React from 'react';
 import './header.scss';
 
 interface ISearchAppBarProps {

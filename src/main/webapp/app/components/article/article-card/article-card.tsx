@@ -16,7 +16,7 @@ export class ArticleCard extends React.Component {
   render() {
     return (
       <Card data-component="article-card">
-        <Document file="../content/pdf/wtr10-2b_f.pdf" onLoadSuccess={this.onDocumentLoadSuccess}>
+        <Document file={require('D:/zz_perso/vibe-files/pdf/wtr10-2b_f.pdf')} onLoadSuccess={this.onDocumentLoadSuccess}>
           <Page pageNumber={1} />
         </Document>
         <CardContent className="content">

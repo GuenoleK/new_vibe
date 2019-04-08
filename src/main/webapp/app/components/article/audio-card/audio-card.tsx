@@ -1,10 +1,7 @@
 import React from 'react';
 import { Card, Typography, CardContent, IconButton, CardMedia } from '@material-ui/core';
-// tslint:disable-next-line:no-submodule-imports
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-// tslint:disable-next-line:no-submodule-imports
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-// tslint:disable-next-line:no-submodule-imports
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import './audio-card.scss';
 
