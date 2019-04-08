@@ -1,23 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
-import { ButtonProps } from '@material-ui/core/Button';
+import { IconButton } from '@material-ui/core';
+import { IconButtonProps } from '@material-ui/core/IconButton';
 
-interface IButtonLinkProps extends ButtonProps {
+interface IButtonLinkProps extends IconButtonProps {
   link: string;
   buttonClassName?: string;
-  label: string;
   linkClassName?: string;
 }
 
-export class ButtonLink extends React.Component<IButtonLinkProps> {
+export class IconButtonLink extends React.Component<IButtonLinkProps> {
   render() {
-    const { link, label } = this.props;
+    const { link } = this.props;
     const CustomLink = props => <Link to={link} className={this.linkClassName} {...props} />;
     return (
-      <Button {...this.props} className={this.buttonClassName} component={CustomLink} size="small" color="primary">
-        {label}
-      </Button>
+      <IconButton {...this.props} color="inherit" className={this.buttonClassName} component={CustomLink}>
+        {this.props.children}
+      </IconButton>
     );
   }
 

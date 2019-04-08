@@ -1,10 +1,12 @@
 import { AppBar, IconButton, InputBase, Toolbar, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
 import SearchIcon from '@material-ui/icons/Search';
 import { headerSearchStyles } from 'app/components/layout-components/header/search-header-jss';
 import React from 'react';
 import './header.scss';
+import { Link } from 'react-router-dom';
+import { IconButtonLink } from 'app/components/icon-button-link/icon-button-link';
 
 interface ISearchAppBarProps {
   classes: any;
@@ -18,9 +20,9 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
       <div className={classes.root} data-component="vibe-header">
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-              <MenuIcon />
-            </IconButton>
+            <IconButtonLink link="/" buttonClassName={classes.menuButton}>
+              <HomeIcon />
+            </IconButtonLink>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
               Vibe
             </Typography>
