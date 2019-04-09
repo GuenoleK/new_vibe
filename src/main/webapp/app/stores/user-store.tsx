@@ -1,20 +1,22 @@
 import { computed } from 'mobx';
-import * as VibeUserInterface from 'app/shared/model/vibe-user.model';
+import * as UserInterface from 'app/shared/model/user.model';
 
-type IVibeUser = VibeUserInterface.IVibeUser;
+type IUser = UserInterface.IUser;
 
 class UserStore {
-  private innerUser: IVibeUser = {
-    user: {}
-  };
+  private innerUser: IUser = {};
 
   @computed
-  get vibeUser(): IVibeUser {
+  get user(): IUser {
     return this.innerUser;
   }
 
-  set vibeUser(user: IVibeUser) {
+  set user(user: IUser) {
     this.innerUser = user;
+  }
+
+  get() {
+    return this.innerUser;
   }
 }
 

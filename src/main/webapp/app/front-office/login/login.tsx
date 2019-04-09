@@ -1,11 +1,11 @@
 import React from 'react';
-import { userStore } from 'app/stores/user-store';
+import { vibeUserStore } from 'app/stores/vibe-user-store';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
 export class VibeLogin extends React.Component {
   render() {
-    const { vibeUser } = userStore;
+    const { vibeUser } = vibeUserStore;
     vibeUser.id = 2;
     vibeUser.user.firstName = 'Guénolé';
     vibeUser.user.lastName = 'Kikabou';

@@ -9,7 +9,7 @@ import { Row, Col, Alert } from 'reactstrap';
 import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
 import { Button } from '@material-ui/core';
-import { userStore } from 'app/stores/user-store';
+import { vibeUserStore } from 'app/stores/vibe-user-store';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
@@ -21,7 +21,7 @@ export class Home extends React.Component<IHomeProp> {
   render() {
     const { account } = this.props;
 
-    const { vibeUser } = userStore;
+    const { vibeUser } = vibeUserStore;
     const MyLink = props => <Link to="/test" className="alert-link" {...props} />;
 
     return (
