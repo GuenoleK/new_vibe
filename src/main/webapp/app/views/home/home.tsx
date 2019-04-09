@@ -1,16 +1,15 @@
-import { ButtonLink } from 'app/components/button-link/button-link';
 import React from 'react';
 import { userStore } from 'app/stores/user-store';
 import { observer } from 'mobx-react';
 import { TextField, Button } from '@material-ui/core';
 import './login.scss';
-import axios from 'axios';
+import { apiUtil } from 'app/api/api';
 
 @observer
 export class VibeHome extends React.Component {
   render() {
     return (
-      <form className="login-form" method="post" autoComplete="off" onSubmit={this.handleSubmit}>
+      <form className="login-form" method="post" autoComplete="off">
         <TextField
           label="Username"
           value={userStore.vibeUser.username}
@@ -29,22 +28,12 @@ export class VibeHome extends React.Component {
           type="password"
           required
         />
-        <Button variant="contained" color="primary" onClick={this.login}>
+        <Button variant="contained" color="primary" onClick={apiUtil.login}>
           Login
         </Button>
         {/* <ButtonLink variant="contained" color="primary" label="Article list" link="article-list" />; */}
       </form>
     );
-  }
-
-  handleSubmit() {
-    // console.log('Here', userStore.vibeUser.username, 'There', userStore.vibeUser.user.password);
-    // const result = axios.post('api/authenticate', {
-    //   username: userStore.vibeUser.username,
-    //   password: userStore.vibeUser.user.password,
-    //   rememberMe: false
-    // }).then(data => console.log('Data', data))
-    // .catch(error => console.log('Error', error));
   }
 
   handleChange = name => event => {
@@ -54,28 +43,5 @@ export class VibeHome extends React.Component {
     } else if (name === 'password') {
       userStore.vibeUser.user.password = event.target.value;
     }
-    console.log('USER', userStore.vibeUser);
   };
-
-  async login() {
-    console.log('Here', userStore.vibeUser);
-
-    const result = axios
-      .post('api/authenticate', {
-        username: userStore.vibeUser.user.login,
-        password: userStore.vibeUser.user.password,
-        rememberMe: false
-      })
-      .then(data => console.log('Data', data))
-      .catch(error => console.log('Error', error));
-
-    // const bearerToken = result.value.headers.authorization;
-    // if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
-    //   const jwt = bearerToken.slice(7, bearerToken.length);
-    //   if (rememberMe) {
-    //     Storage.local.set(AUTH_TOKEN_KEY, jwt);
-    //   } else {
-    //     Storage.session.set(AUTH_TOKEN_KEY, jwt);
-    //   }
-  }
 }
