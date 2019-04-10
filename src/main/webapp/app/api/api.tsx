@@ -5,6 +5,9 @@ import { Storage } from 'react-jhipster';
 const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
 class ApiUtil {
+  /**
+   * Authenticate the user
+   */
   public authenticate = async () => {
     // The user have to fill all inputs to try a login
     if (userStore.user.login || userStore.user.password) {
@@ -37,14 +40,14 @@ class ApiUtil {
         }
         this.login();
       } else if (response && response.status !== 200) {
-        console.error('Status error:', response.status);
+        throw new Error(`Status error ${response.status}`);
       } else {
         // When it failed, we inform the user something wrong append
-        console.error('ERROR', error);
+        throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
       }
     } else {
       // When the user has filled no input, we inform him to do so
-      console.error('You have to fill all the inputs');
+      throw new Error(`You have to fill all the inputs`);
     }
   };
 
@@ -56,7 +59,7 @@ class ApiUtil {
         if (response && response.status === 200) {
           userStore.user = response.data;
         } else if (response && response.status !== 200) {
-          console.error('Response status:', response.status);
+          throw new Error(`Status error ${response.status}`);
         }
       });
     } catch (e) {
@@ -64,7 +67,7 @@ class ApiUtil {
     }
 
     if (error) {
-      console.error('Error', error);
+      throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
     }
   };
 }

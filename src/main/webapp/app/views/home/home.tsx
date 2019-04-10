@@ -28,12 +28,21 @@ export class VibeHome extends React.Component {
           type="password"
           required
         />
-        <Button variant="contained" color="primary" onClick={apiUtil.authenticate}>
+        <Button variant="contained" color="primary" onClick={this.login}>
           Login
         </Button>
-        {/* <ButtonLink variant="contained" color="primary" label="Article list" link="article-list" />; */}
       </form>
     );
+  }
+
+  /**
+   * Call the auth + login function
+   * When everything is ok, we redirect the user to the article list
+   */
+  login() {
+    apiUtil.authenticate().then(() => {
+      window.location.href = '/#/article-list';
+    });
   }
 
   handleChange = name => event => {

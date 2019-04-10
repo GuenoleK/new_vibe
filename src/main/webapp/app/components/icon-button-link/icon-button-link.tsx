@@ -11,10 +11,10 @@ interface IButtonLinkProps extends IconButtonProps {
 
 export class IconButtonLink extends React.Component<IButtonLinkProps> {
   render() {
-    const { link } = this.props;
+    const { link, buttonClassName, ...otherProps } = this.props;
     const CustomLink = props => <Link to={link} className={this.linkClassName} {...props} />;
     return (
-      <IconButton {...this.props} color="inherit" className={this.buttonClassName} component={CustomLink}>
+      <IconButton {...otherProps} color="inherit" className={this.buttonClassName} component={CustomLink}>
         {this.props.children}
       </IconButton>
     );
