@@ -1,6 +1,6 @@
+import { userStore } from 'app/stores/user-store';
 import axios from 'axios';
 import { Storage } from 'react-jhipster';
-import { userStore } from 'app/stores/user-store';
 
 const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
@@ -55,7 +55,6 @@ class ApiUtil {
       axios.get('api/account').then(response => {
         if (response && response.status === 200) {
           userStore.user = response.data;
-          console.log('DATA', response.data, 'STORE', userStore.user, 'MMMh', userStore.get());
         } else if (response && response.status !== 200) {
           console.error('Response status:', response.status);
         }
