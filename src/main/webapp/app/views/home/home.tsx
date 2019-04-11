@@ -43,7 +43,7 @@ export class VibeHome extends React.Component {
    */
   login() {
     apiUtil.authenticate().then(() => {
-      window.location.href = '/#/article-list';
+      window.location.reload();
     });
   }
 

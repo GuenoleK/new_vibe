@@ -13,7 +13,7 @@ export const AppRoutes = () => (
     <CustomRoute path="/article-list" component={ArticleListView} />
     <CustomRoute path="/home" component={ArticleListView} />
     <CustomRoute path="/article/:id" component={ArticleView} />
-    <Route exact path="/" component={VibeHome} />
+    <CustomRoute path="/" component={VibeHome} />
     {/* <Provider store={store}>
       <div>
         <AppComponent />

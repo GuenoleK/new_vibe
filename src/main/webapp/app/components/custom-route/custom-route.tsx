@@ -15,6 +15,17 @@ export class CustomRoute extends React.Component<ICustomRouteProps> {
   get InternalRoute() {
     const { path, component } = this.props;
     if (userStore.icConnected) {
+      if (path !== '/') {
+        return <Route exact path={path} component={component} />;
+      }
+      return (
+        <Route exact path={path}>
+          <Redirect to="/article-list" />
+        </Route>
+      );
+    }
+
+    if (path === '/') {
       return <Route exact path={path} component={component} />;
     }
     return (
