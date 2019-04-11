@@ -4,7 +4,6 @@ import { userStore } from 'app/stores/user-store';
 import { observer } from 'mobx-react';
 import React from 'react';
 import './login.scss';
-import { VibeSnackbar } from 'app/components/snackbar/custommized-snackbars';
 
 @observer
 export class VibeHome extends React.Component {
@@ -15,6 +14,7 @@ export class VibeHome extends React.Component {
           label="Username"
           value={userStore.user.login}
           onChange={this.handleChange('login')}
+          onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
           variant="outlined"
           required
@@ -24,6 +24,7 @@ export class VibeHome extends React.Component {
           label="Password"
           value={userStore.user.password}
           onChange={this.handleChange('password')}
+          onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
           variant="outlined"
           type="password"
@@ -48,5 +49,11 @@ export class VibeHome extends React.Component {
 
   handleChange = name => event => {
     userStore.user[name] = event.target.value;
+  };
+
+  fireLoginOnEnterKey = event => {
+    if (event.key === 'Enter') {
+      this.login();
+    }
   };
 }

@@ -3,7 +3,6 @@ import React from 'react';
 import { MySnackbarContentWrapper } from './snackbar';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { observer } from 'mobx-react';
-import './snackbar.scss';
 
 const styles2 = theme => ({
   margin: {
