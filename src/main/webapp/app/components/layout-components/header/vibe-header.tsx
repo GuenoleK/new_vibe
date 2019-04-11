@@ -51,7 +51,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
               />
             </div>
             <div className="separator" />
-            {userStore.icConnected && (
+            {userStore.isConnected && (
               <IconButton className="header-account-icon-button" onClick={this.openMenu}>
                 <AccountCircleIcon className="header-account-icon" />
                 <Menu open={this.isMenuOpen} anchorEl={this.menuAnchorElement}>
@@ -83,7 +83,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
   };
 
   get homeLink() {
-    if (userStore.icConnected) {
+    if (userStore.isConnected) {
       return '/article-list';
     }
     return '/';

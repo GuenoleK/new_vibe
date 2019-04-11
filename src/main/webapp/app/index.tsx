@@ -10,9 +10,12 @@ import { registerLocale } from './config/translation';
 import setupAxiosInterceptors from './config/axios-interceptor';
 import { clearAuthentication } from './shared/reducers/authentication';
 import ErrorBoundary from './shared/error/error-boundary';
-import AppComponent from './app';
 import { loadIcons } from './config/icon-loader';
 import { Container } from 'app/container';
+import { userStore } from './stores/user-store';
+
+// Initialize userStore
+userStore.initUserStore();
 
 const devTools = process.env.NODE_ENV === 'development' ? <DevTools /> : null;
 

@@ -24,15 +24,7 @@ export class VibeCard extends React.Component {
         <CardActions className="actions">
           <div className="button-actions">
             <ButtonLink buttonClassName="card-consult-button" label="Voir" link="/article/2" />
-            <Button size="small" color="primary">
-              Télécharger
-            </Button>
           </div>
-          {/* <div className="icon-actions">
-            <IconButton>
-                <GetApp />
-            </IconButton>
-          </div> */}
         </CardActions>
       </Card>
     );
