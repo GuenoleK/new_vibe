@@ -77,6 +77,28 @@ class ApiUtil {
       throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
     }
   };
+
+  getAccountWithHeaderToken = (header: any) => {
+    let error;
+
+    try {
+      axios.get('api/account', { headers: header }).then(response => {
+        if (response && response.status === 200) {
+          userStore.user = response.data;
+        } else if (response && response.status !== 200) {
+          snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
+          throw new Error(`Status error ${response.status}`);
+        }
+      });
+    } catch (e) {
+      error = e.response;
+    }
+
+    if (error) {
+      snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Error status: ${error.status}, error text: ${error.statusText}`);
+      throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
+    }
+  };
 }
 
 export const apiUtil = new ApiUtil();

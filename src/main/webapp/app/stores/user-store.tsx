@@ -24,7 +24,7 @@ class UserStore {
 
   initUserStore() {
     if (this.isConnected) {
-      apiUtil.login();
+      apiUtil.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.session.get(AUTH_TOKEN_KEY) });
     }
   }
 }
