@@ -7,6 +7,7 @@ import React from 'react';
 import './header.scss';
 import { Link } from 'react-router-dom';
 import { IconButtonLink } from 'app/components/icon-button-link/icon-button-link';
+import { userStore } from 'app/stores/user-store';
 
 interface ISearchAppBarProps {
   classes: any;
@@ -20,7 +21,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
       <div className={classes.root} data-component="vibe-header">
         <AppBar position="static">
           <Toolbar>
-            <IconButtonLink link="/" buttonClassName={classes.menuButton}>
+            <IconButtonLink link={this.homeLink} buttonClassName={classes.menuButton}>
               <HomeIcon />
             </IconButtonLink>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
@@ -43,6 +44,13 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
         </AppBar>
       </div>
     );
+  }
+
+  get homeLink() {
+    if (userStore.icConnected) {
+      return '/article-list';
+    }
+    return '/';
   }
 }
 

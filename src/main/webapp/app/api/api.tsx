@@ -4,7 +4,7 @@ import { Storage } from 'react-jhipster';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 
-const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
+export const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
 class ApiUtil {
   /**

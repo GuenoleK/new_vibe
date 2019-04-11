@@ -52,7 +52,7 @@ export const headerSearchStyles = (theme: any) =>
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('sm')]: {
-        width: 220,
+        width: 400,
         // make the bar grow when it's focused
         '&:focus': {
           width: 400
