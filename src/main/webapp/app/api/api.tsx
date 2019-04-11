@@ -1,6 +1,8 @@
 import { userStore } from 'app/stores/user-store';
 import axios from 'axios';
 import { Storage } from 'react-jhipster';
+import { snackbarStore } from 'app/stores/snackbar-store';
+import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 
 const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
@@ -40,13 +42,16 @@ class ApiUtil {
         }
         this.login();
       } else if (response && response.status !== 200) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `Status error ${response.status}`);
         throw new Error(`Status error ${response.status}`);
       } else {
         // When it failed, we inform the user something wrong append
+        snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `Error status: ${error.status}, error text: ${error.statusText}`);
         throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
       }
     } else {
       // When the user has filled no input, we inform him to do so
+      snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `You have to fill all the inputs`);
       throw new Error(`You have to fill all the inputs`);
     }
   };
@@ -59,6 +64,7 @@ class ApiUtil {
         if (response && response.status === 200) {
           userStore.user = response.data;
         } else if (response && response.status !== 200) {
+          snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
           throw new Error(`Status error ${response.status}`);
         }
       });
@@ -67,6 +73,7 @@ class ApiUtil {
     }
 
     if (error) {
+      snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Error status: ${error.status}, error text: ${error.statusText}`);
       throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
     }
   };

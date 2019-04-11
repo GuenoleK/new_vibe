@@ -1,6 +1,9 @@
-import { Button, Snackbar, withStyles } from '@material-ui/core';
+import { Snackbar, withStyles } from '@material-ui/core';
 import React from 'react';
 import { MySnackbarContentWrapper } from './snackbar';
+import { snackbarStore } from 'app/stores/snackbar-store';
+import { observer } from 'mobx-react';
+import './snackbar.scss';
 
 const styles2 = theme => ({
   margin: {
@@ -12,21 +15,14 @@ interface ICustomizedSnackbarsProps {
   classes: any;
 }
 
+@observer
 class CustomizedSnackbars extends React.Component<ICustomizedSnackbarsProps> {
-  state = {
-    open: false
-  };
-
-  handleClick = () => {
-    this.setState({ open: true });
-  };
-
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    this.setState({ open: false });
+    snackbarStore.onSnackbarClose();
   };
 
   render() {
@@ -34,43 +30,25 @@ class CustomizedSnackbars extends React.Component<ICustomizedSnackbarsProps> {
 
     return (
       <div>
-        <Button className={classes.margin} onClick={this.handleClick}>
-          Open success snackbar
-        </Button>
         <Snackbar
+          data-component="vibe-snackbar"
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center'
           }}
-          open={this.state.open}
+          open={snackbarStore.isSnackbarOpen}
           autoHideDuration={3000}
           onClose={this.handleClose}
         >
-          <MySnackbarContentWrapper variant="error" className={classes.margin} message="This is an error message!" />
+          <MySnackbarContentWrapper
+            variant={snackbarStore.snackbarType}
+            className={classes.margin}
+            message={snackbarStore.snackbarMessage}
+          />
         </Snackbar>
-        {/* <MySnackbarContentWrapper
-            variant="error"
-            className={classes.margin}
-            message="This is an error message!"
-          />
-          <MySnackbarContentWrapper
-            variant="warning"
-            className={classes.margin}
-            message="This is a warning message!"
-          />
-          <MySnackbarContentWrapper
-            variant="info"
-            className={classes.margin}
-            message="This is an information message!"
-          />
-          <MySnackbarContentWrapper
-            variant="success"
-            className={classes.margin}
-            message="This is a success message!"
-          /> */}
       </div>
     );
   }
 }
 
-export default withStyles(styles2)(CustomizedSnackbars);
+export const VibeSnackbar = withStyles(styles2)(CustomizedSnackbars);

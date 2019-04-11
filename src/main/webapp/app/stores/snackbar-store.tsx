@@ -1,20 +1,46 @@
-import { computed } from 'mobx';
-import * as VibeUserInterface from 'app/shared/model/vibe-user.model';
-
-type IVibeUser = VibeUserInterface.IVibeUser;
+import { observable } from 'mobx';
+import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 
 class SnackbarStore {
-  private innerUser: IVibeUser = {
-    user: {}
-  };
+  @observable
+  private isOpen = false;
+  @observable
+  private messageContent = '';
+  @observable
+  private internalSnackbarType: SnackbarTypeEnum;
 
-  @computed
-  get vibeUser(): IVibeUser {
-    return this.innerUser;
+  get isSnackbarOpen() {
+    return this.isOpen;
   }
 
-  set vibeUser(user: IVibeUser) {
-    this.innerUser = user;
+  get snackbarMessage() {
+    return this.messageContent;
+  }
+
+  get snackbarType() {
+    return this.internalSnackbarType;
+  }
+
+  /**
+   * Defines the snackbar datas
+   */
+  openSnackbar(snackbarType: SnackbarTypeEnum, messageContent: string) {
+    this.internalSnackbarType = snackbarType;
+    this.messageContent = messageContent;
+    this.isOpen = true;
+  }
+
+  /**
+   * handled when the snackbar is closing
+   * Resets the snackbar values
+   */
+  onSnackbarClose() {
+    this.resetValues();
+  }
+
+  resetValues() {
+    this.isOpen = false;
+    this.messageContent = '';
   }
 }
 

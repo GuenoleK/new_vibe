@@ -4,6 +4,7 @@ import { userStore } from 'app/stores/user-store';
 import { observer } from 'mobx-react';
 import React from 'react';
 import './login.scss';
+import { VibeSnackbar } from 'app/components/snackbar/custommized-snackbars';
 
 @observer
 export class VibeHome extends React.Component {
