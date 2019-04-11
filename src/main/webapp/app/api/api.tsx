@@ -51,7 +51,7 @@ class ApiUtil {
       }
     } else {
       // When the user has filled no input, we inform him to do so
-      snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `You have to fill all the inputs`);
+      snackbarStore.openSnackbar(SnackbarTypeEnum.WARNING, `You have to fill all the inputs`);
       throw new Error(`You have to fill all the inputs`);
     }
   };
