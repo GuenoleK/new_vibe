@@ -18,13 +18,23 @@ class UserStore {
     this.innerUser = user;
   }
 
+  private get hasCookie() {
+    return Storage.session.get(AUTH_TOKEN_KEY) !== undefined;
+  }
+
+  private get hasSession() {
+    return Storage.local.get(AUTH_TOKEN_KEY) !== undefined;
+  }
+
   get isConnected() {
-    return Storage.local.get(AUTH_TOKEN_KEY) !== undefined || Storage.session.get(AUTH_TOKEN_KEY) !== undefined;
+    return this.hasCookie || this.hasSession;
   }
 
   initUserStore() {
-    if (this.isConnected) {
+    if (this.hasCookie) {
       apiUtil.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.session.get(AUTH_TOKEN_KEY) });
+    } else if (this.hasSession) {
+      apiUtil.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.local.get(AUTH_TOKEN_KEY) });
     }
   }
 }
