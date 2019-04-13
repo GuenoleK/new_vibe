@@ -34,11 +34,10 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
             <IconButtonLink link={this.homeLink} buttonClassName={classes.menuButton}>
               <HomeIcon />
             </IconButtonLink>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            <Typography className={`${classes.title} vibe-title`} variant="h6" color="inherit" noWrap>
               Vibe
             </Typography>
-            <div className="separator" />
-            <div className={classes.search}>
+            <div data-component="search-bar" className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
@@ -50,7 +49,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
                 }}
               />
             </div>
-            <div className="separator" />
+            <div className="after-bar-separator" />
             {userStore.isConnected && (
               <IconButton className="header-account-icon-button" onClick={this.openMenu}>
                 <AccountCircleIcon className="header-account-icon" />

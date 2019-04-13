@@ -1,6 +1,12 @@
 [data-component='vibe-header'] {
-  .separator {
-    width: 30%;
+  .vibe-title {
+    cursor: default;
+    user-select: none;
+  }
+
+  [data-component='search-bar'] {
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .header-account-icon {
