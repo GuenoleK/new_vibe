@@ -63,9 +63,9 @@ export class ArticleDetail extends React.Component<IArticleDetailProps> {
               <TextFormat value={articleEntity.editionDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <Translate contentKey="vibeApp.article.vibeUser">Vibe User</Translate>
+              <Translate contentKey="vibeApp.article.user">User</Translate>
             </dt>
-            <dd>{articleEntity.vibeUser ? articleEntity.vibeUser.username : ''}</dd>
+            <dd>{articleEntity.user ? articleEntity.user.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/article" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

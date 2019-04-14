@@ -45,9 +45,9 @@ export class ArticleMediaDetail extends React.Component<IArticleMediaDetailProps
             </dt>
             <dd>{articleMediaEntity.article ? articleMediaEntity.article.id : ''}</dd>
             <dt>
-              <Translate contentKey="vibeApp.articleMedia.vibeUser">Vibe User</Translate>
+              <Translate contentKey="vibeApp.articleMedia.user">User</Translate>
             </dt>
-            <dd>{articleMediaEntity.vibeUser ? articleMediaEntity.vibeUser.username : ''}</dd>
+            <dd>{articleMediaEntity.user ? articleMediaEntity.user.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/article-media" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

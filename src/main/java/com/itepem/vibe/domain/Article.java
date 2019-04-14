@@ -48,7 +48,7 @@ public class Article implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("articles")
-    private VibeUser vibeUser;
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -124,17 +124,17 @@ public class Article implements Serializable {
         this.editionDate = editionDate;
     }
 
-    public VibeUser getVibeUser() {
-        return vibeUser;
+    public User getUser() {
+        return user;
     }
 
-    public Article vibeUser(VibeUser vibeUser) {
-        this.vibeUser = vibeUser;
+    public Article user(User user) {
+        this.user = user;
         return this;
     }
 
-    public void setVibeUser(VibeUser vibeUser) {
-        this.vibeUser = vibeUser;
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
