@@ -66,6 +66,7 @@ module.exports = options => ({
           name: 'content/[hash].[ext]'
         }
       },
+      { test: /\.(pdf)$/, loader: 'url-loader?limit=8192' },
       {
         enforce: 'pre',
         test: /\.jsx?$/,
