@@ -26,8 +26,8 @@ const Admin = Loadable({
 });
 // tslint:enable
 
-export const DefaultRoutes = () => (
-  <div className="default-routes">
+const Routes = () => (
+  <div className="view-routes">
     <ErrorBoundaryRoute path="/login" component={Login} />
     <Switch>
       <ErrorBoundaryRoute path="/logout" component={Logout} />
@@ -38,7 +38,9 @@ export const DefaultRoutes = () => (
       <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
-      <ErrorBoundaryRoute path="/toto" component={Home} />
+      <ErrorBoundaryRoute path="/" component={Home} />
     </Switch>
   </div>
 );
+
+export default Routes;

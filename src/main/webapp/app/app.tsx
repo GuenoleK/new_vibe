@@ -16,7 +16,7 @@ import Footer from 'app/shared/layout/footer/footer';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
-import { DefaultRoutes } from 'app/routes';
+import AppRoutes from 'app/routes';
 
 export interface IAppProps extends StateProps, DispatchProps {}
 
@@ -27,8 +27,7 @@ export class App extends React.Component<IAppProps> {
   }
 
   render() {
-    // Base was : 60px
-    const paddingTop = '0px';
+    const paddingTop = '60px';
     return (
       <Router>
         <div className="app-container" style={{ paddingTop }}>
@@ -37,7 +36,7 @@ export class App extends React.Component<IAppProps> {
             className="toastify-container"
             toastClassName="toastify-toast"
           />
-          {/* <ErrorBoundary>
+          <ErrorBoundary>
             <Header
               isAuthenticated={this.props.isAuthenticated}
               isAdmin={this.props.isAdmin}
@@ -47,13 +46,14 @@ export class App extends React.Component<IAppProps> {
               isInProduction={this.props.isInProduction}
               isSwaggerEnabled={this.props.isSwaggerEnabled}
             />
-          </ErrorBoundary> */}
+          </ErrorBoundary>
           <div className="container-fluid view-container" id="app-view-container">
             <Card className="jh-card">
               <ErrorBoundary>
-                <DefaultRoutes />
+                <AppRoutes />
               </ErrorBoundary>
             </Card>
+            <Footer />
           </div>
         </div>
       </Router>

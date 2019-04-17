@@ -5,15 +5,6 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190320000308_added_entity_VibeUser.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190320000309_added_entity_Structure.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190320000310_added_entity_Role.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190320000311_added_entity_Article.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190320000312_added_entity_ArticleMedia.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20190320000308_added_entity_constraints_VibeUser.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190320000310_added_entity_constraints_Role.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190320000311_added_entity_constraints_Article.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190320000312_added_entity_constraints_ArticleMedia.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
