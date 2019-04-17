@@ -1,20 +1,41 @@
-import { computed } from 'mobx';
-import * as VibeUserInterface from 'app/shared/model/vibe-user.model';
+import * as UserInterface from 'app/shared/model/user.model';
+import { computed, observable, toJS } from 'mobx';
+import { AUTH_TOKEN_KEY, apiUtil } from 'app/api/api';
+import { Storage } from 'react-jhipster';
 
-type IVibeUser = VibeUserInterface.IVibeUser;
+type IUser = UserInterface.IUser;
 
 class UserStore {
-  private innerUser: IVibeUser = {
-    user: {}
-  };
+  @observable
+  private innerUser: IUser = {};
 
   @computed
-  get vibeUser(): IVibeUser {
-    return this.innerUser;
+  get user(): IUser {
+    return toJS(this.innerUser);
   }
 
-  set vibeUser(user: IVibeUser) {
+  set user(user: IUser) {
     this.innerUser = user;
+  }
+
+  private get hasCookie() {
+    return Storage.session.get(AUTH_TOKEN_KEY) !== undefined;
+  }
+
+  private get hasSession() {
+    return Storage.local.get(AUTH_TOKEN_KEY) !== undefined;
+  }
+
+  get isConnected() {
+    return this.hasCookie || this.hasSession;
+  }
+
+  initUserStore() {
+    if (this.hasCookie) {
+      apiUtil.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.session.get(AUTH_TOKEN_KEY) });
+    } else if (this.hasSession) {
+      apiUtil.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.local.get(AUTH_TOKEN_KEY) });
+    }
   }
 }
 

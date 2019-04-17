@@ -7,11 +7,6 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
-        "vibeUser": "Vibe User",
-        "structure": "Structure",
-        "role": "Role",
-        "article": "Article",
-        "articleMedia": "Article Media",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

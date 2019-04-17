@@ -10,8 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IStructure } from 'app/shared/model/structure.model';
 import { getEntities as getStructures } from 'app/entities/structure/structure.reducer';
-import { IVibeUser } from 'app/shared/model/vibe-user.model';
-import { getEntities as getVibeUsers } from 'app/entities/vibe-user/vibe-user.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './role.reducer';
 import { IRole } from 'app/shared/model/role.model';
 // tslint:disable-next-line:no-unused-variable
@@ -23,7 +23,7 @@ export interface IRoleUpdateProps extends StateProps, DispatchProps, RouteCompon
 export interface IRoleUpdateState {
   isNew: boolean;
   structureId: string;
-  vibeUserId: string;
+  userId: string;
 }
 
 export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateState> {
@@ -31,7 +31,7 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
     super(props);
     this.state = {
       structureId: '0',
-      vibeUserId: '0',
+      userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -50,7 +50,7 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
     }
 
     this.props.getStructures();
-    this.props.getVibeUsers();
+    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +74,7 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
   };
 
   render() {
-    const { roleEntity, structures, vibeUsers, loading, updating } = this.props;
+    const { roleEntity, structures, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -138,15 +138,15 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="vibeUser.username">
-                    <Translate contentKey="vibeApp.role.vibeUser">Vibe User</Translate>
+                  <Label for="user.id">
+                    <Translate contentKey="vibeApp.role.user">User</Translate>
                   </Label>
-                  <AvInput id="role-vibeUser" type="select" className="form-control" name="vibeUser.id">
+                  <AvInput id="role-user" type="select" className="form-control" name="user.id">
                     <option value="" key="0" />
-                    {vibeUsers
-                      ? vibeUsers.map(otherEntity => (
+                    {users
+                      ? users.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.username}
+                            {otherEntity.id}
                           </option>
                         ))
                       : null}
@@ -176,7 +176,7 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
 
 const mapStateToProps = (storeState: IRootState) => ({
   structures: storeState.structure.entities,
-  vibeUsers: storeState.vibeUser.entities,
+  users: storeState.userManagement.users,
   roleEntity: storeState.role.entity,
   loading: storeState.role.loading,
   updating: storeState.role.updating,
@@ -185,7 +185,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getStructures,
-  getVibeUsers,
+  getUsers,
   getEntity,
   updateEntity,
   createEntity,

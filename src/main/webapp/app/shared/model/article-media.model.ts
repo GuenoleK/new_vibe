@@ -1,5 +1,5 @@
 import { IArticle } from 'app/shared/model/article.model';
-import { IVibeUser } from 'app/shared/model/vibe-user.model';
+import { IUser } from 'app/shared/model/user.model';
 
 export const enum ArticleMediaType {
   IMAGE = 'IMAGE',
@@ -12,7 +12,7 @@ export interface IArticleMedia {
   name?: string;
   articleMediaType?: ArticleMediaType;
   article?: IArticle;
-  vibeUser?: IVibeUser;
+  user?: IUser;
 }
 
 export const defaultValue: Readonly<IArticleMedia> = {};

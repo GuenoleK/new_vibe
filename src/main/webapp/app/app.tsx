@@ -17,7 +17,6 @@ import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
 import AppRoutes from 'app/routes';
-import { VibeHeader } from './components/header';
 
 export interface IAppProps extends StateProps, DispatchProps {}
 
@@ -28,8 +27,7 @@ export class App extends React.Component<IAppProps> {
   }
 
   render() {
-    // Base was : 60px
-    const paddingTop = '0px';
+    const paddingTop = '60px';
     return (
       <Router>
         <div className="app-container" style={{ paddingTop }}>
@@ -38,9 +36,7 @@ export class App extends React.Component<IAppProps> {
             className="toastify-container"
             toastClassName="toastify-toast"
           />
-          {/* Search Header */}
-          <VibeHeader />
-          {/* <ErrorBoundary>
+          <ErrorBoundary>
             <Header
               isAuthenticated={this.props.isAuthenticated}
               isAdmin={this.props.isAdmin}
@@ -50,7 +46,7 @@ export class App extends React.Component<IAppProps> {
               isInProduction={this.props.isInProduction}
               isSwaggerEnabled={this.props.isSwaggerEnabled}
             />
-          </ErrorBoundary> */}
+          </ErrorBoundary>
           <div className="container-fluid view-container" id="app-view-container">
             <Card className="jh-card">
               <ErrorBoundary>

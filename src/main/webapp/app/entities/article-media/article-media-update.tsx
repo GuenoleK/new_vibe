@@ -10,8 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IArticle } from 'app/shared/model/article.model';
 import { getEntities as getArticles } from 'app/entities/article/article.reducer';
-import { IVibeUser } from 'app/shared/model/vibe-user.model';
-import { getEntities as getVibeUsers } from 'app/entities/vibe-user/vibe-user.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './article-media.reducer';
 import { IArticleMedia } from 'app/shared/model/article-media.model';
 // tslint:disable-next-line:no-unused-variable
@@ -23,7 +23,7 @@ export interface IArticleMediaUpdateProps extends StateProps, DispatchProps, Rou
 export interface IArticleMediaUpdateState {
   isNew: boolean;
   articleId: string;
-  vibeUserId: string;
+  userId: string;
 }
 
 export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps, IArticleMediaUpdateState> {
@@ -31,7 +31,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
     super(props);
     this.state = {
       articleId: '0',
-      vibeUserId: '0',
+      userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -50,7 +50,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
     }
 
     this.props.getArticles();
-    this.props.getVibeUsers();
+    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +74,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
   };
 
   render() {
-    const { articleMediaEntity, articles, vibeUsers, loading, updating } = this.props;
+    const { articleMediaEntity, articles, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -151,15 +151,15 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="vibeUser.username">
-                    <Translate contentKey="vibeApp.articleMedia.vibeUser">Vibe User</Translate>
+                  <Label for="user.id">
+                    <Translate contentKey="vibeApp.articleMedia.user">User</Translate>
                   </Label>
-                  <AvInput id="article-media-vibeUser" type="select" className="form-control" name="vibeUser.id">
+                  <AvInput id="article-media-user" type="select" className="form-control" name="user.id">
                     <option value="" key="0" />
-                    {vibeUsers
-                      ? vibeUsers.map(otherEntity => (
+                    {users
+                      ? users.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.username}
+                            {otherEntity.id}
                           </option>
                         ))
                       : null}
@@ -189,7 +189,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
 
 const mapStateToProps = (storeState: IRootState) => ({
   articles: storeState.article.entities,
-  vibeUsers: storeState.vibeUser.entities,
+  users: storeState.userManagement.users,
   articleMediaEntity: storeState.articleMedia.entity,
   loading: storeState.articleMedia.loading,
   updating: storeState.articleMedia.updating,
@@ -198,7 +198,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getArticles,
-  getVibeUsers,
+  getUsers,
   getEntity,
   updateEntity,
   createEntity,

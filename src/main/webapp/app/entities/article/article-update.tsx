@@ -8,8 +8,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IVibeUser } from 'app/shared/model/vibe-user.model';
-import { getEntities as getVibeUsers } from 'app/entities/vibe-user/vibe-user.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './article.reducer';
 import { IArticle } from 'app/shared/model/article.model';
 // tslint:disable-next-line:no-unused-variable
@@ -20,14 +20,14 @@ export interface IArticleUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface IArticleUpdateState {
   isNew: boolean;
-  vibeUserId: string;
+  userId: string;
 }
 
 export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticleUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      vibeUserId: '0',
+      userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -45,7 +45,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getVibeUsers();
+    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +69,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
   };
 
   render() {
-    const { articleEntity, vibeUsers, loading, updating } = this.props;
+    const { articleEntity, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -156,15 +156,15 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="vibeUser.username">
-                    <Translate contentKey="vibeApp.article.vibeUser">Vibe User</Translate>
+                  <Label for="user.id">
+                    <Translate contentKey="vibeApp.article.user">User</Translate>
                   </Label>
-                  <AvInput id="article-vibeUser" type="select" className="form-control" name="vibeUser.id">
+                  <AvInput id="article-user" type="select" className="form-control" name="user.id">
                     <option value="" key="0" />
-                    {vibeUsers
-                      ? vibeUsers.map(otherEntity => (
+                    {users
+                      ? users.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.username}
+                            {otherEntity.id}
                           </option>
                         ))
                       : null}
@@ -193,7 +193,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  vibeUsers: storeState.vibeUser.entities,
+  users: storeState.userManagement.users,
   articleEntity: storeState.article.entity,
   loading: storeState.article.loading,
   updating: storeState.article.updating,
@@ -201,7 +201,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getVibeUsers,
+  getUsers,
   getEntity,
   updateEntity,
   createEntity,

@@ -1,0 +1,9 @@
+$header-height: 64px;
+
+[data-component='vibe-layout'] {
+  height: 100vh;
+
+  .view-routes {
+    height: calc(100% - #{$header-height});
+  }
+}
