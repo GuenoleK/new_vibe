@@ -1,0 +1,43 @@
+
+// TODO: AJOUTER RELATION ENTRE UTILISATEUR ET STRUCTURE
+// UN UTILISATEUR PEUT APPARTENIR A PLUSIEURS STRUCTURES
+
+entity Structure {
+	name String required
+}
+
+entity Role {
+	roleType RoleType required
+}
+
+enum RoleType {
+	ADMIN, VIEWER, EDITOR
+}
+
+entity Article {
+	title String required
+    description String
+    content String required
+    creationDate LocalDate required
+    editionDate LocalDate required
+}
+
+entity ArticleMedia {
+	name String required
+	articleMediaType ArticleMediaType required
+}
+
+enum ArticleMediaType {
+    IMAGE, PDF, AUDIO
+}
+
+relationship ManyToOne {
+	ArticleMedia{article} to Article,
+    Article{user(id)} to User,
+    Role{user(id)} to User,
+    ArticleMedia{user(id)} to User
+}
+
+relationship OneToMany {
+    Structure{role} to Role
+}
