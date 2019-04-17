@@ -26,8 +26,7 @@ export class Role extends React.Component<IRoleProps> {
         <h2 id="role-heading">
           <Translate contentKey="vibeApp.role.home.title">Roles</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="vibeApp.role.home.createLabel">Create new Role</Translate>
           </Link>
         </h2>
@@ -45,7 +44,7 @@ export class Role extends React.Component<IRoleProps> {
                   <Translate contentKey="vibeApp.role.structure">Structure</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="vibeApp.role.vibeUser">Vibe User</Translate>
+                  <Translate contentKey="vibeApp.role.user">User</Translate>
                 </th>
                 <th />
               </tr>
@@ -62,7 +61,7 @@ export class Role extends React.Component<IRoleProps> {
                     <Translate contentKey={`vibeApp.RoleType.${role.roleType}`} />
                   </td>
                   <td>{role.structure ? <Link to={`structure/${role.structure.id}`}>{role.structure.id}</Link> : ''}</td>
-                  <td>{role.vibeUser ? <Link to={`vibe-user/${role.vibeUser.id}`}>{role.vibeUser.username}</Link> : ''}</td>
+                  <td>{role.user ? role.user.id : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${role.id}`} color="info" size="sm">

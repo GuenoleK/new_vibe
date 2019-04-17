@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { IVibeUser } from 'app/shared/model/vibe-user.model';
+import { IUser } from 'app/shared/model/user.model';
 
 export interface IArticle {
   id?: number;
@@ -8,7 +8,7 @@ export interface IArticle {
   content?: string;
   creationDate?: Moment;
   editionDate?: Moment;
-  vibeUser?: IVibeUser;
+  user?: IUser;
 }
 
 export const defaultValue: Readonly<IArticle> = {};

@@ -26,8 +26,7 @@ export class ArticleMedia extends React.Component<IArticleMediaProps> {
         <h2 id="article-media-heading">
           <Translate contentKey="vibeApp.articleMedia.home.title">Article Medias</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="vibeApp.articleMedia.home.createLabel">Create new Article Media</Translate>
           </Link>
         </h2>
@@ -48,7 +47,7 @@ export class ArticleMedia extends React.Component<IArticleMediaProps> {
                   <Translate contentKey="vibeApp.articleMedia.article">Article</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="vibeApp.articleMedia.vibeUser">Vibe User</Translate>
+                  <Translate contentKey="vibeApp.articleMedia.user">User</Translate>
                 </th>
                 <th />
               </tr>
@@ -66,13 +65,7 @@ export class ArticleMedia extends React.Component<IArticleMediaProps> {
                     <Translate contentKey={`vibeApp.ArticleMediaType.${articleMedia.articleMediaType}`} />
                   </td>
                   <td>{articleMedia.article ? <Link to={`article/${articleMedia.article.id}`}>{articleMedia.article.id}</Link> : ''}</td>
-                  <td>
-                    {articleMedia.vibeUser ? (
-                      <Link to={`vibe-user/${articleMedia.vibeUser.id}`}>{articleMedia.vibeUser.username}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
+                  <td>{articleMedia.user ? articleMedia.user.id : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${articleMedia.id}`} color="info" size="sm">

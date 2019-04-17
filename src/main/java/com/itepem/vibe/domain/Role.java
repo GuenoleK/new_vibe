@@ -39,7 +39,7 @@ public class Role implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("roles")
-    private VibeUser vibeUser;
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,17 +76,17 @@ public class Role implements Serializable {
         this.structure = structure;
     }
 
-    public VibeUser getVibeUser() {
-        return vibeUser;
+    public User getUser() {
+        return user;
     }
 
-    public Role vibeUser(VibeUser vibeUser) {
-        this.vibeUser = vibeUser;
+    public Role user(User user) {
+        this.user = user;
         return this;
     }
 
-    public void setVibeUser(VibeUser vibeUser) {
-        this.vibeUser = vibeUser;
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

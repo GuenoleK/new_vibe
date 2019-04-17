@@ -14,11 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="structure"/>
 
-        <addForeignKeyConstraint baseColumnNames="vibe_user_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="role"
-                                 constraintName="fk_role_vibe_user_id"
+                                 constraintName="fk_role_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="vibe_user"/>
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

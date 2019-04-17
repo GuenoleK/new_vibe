@@ -45,17 +45,16 @@ export class ArticleMediaDetail extends React.Component<IArticleMediaDetailProps
             </dt>
             <dd>{articleMediaEntity.article ? articleMediaEntity.article.id : ''}</dd>
             <dt>
-              <Translate contentKey="vibeApp.articleMedia.vibeUser">Vibe User</Translate>
+              <Translate contentKey="vibeApp.articleMedia.user">User</Translate>
             </dt>
-            <dd>{articleMediaEntity.vibeUser ? articleMediaEntity.vibeUser.username : ''}</dd>
+            <dd>{articleMediaEntity.user ? articleMediaEntity.user.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/article-media" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>
-          &nbsp;
+          </Button>&nbsp;
           <Button tag={Link} to={`/entity/article-media/${articleMediaEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

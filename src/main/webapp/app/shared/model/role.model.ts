@@ -1,5 +1,5 @@
 import { IStructure } from 'app/shared/model/structure.model';
-import { IVibeUser } from 'app/shared/model/vibe-user.model';
+import { IUser } from 'app/shared/model/user.model';
 
 export const enum RoleType {
   ADMIN = 'ADMIN',
@@ -11,7 +11,7 @@ export interface IRole {
   id?: number;
   roleType?: RoleType;
   structure?: IStructure;
-  vibeUser?: IVibeUser;
+  user?: IUser;
 }
 
 export const defaultValue: Readonly<IRole> = {};

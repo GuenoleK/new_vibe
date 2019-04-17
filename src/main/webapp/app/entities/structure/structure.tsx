@@ -26,8 +26,7 @@ export class Structure extends React.Component<IStructureProps> {
         <h2 id="structure-heading">
           <Translate contentKey="vibeApp.structure.home.title">Structures</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="vibeApp.structure.home.createLabel">Create new Structure</Translate>
           </Link>
         </h2>

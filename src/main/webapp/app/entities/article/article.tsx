@@ -26,8 +26,7 @@ export class Article extends React.Component<IArticleProps> {
         <h2 id="article-heading">
           <Translate contentKey="vibeApp.article.home.title">Articles</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="vibeApp.article.home.createLabel">Create new Article</Translate>
           </Link>
         </h2>
@@ -54,7 +53,7 @@ export class Article extends React.Component<IArticleProps> {
                   <Translate contentKey="vibeApp.article.editionDate">Edition Date</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="vibeApp.article.vibeUser">Vibe User</Translate>
+                  <Translate contentKey="vibeApp.article.user">User</Translate>
                 </th>
                 <th />
               </tr>
@@ -76,7 +75,7 @@ export class Article extends React.Component<IArticleProps> {
                   <td>
                     <TextFormat type="date" value={article.editionDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
-                  <td>{article.vibeUser ? <Link to={`vibe-user/${article.vibeUser.id}`}>{article.vibeUser.username}</Link> : ''}</td>
+                  <td>{article.user ? article.user.id : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${article.id}`} color="info" size="sm">

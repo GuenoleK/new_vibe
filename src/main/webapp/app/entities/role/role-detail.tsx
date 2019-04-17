@@ -39,17 +39,16 @@ export class RoleDetail extends React.Component<IRoleDetailProps> {
             </dt>
             <dd>{roleEntity.structure ? roleEntity.structure.id : ''}</dd>
             <dt>
-              <Translate contentKey="vibeApp.role.vibeUser">Vibe User</Translate>
+              <Translate contentKey="vibeApp.role.user">User</Translate>
             </dt>
-            <dd>{roleEntity.vibeUser ? roleEntity.vibeUser.username : ''}</dd>
+            <dd>{roleEntity.user ? roleEntity.user.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/role" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>
-          &nbsp;
+          </Button>&nbsp;
           <Button tag={Link} to={`/entity/role/${roleEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

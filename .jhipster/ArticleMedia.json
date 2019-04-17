@@ -27,10 +27,10 @@
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "vibeUser",
+            "otherEntityName": "user",
             "otherEntityRelationshipName": "articleMedia",
-            "relationshipName": "vibeUser",
-            "otherEntityField": "username"
+            "relationshipName": "user",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190320000312",
