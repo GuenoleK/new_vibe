@@ -76,12 +76,13 @@ public class StructureResource {
     /**
      * GET  /structures : get all the structures.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of structures in body
      */
     @GetMapping("/structures")
-    public List<Structure> getAllStructures() {
+    public List<Structure> getAllStructures(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Structures");
-        return structureRepository.findAll();
+        return structureRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -93,7 +94,7 @@ public class StructureResource {
     @GetMapping("/structures/{id}")
     public ResponseEntity<Structure> getStructure(@PathVariable Long id) {
         log.debug("REST request to get Structure : {}", id);
-        Optional<Structure> structure = structureRepository.findById(id);
+        Optional<Structure> structure = structureRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(structure);
     }
 
