@@ -7,11 +7,7 @@ entity Structure {
 }
 
 entity Role {
-	roleType RoleType required
-}
-
-enum RoleType {
-	ADMIN, VIEWER, EDITOR
+	code String required
 }
 
 entity Article {
@@ -24,20 +20,26 @@ entity Article {
 
 entity ArticleMedia {
 	name String required
-	articleMediaType ArticleMediaType required
 }
 
-enum ArticleMediaType {
-    IMAGE, PDF, AUDIO
+entity ArticleMediaType {
+	code String required
 }
 
 relationship ManyToOne {
 	ArticleMedia{article} to Article,
+    ArticleMedia{articleMediaType(code)} to ArticleMediaType
     Article{user(id)} to User,
     Role{user(id)} to User,
-    ArticleMedia{user(id)} to User
+    ArticleMedia{user(id)} to User,
+    Structure{owner(id)} to User
 }
 
 relationship OneToMany {
     Structure{role} to Role
+}
+
+relationship ManyToMany {
+	Structure{user(id)} to User{structure(id)}
+    Role{user(id)} to User{role(id)}
 }
