@@ -12,6 +12,7 @@
         "role": "Role",
         "article": "Article",
         "articleMedia": "Article Media",
+        "articleMediaType": "Article Media Type",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

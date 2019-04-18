@@ -34,6 +34,23 @@ export class StructureDetail extends React.Component<IStructureDetailProps> {
               </span>
             </dt>
             <dd>{structureEntity.name}</dd>
+            <dt>
+              <Translate contentKey="vibeApp.structure.owner">Owner</Translate>
+            </dt>
+            <dd>{structureEntity.owner ? structureEntity.owner.id : ''}</dd>
+            <dt>
+              <Translate contentKey="vibeApp.structure.user">User</Translate>
+            </dt>
+            <dd>
+              {structureEntity.users
+                ? structureEntity.users.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.id}</a>
+                      {i === structureEntity.users.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}{' '}
+            </dd>
           </dl>
           <Button tag={Link} to="/entity/structure" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

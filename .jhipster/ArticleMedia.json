@@ -7,14 +7,6 @@
             "fieldValidateRules": [
                 "required"
             ]
-        },
-        {
-            "fieldName": "articleMediaType",
-            "fieldType": "ArticleMediaType",
-            "fieldValues": "IMAGE,PDF,AUDIO",
-            "fieldValidateRules": [
-                "required"
-            ]
         }
     ],
     "relationships": [
@@ -24,6 +16,13 @@
             "otherEntityRelationshipName": "articleMedia",
             "relationshipName": "article",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "articleMediaType",
+            "otherEntityRelationshipName": "articleMedia",
+            "relationshipName": "articleMediaType",
+            "otherEntityField": "code"
         },
         {
             "relationshipType": "many-to-one",

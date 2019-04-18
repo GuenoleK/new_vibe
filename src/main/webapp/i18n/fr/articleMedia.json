@@ -16,8 +16,8 @@
         "title": "Article Media"
       },
       "name": "Name",
-      "articleMediaType": "Article Media Type",
       "article": "Article",
+      "articleMediaType": "Article Media Type",
       "user": "User"
     }
   }

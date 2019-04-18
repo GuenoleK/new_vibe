@@ -40,6 +40,12 @@ export class Structure extends React.Component<IStructureProps> {
                 <th>
                   <Translate contentKey="vibeApp.structure.name">Name</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="vibeApp.structure.owner">Owner</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="vibeApp.structure.user">User</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -52,6 +58,17 @@ export class Structure extends React.Component<IStructureProps> {
                     </Button>
                   </td>
                   <td>{structure.name}</td>
+                  <td>{structure.owner ? structure.owner.id : ''}</td>
+                  <td>
+                    {structure.users
+                      ? structure.users.map((val, j) => (
+                          <span key={j}>
+                            {val.id}
+                            {j === structure.users.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${structure.id}`} color="info" size="sm">

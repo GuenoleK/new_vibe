@@ -11,8 +11,6 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.itepem.vibe.domain.enumeration.ArticleMediaType;
-
 /**
  * A ArticleMedia.
  */
@@ -32,14 +30,13 @@ public class ArticleMedia implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "article_media_type", nullable = false)
-    private ArticleMediaType articleMediaType;
-
     @ManyToOne
     @JsonIgnoreProperties("articleMedias")
     private Article article;
+
+    @ManyToOne
+    @JsonIgnoreProperties("articleMedias")
+    private ArticleMediaType articleMediaType;
 
     @ManyToOne
     @JsonIgnoreProperties("articleMedias")
@@ -67,19 +64,6 @@ public class ArticleMedia implements Serializable {
         this.name = name;
     }
 
-    public ArticleMediaType getArticleMediaType() {
-        return articleMediaType;
-    }
-
-    public ArticleMedia articleMediaType(ArticleMediaType articleMediaType) {
-        this.articleMediaType = articleMediaType;
-        return this;
-    }
-
-    public void setArticleMediaType(ArticleMediaType articleMediaType) {
-        this.articleMediaType = articleMediaType;
-    }
-
     public Article getArticle() {
         return article;
     }
@@ -91,6 +75,19 @@ public class ArticleMedia implements Serializable {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    public ArticleMediaType getArticleMediaType() {
+        return articleMediaType;
+    }
+
+    public ArticleMedia articleMediaType(ArticleMediaType articleMediaType) {
+        this.articleMediaType = articleMediaType;
+        return this;
+    }
+
+    public void setArticleMediaType(ArticleMediaType articleMediaType) {
+        this.articleMediaType = articleMediaType;
     }
 
     public User getUser() {
@@ -132,7 +129,6 @@ public class ArticleMedia implements Serializable {
         return "ArticleMedia{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", articleMediaType='" + getArticleMediaType() + "'" +
             "}";
     }
 }

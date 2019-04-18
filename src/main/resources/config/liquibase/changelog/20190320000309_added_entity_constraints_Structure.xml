@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Structure.
+    -->
+    <changeSet id="20190320000309-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="owner_id"
+                                 baseTableName="structure"
+                                 constraintName="fk_structure_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="structure_id"
+                                 baseTableName="structure_user"
+                                 constraintName="fk_structure_user_structure_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="structure"/>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="structure_user"
+                                 constraintName="fk_structure_user_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
+    </changeSet>
+</databaseChangeLog>
