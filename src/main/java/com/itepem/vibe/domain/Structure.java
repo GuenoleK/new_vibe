@@ -35,6 +35,13 @@ public class Structure implements Serializable {
     @OneToMany(mappedBy = "structure")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Role> roles = new HashSet<>();
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "structure_user",
+               joinColumns = @JoinColumn(name = "structure_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -80,6 +87,29 @@ public class Structure implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public Structure users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public Structure addUser(User user) {
+        this.users.add(user);
+        return this;
+    }
+
+    public Structure removeUser(User user) {
+        this.users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

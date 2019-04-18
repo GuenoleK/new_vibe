@@ -8,6 +8,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './structure.reducer';
 import { IStructure } from 'app/shared/model/structure.model';
 // tslint:disable-next-line:no-unused-variable
@@ -18,12 +20,14 @@ export interface IStructureUpdateProps extends StateProps, DispatchProps, RouteC
 
 export interface IStructureUpdateState {
   isNew: boolean;
+  idsuser: any[];
 }
 
 export class StructureUpdate extends React.Component<IStructureUpdateProps, IStructureUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      idsuser: [],
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -40,6 +44,8 @@ export class StructureUpdate extends React.Component<IStructureUpdateProps, IStr
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -47,7 +53,8 @@ export class StructureUpdate extends React.Component<IStructureUpdateProps, IStr
       const { structureEntity } = this.props;
       const entity = {
         ...structureEntity,
-        ...values
+        ...values,
+        users: mapIdList(values.users)
       };
 
       if (this.state.isNew) {
@@ -63,7 +70,7 @@ export class StructureUpdate extends React.Component<IStructureUpdateProps, IStr
   };
 
   render() {
-    const { structureEntity, loading, updating } = this.props;
+    const { structureEntity, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -102,6 +109,28 @@ export class StructureUpdate extends React.Component<IStructureUpdateProps, IStr
                     }}
                   />
                 </AvGroup>
+                <AvGroup>
+                  <Label for="users">
+                    <Translate contentKey="vibeApp.structure.user">User</Translate>
+                  </Label>
+                  <AvInput
+                    id="structure-user"
+                    type="select"
+                    multiple
+                    className="form-control"
+                    name="users"
+                    value={structureEntity.users && structureEntity.users.map(e => e.id)}
+                  >
+                    <option value="" key="0" />
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/structure" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -123,6 +152,7 @@ export class StructureUpdate extends React.Component<IStructureUpdateProps, IStr
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  users: storeState.userManagement.users,
   structureEntity: storeState.structure.entity,
   loading: storeState.structure.loading,
   updating: storeState.structure.updating,
@@ -130,6 +160,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getUsers,
   getEntity,
   updateEntity,
   createEntity,

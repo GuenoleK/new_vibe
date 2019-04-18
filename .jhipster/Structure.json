@@ -15,6 +15,14 @@
             "otherEntityName": "role",
             "otherEntityRelationshipName": "structure",
             "relationshipName": "role"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "structure",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "changelogDate": "20190320000309",
