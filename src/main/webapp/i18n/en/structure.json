@@ -16,7 +16,9 @@
         "title": "Structure"
       },
       "name": "Name",
-      "role": "Role"
+      "role": "Role",
+      "owner": "Owner",
+      "user": "User"
     }
   }
 }

@@ -28,6 +28,10 @@ import article, {
 import articleMedia, {
   ArticleMediaState
 } from 'app/entities/article-media/article-media.reducer';
+// prettier-ignore
+import articleMediaType, {
+  ArticleMediaTypeState
+} from 'app/entities/article-media-type/article-media-type.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -45,6 +49,7 @@ export interface IRootState {
   readonly role: RoleState;
   readonly article: ArticleState;
   readonly articleMedia: ArticleMediaState;
+  readonly articleMediaType: ArticleMediaTypeState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -64,6 +69,7 @@ const rootReducer = combineReducers<IRootState>({
   role,
   article,
   articleMedia,
+  articleMediaType,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

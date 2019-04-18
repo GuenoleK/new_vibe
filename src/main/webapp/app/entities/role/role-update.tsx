@@ -22,6 +22,7 @@ export interface IRoleUpdateProps extends StateProps, DispatchProps, RouteCompon
 
 export interface IRoleUpdateState {
   isNew: boolean;
+  idsuser: any[];
   structureId: string;
   userId: string;
 }
@@ -30,6 +31,7 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
   constructor(props) {
     super(props);
     this.state = {
+      idsuser: [],
       structureId: '0',
       userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
@@ -58,7 +60,8 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
       const { roleEntity } = this.props;
       const entity = {
         ...roleEntity,
-        ...values
+        ...values,
+        users: mapIdList(values.users)
       };
 
       if (this.state.isNew) {
@@ -101,26 +104,17 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="roleTypeLabel">
-                    <Translate contentKey="vibeApp.role.roleType">Role Type</Translate>
+                  <Label id="codeLabel" for="code">
+                    <Translate contentKey="vibeApp.role.code">Code</Translate>
                   </Label>
-                  <AvInput
-                    id="role-roleType"
-                    type="select"
-                    className="form-control"
-                    name="roleType"
-                    value={(!isNew && roleEntity.roleType) || 'ADMIN'}
-                  >
-                    <option value="ADMIN">
-                      <Translate contentKey="vibeApp.RoleType.ADMIN" />
-                    </option>
-                    <option value="VIEWER">
-                      <Translate contentKey="vibeApp.RoleType.VIEWER" />
-                    </option>
-                    <option value="EDITOR">
-                      <Translate contentKey="vibeApp.RoleType.EDITOR" />
-                    </option>
-                  </AvInput>
+                  <AvField
+                    id="role-code"
+                    type="text"
+                    name="code"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="structure.id">
@@ -142,6 +136,28 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
                     <Translate contentKey="vibeApp.role.user">User</Translate>
                   </Label>
                   <AvInput id="role-user" type="select" className="form-control" name="user.id">
+                    <option value="" key="0" />
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="users">
+                    <Translate contentKey="vibeApp.role.user">User</Translate>
+                  </Label>
+                  <AvInput
+                    id="role-user"
+                    type="select"
+                    multiple
+                    className="form-control"
+                    name="users"
+                    value={roleEntity.users && roleEntity.users.map(e => e.id)}
+                  >
                     <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (

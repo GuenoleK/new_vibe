@@ -38,10 +38,13 @@ export class Role extends React.Component<IRoleProps> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="vibeApp.role.roleType">Role Type</Translate>
+                  <Translate contentKey="vibeApp.role.code">Code</Translate>
                 </th>
                 <th>
                   <Translate contentKey="vibeApp.role.structure">Structure</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="vibeApp.role.user">User</Translate>
                 </th>
                 <th>
                   <Translate contentKey="vibeApp.role.user">User</Translate>
@@ -57,11 +60,19 @@ export class Role extends React.Component<IRoleProps> {
                       {role.id}
                     </Button>
                   </td>
-                  <td>
-                    <Translate contentKey={`vibeApp.RoleType.${role.roleType}`} />
-                  </td>
+                  <td>{role.code}</td>
                   <td>{role.structure ? <Link to={`structure/${role.structure.id}`}>{role.structure.id}</Link> : ''}</td>
                   <td>{role.user ? role.user.id : ''}</td>
+                  <td>
+                    {role.users
+                      ? role.users.map((val, j) => (
+                          <span key={j}>
+                            {val.id}
+                            {j === role.users.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${role.id}`} color="info" size="sm">

@@ -8,6 +8,7 @@ import Structure from './structure';
 import Role from './role';
 import Article from './article';
 import ArticleMedia from './article-media';
+import ArticleMediaType from './article-media-type';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -18,6 +19,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/role`} component={Role} />
       <ErrorBoundaryRoute path={`${match.url}/article`} component={Article} />
       <ErrorBoundaryRoute path={`${match.url}/article-media`} component={ArticleMedia} />
+      <ErrorBoundaryRoute path={`${match.url}/article-media-type`} component={ArticleMediaType} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

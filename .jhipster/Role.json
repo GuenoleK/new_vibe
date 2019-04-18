@@ -2,9 +2,8 @@
     "name": "Role",
     "fields": [
         {
-            "fieldName": "roleType",
-            "fieldType": "RoleType",
-            "fieldValues": "ADMIN,VIEWER,EDITOR",
+            "fieldName": "code",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
@@ -23,6 +22,14 @@
             "otherEntityRelationshipName": "role",
             "relationshipName": "user",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "role",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "changelogDate": "20190320000310",

@@ -9,9 +9,12 @@ import com.itepem.vibe.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -22,16 +25,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import static com.itepem.vibe.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.itepem.vibe.domain.enumeration.RoleType;
 /**
  * Test class for the RoleResource REST controller.
  *
@@ -41,11 +45,14 @@ import com.itepem.vibe.domain.enumeration.RoleType;
 @SpringBootTest(classes = VibeApp.class)
 public class RoleResourceIntTest {
 
-    private static final RoleType DEFAULT_ROLE_TYPE = RoleType.ADMIN;
-    private static final RoleType UPDATED_ROLE_TYPE = RoleType.VIEWER;
+    private static final String DEFAULT_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_CODE = "BBBBBBBBBB";
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Mock
+    private RoleRepository roleRepositoryMock;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -86,7 +93,7 @@ public class RoleResourceIntTest {
      */
     public static Role createEntity(EntityManager em) {
         Role role = new Role()
-            .roleType(DEFAULT_ROLE_TYPE);
+            .code(DEFAULT_CODE);
         return role;
     }
 
@@ -110,7 +117,7 @@ public class RoleResourceIntTest {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeCreate + 1);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.getRoleType()).isEqualTo(DEFAULT_ROLE_TYPE);
+        assertThat(testRole.getCode()).isEqualTo(DEFAULT_CODE);
     }
 
     @Test
@@ -134,10 +141,10 @@ public class RoleResourceIntTest {
 
     @Test
     @Transactional
-    public void checkRoleTypeIsRequired() throws Exception {
+    public void checkCodeIsRequired() throws Exception {
         int databaseSizeBeforeTest = roleRepository.findAll().size();
         // set the field null
-        role.setRoleType(null);
+        role.setCode(null);
 
         // Create the Role, which fails.
 
@@ -161,9 +168,42 @@ public class RoleResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(role.getId().intValue())))
-            .andExpect(jsonPath("$.[*].roleType").value(hasItem(DEFAULT_ROLE_TYPE.toString())));
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllRolesWithEagerRelationshipsIsEnabled() throws Exception {
+        RoleResource roleResource = new RoleResource(roleRepositoryMock);
+        when(roleRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restRoleMockMvc = MockMvcBuilders.standaloneSetup(roleResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restRoleMockMvc.perform(get("/api/roles?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(roleRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllRolesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        RoleResource roleResource = new RoleResource(roleRepositoryMock);
+            when(roleRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restRoleMockMvc = MockMvcBuilders.standaloneSetup(roleResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restRoleMockMvc.perform(get("/api/roles?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(roleRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getRole() throws Exception {
@@ -175,7 +215,7 @@ public class RoleResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(role.getId().intValue()))
-            .andExpect(jsonPath("$.roleType").value(DEFAULT_ROLE_TYPE.toString()));
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()));
     }
 
     @Test
@@ -199,7 +239,7 @@ public class RoleResourceIntTest {
         // Disconnect from session so that the updates on updatedRole are not directly saved in db
         em.detach(updatedRole);
         updatedRole
-            .roleType(UPDATED_ROLE_TYPE);
+            .code(UPDATED_CODE);
 
         restRoleMockMvc.perform(put("/api/roles")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -210,7 +250,7 @@ public class RoleResourceIntTest {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.getRoleType()).isEqualTo(UPDATED_ROLE_TYPE);
+        assertThat(testRole.getCode()).isEqualTo(UPDATED_CODE);
     }
 
     @Test
