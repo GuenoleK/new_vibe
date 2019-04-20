@@ -10,6 +10,7 @@ import Article from './article';
 import ArticleMedia from './article-media';
 import ArticleMediaType from './article-media-type';
 import ExtendedUser from './extended-user';
+import UserRoleStructure from './user-role-structure';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -22,6 +23,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/article-media`} component={ArticleMedia} />
       <ErrorBoundaryRoute path={`${match.url}/article-media-type`} component={ArticleMediaType} />
       <ErrorBoundaryRoute path={`${match.url}/extended-user`} component={ExtendedUser} />
+      <ErrorBoundaryRoute path={`${match.url}/user-role-structure`} component={UserRoleStructure} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

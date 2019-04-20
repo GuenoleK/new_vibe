@@ -1,0 +1,23 @@
+{
+  "vibeApp": {
+    "userRoleStructure": {
+      "home": {
+        "title": "User Role Structures",
+        "createLabel": "Create a new User Role Structure",
+        "createOrEditLabel": "Create or edit a User Role Structure"
+      },
+      "created": "A new User Role Structure is created with identifier {{ param }}",
+      "updated": "A User Role Structure is updated with identifier {{ param }}",
+      "deleted": "A User Role Structure is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Role Structure {{ id }}?"
+      },
+      "detail": {
+        "title": "User Role Structure"
+      },
+      "user": "User",
+      "role": "Role",
+      "structure": "Structure"
+    }
+  }
+}
