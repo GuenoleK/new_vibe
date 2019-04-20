@@ -26,8 +26,9 @@ entity ArticleMediaType {
 	code String required
 }
 
-entity ExtendedUser {
-}
+entity ExtendedUser {}
+
+entity UserRoleStructure {}
 
 relationship ManyToOne {
 	ArticleMedia{article} to Article,
@@ -45,5 +46,8 @@ relationship ManyToMany {
 
 relationship OneToOne {
 	ExtendedUser{user(id)} to User,
-    ExtendedUser{currentStructure(id)} to Structure
+    ExtendedUser{currentStructure(id)} to Structure,
+    UserRoleStructure{user(id)} to User,
+    UserRoleStructure{role(id)} to Role,
+    UserRoleStructure{structure(id)} to Structure
 }
