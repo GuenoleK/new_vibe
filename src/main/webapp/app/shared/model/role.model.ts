@@ -4,7 +4,6 @@ export interface IRole {
   id?: number;
   code?: string;
   user?: IUser;
-  users?: IUser[];
 }
 
 export const defaultValue: Readonly<IRole> = {};
