@@ -40,8 +40,7 @@ relationship ManyToOne {
 }
 
 relationship ManyToMany {
-	Structure{user(id)} to User{structure(id)},
-    Role{user(id)} to User{role(id)}
+	Structure{user(id)} to User{structure(id)}
 }
 
 relationship OneToOne {
