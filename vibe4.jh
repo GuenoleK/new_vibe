@@ -7,7 +7,7 @@ entity Structure {
 }
 
 entity Role {
-	code String required
+	name String required
 }
 
 entity Article {

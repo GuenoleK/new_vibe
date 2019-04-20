@@ -90,13 +90,13 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="codeLabel" for="code">
-                    <Translate contentKey="vibeApp.role.code">Code</Translate>
+                  <Label id="nameLabel" for="name">
+                    <Translate contentKey="vibeApp.role.name">Name</Translate>
                   </Label>
                   <AvField
-                    id="role-code"
+                    id="role-name"
                     type="text"
-                    name="code"
+                    name="name"
                     validate={{
                       required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}

@@ -1,6 +1,6 @@
 export interface IRole {
   id?: number;
-  code?: string;
+  name?: string;
 }
 
 export const defaultValue: Readonly<IRole> = {};

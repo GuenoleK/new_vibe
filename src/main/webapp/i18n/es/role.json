@@ -15,7 +15,7 @@
       "detail": {
         "title": "Role"
       },
-      "code": "Code"
+      "name": "Name"
     }
   }
 }

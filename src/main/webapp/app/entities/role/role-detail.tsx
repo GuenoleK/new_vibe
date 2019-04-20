@@ -29,11 +29,11 @@ export class RoleDetail extends React.Component<IRoleDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="code">
-                <Translate contentKey="vibeApp.role.code">Code</Translate>
+              <span id="name">
+                <Translate contentKey="vibeApp.role.name">Name</Translate>
               </span>
             </dt>
-            <dd>{roleEntity.code}</dd>
+            <dd>{roleEntity.name}</dd>
           </dl>
           <Button tag={Link} to="/entity/role" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
