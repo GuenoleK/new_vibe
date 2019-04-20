@@ -20,7 +20,6 @@ export interface IRoleUpdateProps extends StateProps, DispatchProps, RouteCompon
 
 export interface IRoleUpdateState {
   isNew: boolean;
-  idsuser: any[];
   userId: string;
 }
 
@@ -28,7 +27,6 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
   constructor(props) {
     super(props);
     this.state = {
-      idsuser: [],
       userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -55,8 +53,7 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
       const { roleEntity } = this.props;
       const entity = {
         ...roleEntity,
-        ...values,
-        users: mapIdList(values.users)
+        ...values
       };
 
       if (this.state.isNew) {
@@ -116,28 +113,6 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
                     <Translate contentKey="vibeApp.role.user">User</Translate>
                   </Label>
                   <AvInput id="role-user" type="select" className="form-control" name="user.id">
-                    <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="users">
-                    <Translate contentKey="vibeApp.role.user">User</Translate>
-                  </Label>
-                  <AvInput
-                    id="role-user"
-                    type="select"
-                    multiple
-                    className="form-control"
-                    name="users"
-                    value={roleEntity.users && roleEntity.users.map(e => e.id)}
-                  >
                     <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (
