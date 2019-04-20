@@ -8,8 +8,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IUser } from 'app/shared/model/user.model';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './role.reducer';
 import { IRole } from 'app/shared/model/role.model';
 // tslint:disable-next-line:no-unused-variable
@@ -20,14 +18,12 @@ export interface IRoleUpdateProps extends StateProps, DispatchProps, RouteCompon
 
 export interface IRoleUpdateState {
   isNew: boolean;
-  userId: string;
 }
 
 export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -44,8 +40,6 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
-
-    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +63,7 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
   };
 
   render() {
-    const { roleEntity, users, loading, updating } = this.props;
+    const { roleEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -108,21 +102,6 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
                     }}
                   />
                 </AvGroup>
-                <AvGroup>
-                  <Label for="user.id">
-                    <Translate contentKey="vibeApp.role.user">User</Translate>
-                  </Label>
-                  <AvInput id="role-user" type="select" className="form-control" name="user.id">
-                    <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/role" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -144,7 +123,6 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  users: storeState.userManagement.users,
   roleEntity: storeState.role.entity,
   loading: storeState.role.loading,
   updating: storeState.role.updating,
@@ -152,7 +130,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getUsers,
   getEntity,
   updateEntity,
   createEntity,
