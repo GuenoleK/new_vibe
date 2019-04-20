@@ -26,6 +26,9 @@ entity ArticleMediaType {
 	code String required
 }
 
+entity ExtendedUser {
+}
+
 relationship ManyToOne {
 	ArticleMedia{article} to Article,
     ArticleMedia{articleMediaType(code)} to ArticleMediaType
@@ -35,11 +38,12 @@ relationship ManyToOne {
     Structure{owner(id)} to User
 }
 
-relationship OneToMany {
-    Structure{role} to Role
+relationship ManyToMany {
+	Structure{user(id)} to User{structure(id)},
+    Role{user(id)} to User{role(id)}
 }
 
-relationship ManyToMany {
-	Structure{user(id)} to User{structure(id)}
-    Role{user(id)} to User{role(id)}
+relationship OneToOne {
+	ExtendedUser{user(id)} to User,
+    ExtendedUser{currentStructure(id)} to Structure
 }
