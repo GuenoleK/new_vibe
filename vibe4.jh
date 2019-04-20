@@ -34,7 +34,6 @@ relationship ManyToOne {
 	ArticleMedia{article} to Article,
     ArticleMedia{articleMediaType(code)} to ArticleMediaType
     Article{user(id)} to User,
-    Role{user(id)} to User,
     ArticleMedia{user(id)} to User,
     Structure{owner(id)} to User
 }
