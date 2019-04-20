@@ -9,15 +9,7 @@
             ]
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user",
-            "otherEntityRelationshipName": "role",
-            "relationshipName": "user",
-            "otherEntityField": "id"
-        }
-    ],
+    "relationships": [],
     "changelogDate": "20190320000310",
     "entityTableName": "role",
     "dto": "no",

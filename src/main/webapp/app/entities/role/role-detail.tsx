@@ -34,10 +34,6 @@ export class RoleDetail extends React.Component<IRoleDetailProps> {
               </span>
             </dt>
             <dd>{roleEntity.code}</dd>
-            <dt>
-              <Translate contentKey="vibeApp.role.user">User</Translate>
-            </dt>
-            <dd>{roleEntity.user ? roleEntity.user.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/role" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
