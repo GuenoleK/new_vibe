@@ -26,8 +26,8 @@ public class Role implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "code", nullable = false)
-    private String code;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -38,17 +38,17 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getName() {
+        return name;
     }
 
-    public Role code(String code) {
-        this.code = code;
+    public Role name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setName(String name) {
+        this.name = name;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -76,7 +76,7 @@ public class Role implements Serializable {
     public String toString() {
         return "Role{" +
             "id=" + getId() +
-            ", code='" + getCode() + "'" +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

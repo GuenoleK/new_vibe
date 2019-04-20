@@ -38,7 +38,7 @@ export class Role extends React.Component<IRoleProps> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="vibeApp.role.code">Code</Translate>
+                  <Translate contentKey="vibeApp.role.name">Name</Translate>
                 </th>
                 <th />
               </tr>
@@ -51,7 +51,7 @@ export class Role extends React.Component<IRoleProps> {
                       {role.id}
                     </Button>
                   </td>
-                  <td>{role.code}</td>
+                  <td>{role.name}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${role.id}`} color="info" size="sm">
