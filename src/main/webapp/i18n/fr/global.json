@@ -14,6 +14,7 @@
         "articleMedia": "Article Media",
         "articleMediaType": "Article Media Type",
         "extendedUser": "Extended User",
+        "userRoleStructure": "User Role Structure",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
