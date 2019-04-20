@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,26 +10,28 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './role.reducer';
-import { IRole } from 'app/shared/model/role.model';
+import { IStructure } from 'app/shared/model/structure.model';
+import { getEntities as getStructures } from 'app/entities/structure/structure.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './extended-user.reducer';
+import { IExtendedUser } from 'app/shared/model/extended-user.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IRoleUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IExtendedUserUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export interface IRoleUpdateState {
+export interface IExtendedUserUpdateState {
   isNew: boolean;
-  idsuser: any[];
   userId: string;
+  currentStructureId: string;
 }
 
-export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateState> {
+export class ExtendedUserUpdate extends React.Component<IExtendedUserUpdateProps, IExtendedUserUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      idsuser: [],
       userId: '0',
+      currentStructureId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -48,15 +50,15 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
     }
 
     this.props.getUsers();
+    this.props.getStructures();
   }
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const { roleEntity } = this.props;
+      const { extendedUserEntity } = this.props;
       const entity = {
-        ...roleEntity,
-        ...values,
-        users: mapIdList(values.users)
+        ...extendedUserEntity,
+        ...values
       };
 
       if (this.state.isNew) {
@@ -68,19 +70,19 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/role');
+    this.props.history.push('/entity/extended-user');
   };
 
   render() {
-    const { roleEntity, users, loading, updating } = this.props;
+    const { extendedUserEntity, users, structures, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="vibeApp.role.home.createOrEditLabel">
-              <Translate contentKey="vibeApp.role.home.createOrEditLabel">Create or edit a Role</Translate>
+            <h2 id="vibeApp.extendedUser.home.createOrEditLabel">
+              <Translate contentKey="vibeApp.extendedUser.home.createOrEditLabel">Create or edit a ExtendedUser</Translate>
             </h2>
           </Col>
         </Row>
@@ -89,33 +91,20 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <AvForm model={isNew ? {} : roleEntity} onSubmit={this.saveEntity}>
+              <AvForm model={isNew ? {} : extendedUserEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
                     <Label for="id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
-                    <AvInput id="role-id" type="text" className="form-control" name="id" required readOnly />
+                    <AvInput id="extended-user-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="codeLabel" for="code">
-                    <Translate contentKey="vibeApp.role.code">Code</Translate>
-                  </Label>
-                  <AvField
-                    id="role-code"
-                    type="text"
-                    name="code"
-                    validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
                   <Label for="user.id">
-                    <Translate contentKey="vibeApp.role.user">User</Translate>
+                    <Translate contentKey="vibeApp.extendedUser.user">User</Translate>
                   </Label>
-                  <AvInput id="role-user" type="select" className="form-control" name="user.id">
+                  <AvInput id="extended-user-user" type="select" className="form-control" name="user.id">
                     <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (
@@ -127,20 +116,13 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="users">
-                    <Translate contentKey="vibeApp.role.user">User</Translate>
+                  <Label for="currentStructure.id">
+                    <Translate contentKey="vibeApp.extendedUser.currentStructure">Current Structure</Translate>
                   </Label>
-                  <AvInput
-                    id="role-user"
-                    type="select"
-                    multiple
-                    className="form-control"
-                    name="users"
-                    value={roleEntity.users && roleEntity.users.map(e => e.id)}
-                  >
+                  <AvInput id="extended-user-currentStructure" type="select" className="form-control" name="currentStructure.id">
                     <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
+                    {structures
+                      ? structures.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -148,7 +130,7 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/role" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/entity/extended-user" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
@@ -170,14 +152,16 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
 
 const mapStateToProps = (storeState: IRootState) => ({
   users: storeState.userManagement.users,
-  roleEntity: storeState.role.entity,
-  loading: storeState.role.loading,
-  updating: storeState.role.updating,
-  updateSuccess: storeState.role.updateSuccess
+  structures: storeState.structure.entities,
+  extendedUserEntity: storeState.extendedUser.entity,
+  loading: storeState.extendedUser.loading,
+  updating: storeState.extendedUser.updating,
+  updateSuccess: storeState.extendedUser.updateSuccess
 });
 
 const mapDispatchToProps = {
   getUsers,
+  getStructures,
   getEntity,
   updateEntity,
   createEntity,
@@ -190,4 +174,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RoleUpdate);
+)(ExtendedUserUpdate);

@@ -11,12 +11,6 @@
     ],
     "relationships": [
         {
-            "relationshipName": "structure",
-            "otherEntityName": "structure",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "role",

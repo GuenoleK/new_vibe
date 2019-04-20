@@ -1,7 +1,6 @@
 package com.itepem.vibe.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -33,9 +32,6 @@ public class Structure implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "structure")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Role> roles = new HashSet<>();
     @ManyToOne
     @JsonIgnoreProperties("structures")
     private User owner;
@@ -67,31 +63,6 @@ public class Structure implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public Structure roles(Set<Role> roles) {
-        this.roles = roles;
-        return this;
-    }
-
-    public Structure addRole(Role role) {
-        this.roles.add(role);
-        role.setStructure(this);
-        return this;
-    }
-
-    public Structure removeRole(Role role) {
-        this.roles.remove(role);
-        role.setStructure(null);
-        return this;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     public User getOwner() {

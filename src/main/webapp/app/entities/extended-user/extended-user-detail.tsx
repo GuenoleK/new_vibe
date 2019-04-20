@@ -7,58 +7,43 @@ import { Translate, ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './role.reducer';
-import { IRole } from 'app/shared/model/role.model';
+import { getEntity } from './extended-user.reducer';
+import { IExtendedUser } from 'app/shared/model/extended-user.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IRoleDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IExtendedUserDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export class RoleDetail extends React.Component<IRoleDetailProps> {
+export class ExtendedUserDetail extends React.Component<IExtendedUserDetailProps> {
   componentDidMount() {
     this.props.getEntity(this.props.match.params.id);
   }
 
   render() {
-    const { roleEntity } = this.props;
+    const { extendedUserEntity } = this.props;
     return (
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="vibeApp.role.detail.title">Role</Translate> [<b>{roleEntity.id}</b>]
+            <Translate contentKey="vibeApp.extendedUser.detail.title">ExtendedUser</Translate> [<b>{extendedUserEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="code">
-                <Translate contentKey="vibeApp.role.code">Code</Translate>
-              </span>
+              <Translate contentKey="vibeApp.extendedUser.user">User</Translate>
             </dt>
-            <dd>{roleEntity.code}</dd>
+            <dd>{extendedUserEntity.user ? extendedUserEntity.user.id : ''}</dd>
             <dt>
-              <Translate contentKey="vibeApp.role.user">User</Translate>
+              <Translate contentKey="vibeApp.extendedUser.currentStructure">Current Structure</Translate>
             </dt>
-            <dd>{roleEntity.user ? roleEntity.user.id : ''}</dd>
-            <dt>
-              <Translate contentKey="vibeApp.role.user">User</Translate>
-            </dt>
-            <dd>
-              {roleEntity.users
-                ? roleEntity.users.map((val, i) => (
-                    <span key={val.id}>
-                      <a>{val.id}</a>
-                      {i === roleEntity.users.length - 1 ? '' : ', '}
-                    </span>
-                  ))
-                : null}{' '}
-            </dd>
+            <dd>{extendedUserEntity.currentStructure ? extendedUserEntity.currentStructure.id : ''}</dd>
           </dl>
-          <Button tag={Link} to="/entity/role" replace color="info">
+          <Button tag={Link} to="/entity/extended-user" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/entity/role/${roleEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/entity/extended-user/${extendedUserEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
@@ -70,8 +55,8 @@ export class RoleDetail extends React.Component<IRoleDetailProps> {
   }
 }
 
-const mapStateToProps = ({ role }: IRootState) => ({
-  roleEntity: role.entity
+const mapStateToProps = ({ extendedUser }: IRootState) => ({
+  extendedUserEntity: extendedUser.entity
 });
 
 const mapDispatchToProps = { getEntity };
@@ -82,4 +67,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RoleDetail);
+)(ExtendedUserDetail);
