@@ -46,6 +46,7 @@ public class CacheConfiguration {
             cm.createCache(com.itepem.vibe.domain.Structure.class.getName() + ".users", jcacheConfiguration);
             cm.createCache(com.itepem.vibe.domain.Role.class.getName() + ".users", jcacheConfiguration);
             cm.createCache(com.itepem.vibe.domain.ArticleMediaType.class.getName(), jcacheConfiguration);
+            cm.createCache(com.itepem.vibe.domain.ExtendedUser.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

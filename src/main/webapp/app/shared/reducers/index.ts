@@ -32,6 +32,10 @@ import articleMedia, {
 import articleMediaType, {
   ArticleMediaTypeState
 } from 'app/entities/article-media-type/article-media-type.reducer';
+// prettier-ignore
+import extendedUser, {
+  ExtendedUserState
+} from 'app/entities/extended-user/extended-user.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -50,6 +54,7 @@ export interface IRootState {
   readonly article: ArticleState;
   readonly articleMedia: ArticleMediaState;
   readonly articleMediaType: ArticleMediaTypeState;
+  readonly extendedUser: ExtendedUserState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -70,6 +75,7 @@ const rootReducer = combineReducers<IRootState>({
   article,
   articleMedia,
   articleMediaType,
+  extendedUser,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

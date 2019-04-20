@@ -34,10 +34,6 @@ public class Role implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("roles")
-    private Structure structure;
-
-    @ManyToOne
-    @JsonIgnoreProperties("roles")
     private User user;
 
     @ManyToMany
@@ -67,19 +63,6 @@ public class Role implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public Structure getStructure() {
-        return structure;
-    }
-
-    public Role structure(Structure structure) {
-        this.structure = structure;
-        return this;
-    }
-
-    public void setStructure(Structure structure) {
-        this.structure = structure;
     }
 
     public User getUser() {

@@ -23,6 +23,9 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/article-media-type">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;<Translate contentKey="global.menu.entities.articleMediaType" />
     </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/extended-user">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;<Translate contentKey="global.menu.entities.extendedUser" />
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );
