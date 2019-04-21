@@ -46,7 +46,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "structure",
             "otherEntityRelationshipName": "article",
-            "relationshipName": "strcture",
+            "relationshipName": "structure",
             "otherEntityField": "id"
         }
     ],

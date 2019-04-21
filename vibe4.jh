@@ -36,7 +36,7 @@ relationship ManyToOne {
     Article{user(id)} to User,
     ArticleMedia{user(id)} to User,
     Structure{owner(id)} to User,
-    Article{strcture(id)} to Structure
+    Article{structure(id)} to Structure
 }
 
 relationship ManyToMany {
