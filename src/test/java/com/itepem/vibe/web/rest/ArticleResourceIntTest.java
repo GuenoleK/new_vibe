@@ -4,6 +4,7 @@ import com.itepem.vibe.VibeApp;
 
 import com.itepem.vibe.domain.Article;
 import com.itepem.vibe.repository.ArticleRepository;
+import com.itepem.vibe.service.ArticleService;
 import com.itepem.vibe.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -61,6 +62,9 @@ public class ArticleResourceIntTest {
     private ArticleRepository articleRepository;
 
     @Autowired
+    private ArticleService articleService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -82,7 +86,7 @@ public class ArticleResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ArticleResource articleResource = new ArticleResource(articleRepository);
+        final ArticleResource articleResource = new ArticleResource(articleRepository, articleService);
         this.restArticleMockMvc = MockMvcBuilders.standaloneSetup(articleResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
