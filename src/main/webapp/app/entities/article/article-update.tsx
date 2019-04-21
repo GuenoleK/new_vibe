@@ -23,7 +23,7 @@ export interface IArticleUpdateProps extends StateProps, DispatchProps, RouteCom
 export interface IArticleUpdateState {
   isNew: boolean;
   userId: string;
-  strctureId: string;
+  structureId: string;
 }
 
 export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticleUpdateState> {
@@ -31,7 +31,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
     super(props);
     this.state = {
       userId: '0',
-      strctureId: '0',
+      structureId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -176,10 +176,10 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="strcture.id">
-                    <Translate contentKey="vibeApp.article.strcture">Strcture</Translate>
+                  <Label for="structure.id">
+                    <Translate contentKey="vibeApp.article.structure">Structure</Translate>
                   </Label>
-                  <AvInput id="article-strcture" type="select" className="form-control" name="strcture.id">
+                  <AvInput id="article-structure" type="select" className="form-control" name="structure.id">
                     <option value="" key="0" />
                     {structures
                       ? structures.map(otherEntity => (

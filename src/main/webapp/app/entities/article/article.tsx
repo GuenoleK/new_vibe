@@ -56,7 +56,7 @@ export class Article extends React.Component<IArticleProps> {
                   <Translate contentKey="vibeApp.article.user">User</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="vibeApp.article.strcture">Strcture</Translate>
+                  <Translate contentKey="vibeApp.article.structure">Structure</Translate>
                 </th>
                 <th />
               </tr>
@@ -79,7 +79,7 @@ export class Article extends React.Component<IArticleProps> {
                     <TextFormat type="date" value={article.editionDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{article.user ? article.user.id : ''}</td>
-                  <td>{article.strcture ? <Link to={`structure/${article.strcture.id}`}>{article.strcture.id}</Link> : ''}</td>
+                  <td>{article.structure ? <Link to={`structure/${article.structure.id}`}>{article.structure.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${article.id}`} color="info" size="sm">

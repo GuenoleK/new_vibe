@@ -10,7 +10,7 @@ export interface IArticle {
   creationDate?: Moment;
   editionDate?: Moment;
   user?: IUser;
-  strcture?: IStructure;
+  structure?: IStructure;
 }
 
 export const defaultValue: Readonly<IArticle> = {};

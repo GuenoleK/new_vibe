@@ -45,7 +45,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="strcture_id" type="bigint">
+            <column name="structure_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
