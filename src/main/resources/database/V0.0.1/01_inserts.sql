@@ -1,8 +1,8 @@
 insert into structure (id, name, owner_id) values 
 (0, 'admin_structure', 3);
 
-insert into article (id, title, description, content, creation_date, edition_date, user_id) values
-(0, 'wtr10-2b_f', 'wtr10-2b_f description', 'It is the first content here', now(), now(), 3);
+insert into article (id, title, description, content, creation_date, edition_date, user_id, structure_id) values
+(0, 'wtr10-2b_f', 'wtr10-2b_f description', 'It is the first content here', now(), now(), 3, 0);
 
 insert into role (id, name) values
 (0, 'ADMIN'),
