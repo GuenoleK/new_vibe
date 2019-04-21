@@ -12,7 +12,13 @@ export class CardContainer extends React.Component {
 
   get ArticleList() {
     if (articleStore.articleList.length > 0) {
-      return <VibeCard />;
+      return (
+        <div>
+          {articleStore.articleList.map((article, idx) => (
+            <VibeCard article={article} key={`article-list-card-${idx}`} />
+          ))}
+        </div>
+      );
     }
     return <div />;
   }
