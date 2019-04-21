@@ -66,6 +66,10 @@ export class ArticleDetail extends React.Component<IArticleDetailProps> {
               <Translate contentKey="vibeApp.article.user">User</Translate>
             </dt>
             <dd>{articleEntity.user ? articleEntity.user.id : ''}</dd>
+            <dt>
+              <Translate contentKey="vibeApp.article.strcture">Strcture</Translate>
+            </dt>
+            <dd>{articleEntity.strcture ? articleEntity.strcture.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/article" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

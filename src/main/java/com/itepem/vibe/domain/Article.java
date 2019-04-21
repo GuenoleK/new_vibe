@@ -50,6 +50,10 @@ public class Article implements Serializable {
     @JsonIgnoreProperties("articles")
     private User user;
 
+    @ManyToOne
+    @JsonIgnoreProperties("articles")
+    private Structure strcture;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -135,6 +139,19 @@ public class Article implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Structure getStrcture() {
+        return strcture;
+    }
+
+    public Article strcture(Structure structure) {
+        this.strcture = structure;
+        return this;
+    }
+
+    public void setStrcture(Structure structure) {
+        this.strcture = structure;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

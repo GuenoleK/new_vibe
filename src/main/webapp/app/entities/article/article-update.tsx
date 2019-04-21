@@ -10,6 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { IStructure } from 'app/shared/model/structure.model';
+import { getEntities as getStructures } from 'app/entities/structure/structure.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './article.reducer';
 import { IArticle } from 'app/shared/model/article.model';
 // tslint:disable-next-line:no-unused-variable
@@ -21,6 +23,7 @@ export interface IArticleUpdateProps extends StateProps, DispatchProps, RouteCom
 export interface IArticleUpdateState {
   isNew: boolean;
   userId: string;
+  strctureId: string;
 }
 
 export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticleUpdateState> {
@@ -28,6 +31,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
     super(props);
     this.state = {
       userId: '0',
+      strctureId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -46,6 +50,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
     }
 
     this.props.getUsers();
+    this.props.getStructures();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +74,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
   };
 
   render() {
-    const { articleEntity, users, loading, updating } = this.props;
+    const { articleEntity, users, structures, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -170,6 +175,21 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="strcture.id">
+                    <Translate contentKey="vibeApp.article.strcture">Strcture</Translate>
+                  </Label>
+                  <AvInput id="article-strcture" type="select" className="form-control" name="strcture.id">
+                    <option value="" key="0" />
+                    {structures
+                      ? structures.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/article" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -192,6 +212,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
 
 const mapStateToProps = (storeState: IRootState) => ({
   users: storeState.userManagement.users,
+  structures: storeState.structure.entities,
   articleEntity: storeState.article.entity,
   loading: storeState.article.loading,
   updating: storeState.article.updating,
@@ -200,6 +221,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getUsers,
+  getStructures,
   getEntity,
   updateEntity,
   createEntity,
