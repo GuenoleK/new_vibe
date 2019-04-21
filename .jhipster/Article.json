@@ -41,6 +41,13 @@
             "otherEntityRelationshipName": "article",
             "relationshipName": "user",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "structure",
+            "otherEntityRelationshipName": "article",
+            "relationshipName": "strcture",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190320000311",
