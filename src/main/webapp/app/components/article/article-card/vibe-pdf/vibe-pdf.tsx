@@ -1,7 +1,10 @@
 import React from 'react';
 import { Document, Page } from 'react-pdf';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { observer } from 'mobx-react';
+import { articleMediaStore } from 'app/stores/article-media-store';
+import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
+import { articleMediaUtils } from 'app/utils/ArticleMediaUtils';
 
 @observer
 export class VibePdfDocument extends React.Component {
@@ -10,12 +13,16 @@ export class VibePdfDocument extends React.Component {
 
   @observable
   pageNumber: boolean;
+
   render() {
-    const t = 'wtr10-2b_f/wtr10-2b_f.pdf';
     return (
-      <Document file={require('D:/zz_perso/vibe-files/admin_structure/' + t)} onLoadSuccess={this.onDocumentLoadSuccess}>
-        <Page pageNumber={this.currentPage} />
-      </Document>
+      <div>
+        {this.media && (
+          <Document file={require(`D:/zz_perso/vibe-files/${this.filePath}`)} onLoadSuccess={this.onDocumentLoadSuccess}>
+            <Page pageNumber={this.currentPage} />
+          </Document>
+        )}
+      </div>
     );
   }
 
@@ -23,4 +30,14 @@ export class VibePdfDocument extends React.Component {
   onDocumentLoadSuccess = props => {
     this.pageNumber = props._pdfInfo.numPages;
   };
+
+  @computed
+  get media() {
+    return articleMediaStore.articleMediaList.find(media => media.articleMediaType.code === ArticleMediaTypeCodeEnum.PDF);
+  }
+
+  @computed
+  get filePath() {
+    return articleMediaUtils.buildMediaPath(this.media);
+  }
 }

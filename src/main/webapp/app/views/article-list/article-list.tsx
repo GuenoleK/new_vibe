@@ -6,11 +6,15 @@ import { observer } from 'mobx-react';
 
 @observer
 export class ArticleListView extends React.Component {
+  render() {
+    return <CardContainer />;
+  }
+
   componentWillMount() {
     articleApi.getArticleListByStructureId(0);
   }
 
-  render() {
-    return <CardContainer />;
+  componentWillUnmount() {
+    articleStore.articleList = [];
   }
 }

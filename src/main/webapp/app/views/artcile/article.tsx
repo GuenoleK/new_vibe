@@ -3,9 +3,14 @@ import { ArticleCard } from 'app/components/article/article-card/article-card';
 import { AudioCard } from 'app/components/article/audio-card/audio-card';
 import './article.scss';
 import { observer } from 'mobx-react';
+import { articleMediaApi } from 'app/api/article-media-api';
+import { RouteComponentProps } from 'react-router';
+import { articleApi } from 'app/api/article';
+import { articleStore } from 'app/stores/article-store';
+import { articleMediaStore } from 'app/stores/article-media-store';
 
 @observer
-export class ArticleView extends React.Component {
+export class ArticleView extends React.Component<RouteComponentProps<any>> {
   render() {
     return (
       <div data-component="vibe-article">
@@ -20,7 +25,20 @@ export class ArticleView extends React.Component {
     );
   }
 
-  componentWillMount() {
+  get articleId() {
+    return this.props.match.params.id;
+  }
+  async componentWillMount() {
     // Here call the web service that will give the file names
+    if (this.articleId) {
+      articleApi.getArticle(this.articleId);
+      articleMediaApi.getArticleMediaListByArticleId(this.articleId);
+    }
+  }
+
+  componentWillUnMount() {
+    // Here clear articleMediaList in the store
+    articleStore.article = undefined;
+    articleMediaStore.articleMediaList = [];
   }
 }

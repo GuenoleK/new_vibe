@@ -5,7 +5,7 @@ type IArticle = ArticleInterface.IArticle;
 
 class ArticleStore {
   @observable
-  innerArticleList: IArticle[] = [];
+  private innerArticleList: IArticle[] = [];
 
   @computed
   get articleList(): IArticle[] {
@@ -14,6 +14,18 @@ class ArticleStore {
 
   set articleList(articleList: IArticle[]) {
     this.innerArticleList = articleList;
+  }
+
+  @observable
+  private innerArticle: IArticle;
+
+  @computed
+  get article(): IArticle {
+    return toJS(this.innerArticle);
+  }
+
+  set article(article: IArticle) {
+    this.innerArticle = article;
   }
 }
 
