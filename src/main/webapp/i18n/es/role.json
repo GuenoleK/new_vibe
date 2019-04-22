@@ -15,9 +15,7 @@
       "detail": {
         "title": "Role"
       },
-      "roleType": "Role Type",
-      "structure": "Structure",
-      "user": "User"
+      "name": "Name"
     }
   }
 }

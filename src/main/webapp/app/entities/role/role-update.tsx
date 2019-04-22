@@ -8,10 +8,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IStructure } from 'app/shared/model/structure.model';
-import { getEntities as getStructures } from 'app/entities/structure/structure.reducer';
-import { IUser } from 'app/shared/model/user.model';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './role.reducer';
 import { IRole } from 'app/shared/model/role.model';
 // tslint:disable-next-line:no-unused-variable
@@ -22,16 +18,12 @@ export interface IRoleUpdateProps extends StateProps, DispatchProps, RouteCompon
 
 export interface IRoleUpdateState {
   isNew: boolean;
-  structureId: string;
-  userId: string;
 }
 
 export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      structureId: '0',
-      userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -48,9 +40,6 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
-
-    this.props.getStructures();
-    this.props.getUsers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +63,7 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
   };
 
   render() {
-    const { roleEntity, structures, users, loading, updating } = this.props;
+    const { roleEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -101,68 +90,27 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="roleTypeLabel">
-                    <Translate contentKey="vibeApp.role.roleType">Role Type</Translate>
+                  <Label id="nameLabel" for="name">
+                    <Translate contentKey="vibeApp.role.name">Name</Translate>
                   </Label>
-                  <AvInput
-                    id="role-roleType"
-                    type="select"
-                    className="form-control"
-                    name="roleType"
-                    value={(!isNew && roleEntity.roleType) || 'ADMIN'}
-                  >
-                    <option value="ADMIN">
-                      <Translate contentKey="vibeApp.RoleType.ADMIN" />
-                    </option>
-                    <option value="VIEWER">
-                      <Translate contentKey="vibeApp.RoleType.VIEWER" />
-                    </option>
-                    <option value="EDITOR">
-                      <Translate contentKey="vibeApp.RoleType.EDITOR" />
-                    </option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="structure.id">
-                    <Translate contentKey="vibeApp.role.structure">Structure</Translate>
-                  </Label>
-                  <AvInput id="role-structure" type="select" className="form-control" name="structure.id">
-                    <option value="" key="0" />
-                    {structures
-                      ? structures.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="user.id">
-                    <Translate contentKey="vibeApp.role.user">User</Translate>
-                  </Label>
-                  <AvInput id="role-user" type="select" className="form-control" name="user.id">
-                    <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
+                  <AvField
+                    id="role-name"
+                    type="text"
+                    name="name"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                    }}
+                  />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/role" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="save" />&nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
@@ -175,8 +123,6 @@ export class RoleUpdate extends React.Component<IRoleUpdateProps, IRoleUpdateSta
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  structures: storeState.structure.entities,
-  users: storeState.userManagement.users,
   roleEntity: storeState.role.entity,
   loading: storeState.role.loading,
   updating: storeState.role.updating,
@@ -184,8 +130,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getStructures,
-  getUsers,
   getEntity,
   updateEntity,
   createEntity,

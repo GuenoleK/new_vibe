@@ -4,6 +4,7 @@ import com.itepem.vibe.VibeApp;
 
 import com.itepem.vibe.domain.ArticleMedia;
 import com.itepem.vibe.repository.ArticleMediaRepository;
+import com.itepem.vibe.service.ArticleMediaServices;
 import com.itepem.vibe.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -31,7 +32,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.itepem.vibe.domain.enumeration.ArticleMediaType;
 /**
  * Test class for the ArticleMediaResource REST controller.
  *
@@ -44,11 +44,11 @@ public class ArticleMediaResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final ArticleMediaType DEFAULT_ARTICLE_MEDIA_TYPE = ArticleMediaType.IMAGE;
-    private static final ArticleMediaType UPDATED_ARTICLE_MEDIA_TYPE = ArticleMediaType.PDF;
-
     @Autowired
     private ArticleMediaRepository articleMediaRepository;
+
+    @Autowired
+    private ArticleMediaServices articleMediaServices;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -72,7 +72,7 @@ public class ArticleMediaResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ArticleMediaResource articleMediaResource = new ArticleMediaResource(articleMediaRepository);
+        final ArticleMediaResource articleMediaResource = new ArticleMediaResource(articleMediaRepository, articleMediaServices);
         this.restArticleMediaMockMvc = MockMvcBuilders.standaloneSetup(articleMediaResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -89,8 +89,7 @@ public class ArticleMediaResourceIntTest {
      */
     public static ArticleMedia createEntity(EntityManager em) {
         ArticleMedia articleMedia = new ArticleMedia()
-            .name(DEFAULT_NAME)
-            .articleMediaType(DEFAULT_ARTICLE_MEDIA_TYPE);
+            .name(DEFAULT_NAME);
         return articleMedia;
     }
 
@@ -115,7 +114,6 @@ public class ArticleMediaResourceIntTest {
         assertThat(articleMediaList).hasSize(databaseSizeBeforeCreate + 1);
         ArticleMedia testArticleMedia = articleMediaList.get(articleMediaList.size() - 1);
         assertThat(testArticleMedia.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testArticleMedia.getArticleMediaType()).isEqualTo(DEFAULT_ARTICLE_MEDIA_TYPE);
     }
 
     @Test
@@ -157,24 +155,6 @@ public class ArticleMediaResourceIntTest {
 
     @Test
     @Transactional
-    public void checkArticleMediaTypeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = articleMediaRepository.findAll().size();
-        // set the field null
-        articleMedia.setArticleMediaType(null);
-
-        // Create the ArticleMedia, which fails.
-
-        restArticleMediaMockMvc.perform(post("/api/article-medias")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(articleMedia)))
-            .andExpect(status().isBadRequest());
-
-        List<ArticleMedia> articleMediaList = articleMediaRepository.findAll();
-        assertThat(articleMediaList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllArticleMedias() throws Exception {
         // Initialize the database
         articleMediaRepository.saveAndFlush(articleMedia);
@@ -184,8 +164,7 @@ public class ArticleMediaResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(articleMedia.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].articleMediaType").value(hasItem(DEFAULT_ARTICLE_MEDIA_TYPE.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
     
     @Test
@@ -199,8 +178,7 @@ public class ArticleMediaResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(articleMedia.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.articleMediaType").value(DEFAULT_ARTICLE_MEDIA_TYPE.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
     @Test
@@ -224,8 +202,7 @@ public class ArticleMediaResourceIntTest {
         // Disconnect from session so that the updates on updatedArticleMedia are not directly saved in db
         em.detach(updatedArticleMedia);
         updatedArticleMedia
-            .name(UPDATED_NAME)
-            .articleMediaType(UPDATED_ARTICLE_MEDIA_TYPE);
+            .name(UPDATED_NAME);
 
         restArticleMediaMockMvc.perform(put("/api/article-medias")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -237,7 +214,6 @@ public class ArticleMediaResourceIntTest {
         assertThat(articleMediaList).hasSize(databaseSizeBeforeUpdate);
         ArticleMedia testArticleMedia = articleMediaList.get(articleMediaList.size() - 1);
         assertThat(testArticleMedia.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testArticleMedia.getArticleMediaType()).isEqualTo(UPDATED_ARTICLE_MEDIA_TYPE);
     }
 
     @Test

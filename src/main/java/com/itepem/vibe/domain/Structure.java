@@ -1,7 +1,7 @@
 package com.itepem.vibe.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -32,9 +32,17 @@ public class Structure implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "structure")
+    @ManyToOne
+    @JsonIgnoreProperties("structures")
+    private User owner;
+
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Role> roles = new HashSet<>();
+    @JoinTable(name = "structure_user",
+               joinColumns = @JoinColumn(name = "structure_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -57,29 +65,40 @@ public class Structure implements Serializable {
         this.name = name;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public User getOwner() {
+        return owner;
     }
 
-    public Structure roles(Set<Role> roles) {
-        this.roles = roles;
+    public Structure owner(User user) {
+        this.owner = user;
         return this;
     }
 
-    public Structure addRole(Role role) {
-        this.roles.add(role);
-        role.setStructure(this);
+    public void setOwner(User user) {
+        this.owner = user;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public Structure users(Set<User> users) {
+        this.users = users;
         return this;
     }
 
-    public Structure removeRole(Role role) {
-        this.roles.remove(role);
-        role.setStructure(null);
+    public Structure addUser(User user) {
+        this.users.add(user);
         return this;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public Structure removeUser(User user) {
+        this.users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

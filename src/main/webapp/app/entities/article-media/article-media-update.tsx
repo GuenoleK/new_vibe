@@ -10,6 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IArticle } from 'app/shared/model/article.model';
 import { getEntities as getArticles } from 'app/entities/article/article.reducer';
+import { IArticleMediaType } from 'app/shared/model/article-media-type.model';
+import { getEntities as getArticleMediaTypes } from 'app/entities/article-media-type/article-media-type.reducer';
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './article-media.reducer';
@@ -23,6 +25,7 @@ export interface IArticleMediaUpdateProps extends StateProps, DispatchProps, Rou
 export interface IArticleMediaUpdateState {
   isNew: boolean;
   articleId: string;
+  articleMediaTypeId: string;
   userId: string;
 }
 
@@ -31,6 +34,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
     super(props);
     this.state = {
       articleId: '0',
+      articleMediaTypeId: '0',
       userId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -50,6 +54,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
     }
 
     this.props.getArticles();
+    this.props.getArticleMediaTypes();
     this.props.getUsers();
   }
 
@@ -74,7 +79,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
   };
 
   render() {
-    const { articleMediaEntity, articles, users, loading, updating } = this.props;
+    const { articleMediaEntity, articles, articleMediaTypes, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -114,28 +119,6 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="articleMediaTypeLabel">
-                    <Translate contentKey="vibeApp.articleMedia.articleMediaType">Article Media Type</Translate>
-                  </Label>
-                  <AvInput
-                    id="article-media-articleMediaType"
-                    type="select"
-                    className="form-control"
-                    name="articleMediaType"
-                    value={(!isNew && articleMediaEntity.articleMediaType) || 'IMAGE'}
-                  >
-                    <option value="IMAGE">
-                      <Translate contentKey="vibeApp.ArticleMediaType.IMAGE" />
-                    </option>
-                    <option value="PDF">
-                      <Translate contentKey="vibeApp.ArticleMediaType.PDF" />
-                    </option>
-                    <option value="AUDIO">
-                      <Translate contentKey="vibeApp.ArticleMediaType.AUDIO" />
-                    </option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
                   <Label for="article.id">
                     <Translate contentKey="vibeApp.articleMedia.article">Article</Translate>
                   </Label>
@@ -145,6 +128,21 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
                       ? articles.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="articleMediaType.code">
+                    <Translate contentKey="vibeApp.articleMedia.articleMediaType">Article Media Type</Translate>
+                  </Label>
+                  <AvInput id="article-media-articleMediaType" type="select" className="form-control" name="articleMediaType.id">
+                    <option value="" key="0" />
+                    {articleMediaTypes
+                      ? articleMediaTypes.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.code}
                           </option>
                         ))
                       : null}
@@ -166,16 +164,14 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/article-media" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="save" />&nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
@@ -189,6 +185,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
 
 const mapStateToProps = (storeState: IRootState) => ({
   articles: storeState.article.entities,
+  articleMediaTypes: storeState.articleMediaType.entities,
   users: storeState.userManagement.users,
   articleMediaEntity: storeState.articleMedia.entity,
   loading: storeState.articleMedia.loading,
@@ -198,6 +195,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getArticles,
+  getArticleMediaTypes,
   getUsers,
   getEntity,
   updateEntity,

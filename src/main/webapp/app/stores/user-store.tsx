@@ -18,11 +18,11 @@ class UserStore {
     this.innerUser = user;
   }
 
-  private get hasCookie() {
+  get hasCookie() {
     return Storage.session.get(AUTH_TOKEN_KEY) !== undefined;
   }
 
-  private get hasSession() {
+  get hasSession() {
     return Storage.local.get(AUTH_TOKEN_KEY) !== undefined;
   }
 

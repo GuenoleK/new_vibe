@@ -14,6 +14,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="article"/>
 
+        <addForeignKeyConstraint baseColumnNames="article_media_type_id"
+                                 baseTableName="article_media"
+                                 constraintName="fk_article_media_article_media_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="article_media_type"/>
+
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="article_media"
                                  constraintName="fk_article_media_user_id"

@@ -12,6 +12,34 @@ import activate, { ActivateState } from 'app/modules/account/activate/activate.r
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
+// prettier-ignore
+import structure, {
+  StructureState
+} from 'app/entities/structure/structure.reducer';
+// prettier-ignore
+import role, {
+  RoleState
+} from 'app/entities/role/role.reducer';
+// prettier-ignore
+import article, {
+  ArticleState
+} from 'app/entities/article/article.reducer';
+// prettier-ignore
+import articleMedia, {
+  ArticleMediaState
+} from 'app/entities/article-media/article-media.reducer';
+// prettier-ignore
+import articleMediaType, {
+  ArticleMediaTypeState
+} from 'app/entities/article-media-type/article-media-type.reducer';
+// prettier-ignore
+import extendedUser, {
+  ExtendedUserState
+} from 'app/entities/extended-user/extended-user.reducer';
+// prettier-ignore
+import userRoleStructure, {
+  UserRoleStructureState
+} from 'app/entities/user-role-structure/user-role-structure.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -25,6 +53,13 @@ export interface IRootState {
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
+  readonly structure: StructureState;
+  readonly role: RoleState;
+  readonly article: ArticleState;
+  readonly articleMedia: ArticleMediaState;
+  readonly articleMediaType: ArticleMediaTypeState;
+  readonly extendedUser: ExtendedUserState;
+  readonly userRoleStructure: UserRoleStructureState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -40,6 +75,13 @@ const rootReducer = combineReducers<IRootState>({
   passwordReset,
   password,
   settings,
+  structure,
+  role,
+  article,
+  articleMedia,
+  articleMediaType,
+  extendedUser,
+  userRoleStructure,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

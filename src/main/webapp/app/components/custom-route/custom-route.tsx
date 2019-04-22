@@ -16,7 +16,8 @@ export class CustomRoute extends React.Component<ICustomRouteProps> {
     const { path, component } = this.props;
     if (userStore.isConnected) {
       if (path !== '/') {
-        return <Route exact path={path} component={component} />;
+        // tslint:disable-next-line: jsx-no-lambda
+        return <Route exact path={path} component={props => this.renderComponent(component, props)} />;
       }
       return (
         <Route exact path={path}>
@@ -26,12 +27,17 @@ export class CustomRoute extends React.Component<ICustomRouteProps> {
     }
 
     if (path === '/') {
-      return <Route exact path={path} component={component} />;
+      // tslint:disable-next-line: jsx-no-lambda
+      return <Route exact path={path} component={props => this.renderComponent(component, props)} />;
     }
     return (
       <Route exact path={path}>
         <Redirect to="/" />
       </Route>
     );
+  }
+
+  renderComponent(Component: any, props: any) {
+    return <Component {...props} />;
   }
 }

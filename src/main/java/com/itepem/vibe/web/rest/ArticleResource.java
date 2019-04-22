@@ -1,6 +1,7 @@
 package com.itepem.vibe.web.rest;
 import com.itepem.vibe.domain.Article;
 import com.itepem.vibe.repository.ArticleRepository;
+import com.itepem.vibe.service.ArticleService;
 import com.itepem.vibe.web.rest.errors.BadRequestAlertException;
 import com.itepem.vibe.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,8 +30,11 @@ public class ArticleResource {
 
     private final ArticleRepository articleRepository;
 
-    public ArticleResource(ArticleRepository articleRepository) {
+    private final ArticleService articleService;
+
+    public ArticleResource(ArticleRepository articleRepository, ArticleService articleService) {
         this.articleRepository = articleRepository;
+        this.articleService = articleService;
     }
 
     /**
@@ -82,6 +86,12 @@ public class ArticleResource {
     public List<Article> getAllArticles() {
         log.debug("REST request to get all Articles");
         return articleRepository.findAll();
+    }
+
+    @GetMapping("/articles/structure/{structureId}")
+    public List<Article> getArticleListByStructureId(@PathVariable Long structureId) {
+        log.debug("REST request to get Article list by structure ID : {}", structureId);
+        return articleService.getArticleListByStructureId(structureId);
     }
 
     /**

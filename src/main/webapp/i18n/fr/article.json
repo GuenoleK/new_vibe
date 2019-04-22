@@ -20,7 +20,8 @@
       "content": "Content",
       "creationDate": "Creation Date",
       "editionDate": "Edition Date",
-      "user": "User"
+      "user": "User",
+      "structure": "Structure"
     }
   }
 }

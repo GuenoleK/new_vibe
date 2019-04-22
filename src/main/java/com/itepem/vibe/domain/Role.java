@@ -1,7 +1,6 @@
 package com.itepem.vibe.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -10,8 +9,6 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.itepem.vibe.domain.enumeration.RoleType;
 
 /**
  * A Role.
@@ -29,17 +26,8 @@ public class Role implements Serializable {
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role_type", nullable = false)
-    private RoleType roleType;
-
-    @ManyToOne
-    @JsonIgnoreProperties("roles")
-    private Structure structure;
-
-    @ManyToOne
-    @JsonIgnoreProperties("roles")
-    private User user;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -50,43 +38,17 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public RoleType getRoleType() {
-        return roleType;
+    public String getName() {
+        return name;
     }
 
-    public Role roleType(RoleType roleType) {
-        this.roleType = roleType;
+    public Role name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
-    }
-
-    public Structure getStructure() {
-        return structure;
-    }
-
-    public Role structure(Structure structure) {
-        this.structure = structure;
-        return this;
-    }
-
-    public void setStructure(Structure structure) {
-        this.structure = structure;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Role user(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -114,7 +76,7 @@ public class Role implements Serializable {
     public String toString() {
         return "Role{" +
             "id=" + getId() +
-            ", roleType='" + getRoleType() + "'" +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

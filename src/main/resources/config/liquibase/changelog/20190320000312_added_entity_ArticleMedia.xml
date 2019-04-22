@@ -25,11 +25,11 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="article_media_type" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="article_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
-            <column name="article_id" type="bigint">
+            <column name="article_media_type_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

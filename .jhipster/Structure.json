@@ -11,10 +11,19 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "role",
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
             "otherEntityRelationshipName": "structure",
-            "relationshipName": "role"
+            "relationshipName": "owner",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "structure",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "changelogDate": "20190320000309",

@@ -35,15 +35,13 @@ export class ArticleMediaDetail extends React.Component<IArticleMediaDetailProps
             </dt>
             <dd>{articleMediaEntity.name}</dd>
             <dt>
-              <span id="articleMediaType">
-                <Translate contentKey="vibeApp.articleMedia.articleMediaType">Article Media Type</Translate>
-              </span>
-            </dt>
-            <dd>{articleMediaEntity.articleMediaType}</dd>
-            <dt>
               <Translate contentKey="vibeApp.articleMedia.article">Article</Translate>
             </dt>
             <dd>{articleMediaEntity.article ? articleMediaEntity.article.id : ''}</dd>
+            <dt>
+              <Translate contentKey="vibeApp.articleMedia.articleMediaType">Article Media Type</Translate>
+            </dt>
+            <dd>{articleMediaEntity.articleMediaType ? articleMediaEntity.articleMediaType.code : ''}</dd>
             <dt>
               <Translate contentKey="vibeApp.articleMedia.user">User</Translate>
             </dt>
@@ -54,8 +52,7 @@ export class ArticleMediaDetail extends React.Component<IArticleMediaDetailProps
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>
-          &nbsp;
+          </Button>&nbsp;
           <Button tag={Link} to={`/entity/article-media/${articleMediaEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

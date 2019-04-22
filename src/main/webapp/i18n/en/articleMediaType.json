@@ -1,10 +1,21 @@
 {
   "vibeApp": {
-    "ArticleMediaType": {
-      "null": "",
-      "IMAGE": "IMAGE",
-      "PDF": "PDF",
-      "AUDIO": "AUDIO"
+    "articleMediaType": {
+      "home": {
+        "title": "Article Media Types",
+        "createLabel": "Create a new Article Media Type",
+        "createOrEditLabel": "Create or edit a Article Media Type"
+      },
+      "created": "A new Article Media Type is created with identifier {{ param }}",
+      "updated": "A Article Media Type is updated with identifier {{ param }}",
+      "deleted": "A Article Media Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Article Media Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Article Media Type"
+      },
+      "code": "Code"
     }
   }
 }
