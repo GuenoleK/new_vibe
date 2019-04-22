@@ -3,15 +3,15 @@ import axios from 'axios';
 import { Storage } from 'react-jhipster';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
-import { articleStore } from 'app/stores/article-store';
+import { articleMediaStore } from 'app/stores/article-media-store';
 
 export const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
-class ArticleApi {
+class ArticleMediaApi {
   /**
    * Authenticate the user
    */
-  public getArticleListByStructureId = async (structureId: number) => {
+  public getArticleMediaListByArticleId = async (articleId: number) => {
     let error;
     let headers = {};
 
@@ -22,9 +22,9 @@ class ArticleApi {
     }
 
     try {
-      axios.get(`api/articles/structure/${structureId}`, headers).then(response => {
+      axios.get(`api/article-media/article/${articleId}`, headers).then(response => {
         if (response && response.status === 200) {
-          articleStore.articleList = response.data;
+          articleMediaStore.articleMediaList = response.data;
         } else if (response && response.status !== 200) {
           snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
           throw new Error(`Status error ${response.status}`);
@@ -41,4 +41,4 @@ class ArticleApi {
   };
 }
 
-export const articleApi = new ArticleApi();
+export const articleMediaApi = new ArticleMediaApi();

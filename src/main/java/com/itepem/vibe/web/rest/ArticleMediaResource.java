@@ -1,6 +1,7 @@
 package com.itepem.vibe.web.rest;
 import com.itepem.vibe.domain.ArticleMedia;
 import com.itepem.vibe.repository.ArticleMediaRepository;
+import com.itepem.vibe.service.ArticleMediaServices;
 import com.itepem.vibe.web.rest.errors.BadRequestAlertException;
 import com.itepem.vibe.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,8 +30,11 @@ public class ArticleMediaResource {
 
     private final ArticleMediaRepository articleMediaRepository;
 
-    public ArticleMediaResource(ArticleMediaRepository articleMediaRepository) {
+    private final ArticleMediaServices articleMediaServices;
+
+    public ArticleMediaResource(ArticleMediaRepository articleMediaRepository, ArticleMediaServices articleMediaServices) {
         this.articleMediaRepository = articleMediaRepository;
+        this.articleMediaServices = articleMediaServices;
     }
 
     /**
@@ -82,6 +86,11 @@ public class ArticleMediaResource {
     public List<ArticleMedia> getAllArticleMedias() {
         log.debug("REST request to get all ArticleMedias");
         return articleMediaRepository.findAll();
+    }
+
+    @GetMapping("/article-media/article/{articleId}")
+    public List<ArticleMedia> getArticleMediaListByArticleId(@PathVariable Long articleId) {
+        return articleMediaServices.getArticleMediaListByArticleId(articleId);
     }
 
     /**

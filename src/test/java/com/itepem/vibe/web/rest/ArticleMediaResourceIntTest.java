@@ -4,6 +4,7 @@ import com.itepem.vibe.VibeApp;
 
 import com.itepem.vibe.domain.ArticleMedia;
 import com.itepem.vibe.repository.ArticleMediaRepository;
+import com.itepem.vibe.service.ArticleMediaServices;
 import com.itepem.vibe.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -47,6 +48,9 @@ public class ArticleMediaResourceIntTest {
     private ArticleMediaRepository articleMediaRepository;
 
     @Autowired
+    private ArticleMediaServices articleMediaServices;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -68,7 +72,7 @@ public class ArticleMediaResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ArticleMediaResource articleMediaResource = new ArticleMediaResource(articleMediaRepository);
+        final ArticleMediaResource articleMediaResource = new ArticleMediaResource(articleMediaRepository, articleMediaServices);
         this.restArticleMediaMockMvc = MockMvcBuilders.standaloneSetup(articleMediaResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

@@ -16,4 +16,6 @@ public interface ArticleMediaRepository extends JpaRepository<ArticleMedia, Long
     @Query("select article_media from ArticleMedia article_media where article_media.user.login = ?#{principal.username}")
     List<ArticleMedia> findByUserIsCurrentUser();
 
+    @Query("select article_media from ArticleMedia article_media where article_media.article.id = ?1")
+    List<ArticleMedia> getArticleMediaListByArticleId(final Long articleId);
 }
