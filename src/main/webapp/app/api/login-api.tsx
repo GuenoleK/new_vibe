@@ -6,7 +6,7 @@ import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 
 export const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
-class ApiUtil {
+class LoginApi {
   /**
    * Authenticate the user
    */
@@ -101,4 +101,4 @@ class ApiUtil {
   };
 }
 
-export const apiUtil = new ApiUtil();
+export const loginApi = new LoginApi();

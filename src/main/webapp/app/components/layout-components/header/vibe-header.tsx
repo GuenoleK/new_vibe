@@ -11,7 +11,7 @@ import { userStore } from 'app/stores/user-store';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import { Storage } from 'react-jhipster';
-import { AUTH_TOKEN_KEY } from 'app/api/api';
+import { AUTH_TOKEN_KEY } from 'app/api/login-api';
 
 interface ISearchAppBarProps {
   classes: any;

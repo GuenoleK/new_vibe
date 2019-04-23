@@ -1,9 +1,10 @@
 import { Button, TextField } from '@material-ui/core';
-import { apiUtil } from 'app/api/api';
+import { loginApi } from 'app/api/login-api';
 import { userStore } from 'app/stores/user-store';
 import { observer } from 'mobx-react';
 import React from 'react';
-import './login.scss';
+import './home.scss';
+import { ButtonLink } from 'app/components/button-link/button-link';
 
 @observer
 export class VibeHome extends React.Component {
@@ -30,11 +31,18 @@ export class VibeHome extends React.Component {
           type="password"
           required
         />
-        <Button variant="contained" color="primary" onClick={this.login}>
-          Login
-        </Button>
+        <div className="buttons">
+          <Button variant="contained" color="primary" onClick={this.login}>
+            Login
+          </Button>
+          <ButtonLink buttonClassName="register-redirection-button" variant="text" link="/register" label="register" />
+        </div>
       </form>
     );
+  }
+
+  componentWillMount() {
+    userStore.clearUser();
   }
 
   /**
@@ -42,7 +50,7 @@ export class VibeHome extends React.Component {
    * When everything is ok, we redirect the user to the article list
    */
   login() {
-    apiUtil.authenticate().then(() => {
+    loginApi.authenticate().then(() => {
       window.location.reload();
     });
   }

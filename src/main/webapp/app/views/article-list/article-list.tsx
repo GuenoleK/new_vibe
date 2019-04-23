@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardContainer } from 'app/components/layout-components/card-container/card-container';
-import { articleApi } from 'app/api/article';
+import { articleApi } from 'app/api/article-api';
 import { articleStore } from 'app/stores/article-store';
 import { observer } from 'mobx-react';
 

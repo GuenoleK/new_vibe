@@ -1,6 +1,6 @@
 import * as UserInterface from 'app/shared/model/user.model';
 import { computed, observable, toJS } from 'mobx';
-import { AUTH_TOKEN_KEY, apiUtil } from 'app/api/api';
+import { AUTH_TOKEN_KEY, loginApi } from 'app/api/login-api';
 import { Storage } from 'react-jhipster';
 
 type IUser = UserInterface.IUser;
@@ -32,10 +32,14 @@ class UserStore {
 
   initUserStore() {
     if (this.hasCookie) {
-      apiUtil.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.session.get(AUTH_TOKEN_KEY) });
+      loginApi.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.session.get(AUTH_TOKEN_KEY) });
     } else if (this.hasSession) {
-      apiUtil.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.local.get(AUTH_TOKEN_KEY) });
+      loginApi.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.local.get(AUTH_TOKEN_KEY) });
     }
+  }
+
+  clearUser() {
+    this.innerUser = {};
   }
 }
 
