@@ -12,35 +12,33 @@ class RegisterApi {
    * Authenticate the user
    */
   public register = async () => {
-    let error;
-
-    if (userStore.user.login && userStore.user.password && userStore.user.email) {
-      try {
-        axios
-          .post('api/register', {
-            login: userStore.user.login,
-            password: userStore.user.password,
-            email: userStore.user.email,
-            langKey: 'fr'
-          })
-          .then(response => {
-            if (response && response.status >= 200 && response.status <= 300) {
-              // LOGIN NOW ?
-              snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, `Registration success`);
-              articleStore.articleList = response.data;
-            } else if (response && response.status !== 200) {
-              snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
-              throw new Error(`Status error ${response.status}`);
-            }
-          });
-      } catch (e) {
-        error = e.response;
-      }
-    }
-
-    if (error) {
-      snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Error status: ${error.status}, error text: ${error.statusText}`);
-      throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
+    if (userStore.user.login && userStore.user.password && userStore.user.email && userStore.user.langKey) {
+      axios
+        .post('api/register', {
+          login: userStore.user.login,
+          password: userStore.user.password,
+          email: userStore.user.email,
+          langKey: userStore.user.langKey
+        })
+        .then(response => {
+          if (response && response.status >= 200 && response.status <= 300) {
+            // LOGIN NOW ?
+            snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, `Registration success`);
+            articleStore.articleList = response.data;
+          } else if (response && response.status !== 200) {
+            snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `Status error ${response.status}`);
+            throw new Error(`Status error ${response.status}`);
+          }
+        })
+        .catch(e => {
+          const error = e.response;
+          snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `Error status: ${error.status}, error text: ${error.statusText}`);
+          throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
+        });
+    } else {
+      // When the user has filled no input, we inform him to do so
+      snackbarStore.openSnackbar(SnackbarTypeEnum.WARNING, `You have to fill all the inputs`);
+      throw new Error(`You have to fill all the inputs`);
     }
   };
 }

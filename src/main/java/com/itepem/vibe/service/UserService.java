@@ -2,8 +2,10 @@ package com.itepem.vibe.service;
 
 import com.itepem.vibe.config.Constants;
 import com.itepem.vibe.domain.Authority;
+import com.itepem.vibe.domain.ExtendedUser;
 import com.itepem.vibe.domain.User;
 import com.itepem.vibe.repository.AuthorityRepository;
+import com.itepem.vibe.repository.ExtendedUserRepository;
 import com.itepem.vibe.repository.UserRepository;
 import com.itepem.vibe.security.AuthoritiesConstants;
 import com.itepem.vibe.security.SecurityUtils;
@@ -37,17 +39,20 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final ExtendedUserRepository extendedUserRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     private final AuthorityRepository authorityRepository;
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager, ExtendedUserRepository extendedUserRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.extendedUserRepository = extendedUserRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -117,9 +122,19 @@ public class UserService {
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
+
+        // After saving the user, we save the extended user
+        createExtendedUser(newUser);
+
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
+    }
+
+    private void createExtendedUser(User user) {
+        ExtendedUser extUser = new ExtendedUser();
+        extUser.setUser(user);
+        extendedUserRepository.save(extUser);
     }
 
     private boolean removeNonActivatedUser(User existingUser){

@@ -1,5 +1,5 @@
 import * as UserInterface from 'app/shared/model/user.model';
-import { computed, observable, toJS } from 'mobx';
+import { computed, observable, toJS, action } from 'mobx';
 import { AUTH_TOKEN_KEY, loginApi } from 'app/api/login-api';
 import { Storage } from 'react-jhipster';
 
