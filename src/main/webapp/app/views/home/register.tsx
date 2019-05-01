@@ -17,9 +17,6 @@ class Register extends React.Component<{ classes: any }> {
   @observable
   labelWidth = 0;
 
-  @observable
-  langKey = '';
-
   render() {
     const { classes } = this.props;
 
@@ -40,6 +37,7 @@ class Register extends React.Component<{ classes: any }> {
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
           variant="outlined"
+          type="email"
           required
         />
 

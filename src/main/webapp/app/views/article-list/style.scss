@@ -1,0 +1,40 @@
+[data-component='article-list'] {
+  #create-article-button {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    transition: transform 0.2s;
+
+    .create-button {
+      .add-icon {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  #create-article-button.show {
+    transform: scale(1);
+  }
+
+  #create-article-button.hide {
+    transform: scale(0);
+  }
+}
+
+[data-component='spocc-dialog'] {
+  .dialog-title {
+    align-items: center;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+  }
+
+  .title-divider {
+    border-bottom: 1px solid #dadce0;
+  }
+
+  .action-divider {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
