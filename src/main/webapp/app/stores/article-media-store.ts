@@ -1,5 +1,5 @@
 import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
-import { computed, observable, toJS } from 'mobx';
+import { computed, observable } from 'mobx';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -9,7 +9,7 @@ class ArticleMediaStore {
 
   @computed
   get articleMediaList(): IArticleMedia[] {
-    return toJS(this.innerArticleMediaList);
+    return this.innerArticleMediaList;
   }
 
   set articleMediaList(articleMediaList: IArticleMedia[]) {

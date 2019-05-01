@@ -1,5 +1,5 @@
 import * as ArticleInterface from 'app/shared/model/article.model';
-import { computed, observable, toJS } from 'mobx';
+import { computed, observable } from 'mobx';
 
 type IArticle = ArticleInterface.IArticle;
 
@@ -9,7 +9,7 @@ class ArticleStore {
 
   @computed
   get articleList(): IArticle[] {
-    return toJS(this.innerArticleList);
+    return this.innerArticleList;
   }
 
   set articleList(articleList: IArticle[]) {
@@ -21,7 +21,7 @@ class ArticleStore {
 
   @computed
   get article(): IArticle {
-    return toJS(this.innerArticle);
+    return this.innerArticle;
   }
 
   set article(article: IArticle) {

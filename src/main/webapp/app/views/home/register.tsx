@@ -1,9 +1,9 @@
-import { Button, TextField, Select, InputLabel, MenuItem, FormControl, FormHelperText, OutlinedInput, withStyles } from '@material-ui/core';
+import { Button, TextField, Select, InputLabel, MenuItem, FormControl, OutlinedInput, withStyles } from '@material-ui/core';
 import { userStore } from 'app/stores/user-store';
 import { observer } from 'mobx-react';
 import React from 'react';
 import './home.scss';
-import { observable, toJS, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import { registerApi } from 'app/api/register-api';
 import { LanguageEnum } from 'app/enums/LanguageEnum';
 import { snackbarStore } from 'app/stores/snackbar-store';
@@ -16,6 +16,9 @@ class Register extends React.Component<{ classes: any }> {
 
   @observable
   labelWidth = 0;
+
+  @observable
+  langKey = '';
 
   render() {
     const { classes } = this.props;
@@ -65,7 +68,7 @@ class Register extends React.Component<{ classes: any }> {
             Language
           </InputLabel>
           <Select
-            value={userStore.user.langKey || ''}
+            value={userStore.user.langKey}
             onChange={this.onSelectChange}
             input={<OutlinedInput name="language" labelWidth={this.labelWidth} id="outlined-language" />}
           >
@@ -90,11 +93,6 @@ class Register extends React.Component<{ classes: any }> {
     userStore.user.langKey = '';
   }
 
-  @computed
-  get language() {
-    return userStore.user.langKey;
-  }
-
   register = () => {
     if (
       this.passwordValidation.trim() !== '' &&
@@ -109,7 +107,7 @@ class Register extends React.Component<{ classes: any }> {
 
   @action
   handleChange = name => event => {
-    userStore.user = { ...userStore.user, [name]: event.target.value };
+    userStore.user[name] = event.target.value;
   };
 
   onValidationChange = name => event => {
@@ -126,7 +124,7 @@ class Register extends React.Component<{ classes: any }> {
 
   @action
   onSelectChange = event => {
-    userStore.user = { ...userStore.user, langKey: event.target.value };
+    userStore.user.langKey = event.target.value;
   };
 }
 

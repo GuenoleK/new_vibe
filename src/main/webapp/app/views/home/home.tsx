@@ -13,7 +13,6 @@ export class VibeHome extends React.Component {
       <form className="login-form" method="post" autoComplete="off">
         <TextField
           label="Username"
-          value={userStore.user.login}
           onChange={this.handleChange('login')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -23,7 +22,6 @@ export class VibeHome extends React.Component {
 
         <TextField
           label="Password"
-          value={userStore.user.password}
           onChange={this.handleChange('password')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
