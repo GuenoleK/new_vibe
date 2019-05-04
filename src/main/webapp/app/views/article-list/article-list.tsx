@@ -7,6 +7,7 @@ import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogAc
 import AddIcon from '@material-ui/icons/Add';
 import './style.scss';
 import { observable } from 'mobx';
+import { SpoccDialog } from './spocc-dialog';
 
 @observer
 export class ArticleListView extends React.Component {
@@ -23,12 +24,14 @@ export class ArticleListView extends React.Component {
             Créer un article
           </Button>
         </div>
+        <SpoccDialog close={this.closePopin} isOpen={this.isPopinOpen} />
       </div>
     );
   }
 
   openPopin = () => {
     this.isPopinOpen = true;
+    console.log('GO', this.isPopinOpen);
   };
 
   closePopin = () => {

@@ -1,21 +1,24 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogContentText, DialogActions, Button, Zoom } from '@material-ui/core';
+import './spocc-dialog.scss';
+import { observer } from 'mobx-react';
 
 interface ISpoccDialogProps {
   isOpen: boolean;
-  open: Function;
-  close: Function;
+  close: () => void;
 }
 
-export class SpoccDialog extends React.Component {
+@observer
+export class SpoccDialog extends React.Component<ISpoccDialogProps> {
   render() {
+    console.log('Hello', this.props.isOpen);
     return (
       <div data-component="spocc-dialog">
         <Dialog
-          open={this.props.open}
+          open={this.props.isOpen}
           TransitionComponent={this.Transition}
           keepMounted
-          onClose={this.closePopin}
+          onClose={this.props.close}
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
@@ -28,10 +31,10 @@ export class SpoccDialog extends React.Component {
           </DialogContent>
           <div className="action-divider" />
           <DialogActions>
-            <Button onClick={this.closePopin} color="primary">
+            <Button onClick={this.props.close} color="primary">
               Disagree
             </Button>
-            <Button onClick={this.closePopin} color="primary">
+            <Button onClick={this.props.close} color="primary">
               Agree
             </Button>
           </DialogActions>

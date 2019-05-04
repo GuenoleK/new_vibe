@@ -1,0 +1,17 @@
+[data-component='spocc-dialog'] {
+  .dialog-title {
+    align-items: center;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+  }
+
+  .title-divider {
+    border-bottom: 1px solid #dadce0;
+  }
+
+  .action-divider {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
