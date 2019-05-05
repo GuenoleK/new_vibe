@@ -13,6 +13,14 @@ import ErrorBoundary from './shared/error/error-boundary';
 import { loadIcons } from './config/icon-loader';
 import { Container } from 'app/container';
 import { userStore } from './stores/user-store';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+export const theme = createMuiTheme({
+  typography: {
+    // Use the system font.
+    fontFamily: '"Product Sans"'
+  }
+});
 
 // Initialize userStore
 userStore.initUserStore();

@@ -3,11 +3,11 @@ import { CardContainer } from 'app/components/layout-components/card-container/c
 import { articleApi } from 'app/api/article-api';
 import { articleStore } from 'app/stores/article-store';
 import { observer } from 'mobx-react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Zoom, Divider, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import './style.scss';
 import { observable } from 'mobx';
-import { SpoccDialog } from './spocc-dialog';
+import { VibeDialog } from 'app/components/vibe-dialog/vibe-dialog';
 
 @observer
 export class ArticleListView extends React.Component {
@@ -21,17 +21,16 @@ export class ArticleListView extends React.Component {
         <div id="create-article-button" className="hide">
           <Button onClick={this.openPopin} className="create-button" color="primary" variant="extendedFab">
             <AddIcon className="add-icon" />
-            Créer un article
+            <div className="button-text">Créer un article</div>
           </Button>
         </div>
-        <SpoccDialog close={this.closePopin} isOpen={this.isPopinOpen} />
+        <VibeDialog close={this.closePopin} isOpen={this.isPopinOpen} />
       </div>
     );
   }
 
   openPopin = () => {
     this.isPopinOpen = true;
-    console.log('GO', this.isPopinOpen);
   };
 
   closePopin = () => {

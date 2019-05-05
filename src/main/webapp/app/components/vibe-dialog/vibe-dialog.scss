@@ -1,10 +1,10 @@
-[data-component='spocc-dialog'] {
+.vibe-dialog {
   .dialog-title {
     align-items: center;
-    background-color: #fff;
     display: flex;
     justify-content: space-between;
     padding: 16px 24px;
+    color: black;
   }
 
   .title-divider {
