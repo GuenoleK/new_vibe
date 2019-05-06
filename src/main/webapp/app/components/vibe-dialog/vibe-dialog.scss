@@ -1,4 +1,13 @@
 .vibe-dialog {
+  > div {
+    > div {
+      width: 40%;
+    }
+  }
+  .dialog-content {
+    padding: 24px;
+  }
+
   .dialog-title {
     align-items: center;
     display: flex;

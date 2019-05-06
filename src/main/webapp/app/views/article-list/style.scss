@@ -19,4 +19,12 @@
   #create-article-button.hide {
     transform: scale(0);
   }
+
+  .vibe-dialog {
+    > div {
+      > div {
+        width: 350px;
+      }
+    }
+  }
 }
