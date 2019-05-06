@@ -8,14 +8,16 @@ interface ISpoccDialogProps {
   isOpen: boolean;
   close: () => void;
   Buttons: JSX.Element;
+  className?: string;
 }
 
 @observer
 export class VibeDialog extends React.Component<ISpoccDialogProps> {
   render() {
+    const className = this.props.className ? `${this.props.className} vibe-dialog` : 'vibe-dialog';
     return (
       <Dialog
-        className="vibe-dialog"
+        className={className}
         open={this.props.isOpen}
         TransitionComponent={this.Transition}
         keepMounted

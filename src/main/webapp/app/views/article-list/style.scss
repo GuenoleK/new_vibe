@@ -1,6 +1,6 @@
 [data-component='article-list'] {
   #create-article-button {
-    position: absolute;
+    position: fixed;
     bottom: 15px;
     right: 15px;
     transition: transform 0.2s;
@@ -19,11 +19,38 @@
   #create-article-button.hide {
     transform: scale(0);
   }
+}
 
-  .vibe-dialog {
+.vibe-dialog.create-article-dialog {
+  > div {
     > div {
-      > div {
-        width: 350px;
+      max-width: unset;
+      width: 600px;
+    }
+  }
+
+  .create-article-content {
+    display: flex;
+    flex-direction: column;
+    .article-name {
+      width: 40%;
+    }
+
+    .file-upload-zone {
+      display: flex;
+      justify-content: space-around;
+
+      .upload-dropzone {
+        > div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 15px;
+
+          .label {
+            margin-right: 10px;
+          }
+        }
       }
     }
   }

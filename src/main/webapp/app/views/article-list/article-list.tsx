@@ -25,29 +25,55 @@ export class ArticleListView extends React.Component {
             <div className="button-text">Créer un article</div>
           </Button>
         </div>
-        <VibeDialog Buttons={this.CreateArticleButtons} title="Créer un article" close={this.closePopin} isOpen={this.isPopinOpen}>
-          <div style={{ display: 'flex' }} className="create-article-content">
-            <div
-              className="left-block"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                marginRight: '20px'
-              }}
-            >
-              <TextField label="Nom de l'article" margin="normal" variant="outlined" style={{ marginTop: 'unset' }} required />
+        <VibeDialog
+          className="create-article-dialog"
+          Buttons={this.CreateArticleButtons}
+          title="Créer un article"
+          close={this.closePopin}
+          isOpen={this.isPopinOpen}
+        >
+          <div className="create-article-content">
+            <TextField
+              className="article-name"
+              label="Nom de l'article"
+              margin="normal"
+              variant="outlined"
+              style={{ marginTop: 'unset' }}
+              required
+            />
+            <TextField className="article-description" label="Description" margin="normal" variant="outlined" multiline rows={4} required />
+            <div className="file-upload-zone">
+              {/* PDF DROPZONE */}
+              <div className="upload-dropzone">
+                <Dropzone accept="application/pdf" onDrop={this.onDrop}>
+                  {({ getRootProps, getInputProps, isDragActive }) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <div className="label">Paroles du chant (PDF)</div>
+                      <Button size="small" variant="extendedFab" color="primary">
+                        Charger
+                      </Button>
+                      {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
 
-              <TextField label="Description" margin="normal" variant="outlined" multiline rows={2} required />
-            </div>
-            <div className="right-block">
-              <Dropzone accept="application/pdf, audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi" onDrop={this.onDrop}>
-                {({ getRootProps, getInputProps, isDragActive }) => (
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'}
-                  </div>
-                )}
-              </Dropzone>
+              {/* Voix */}
+              <div className="upload-dropzone">
+                <Dropzone accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3" onDrop={this.onDrop}>
+                  {({ getRootProps, getInputProps, isDragActive }) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <div className="label">Audio du chant (TOUS)</div>
+                      <Button size="small" variant="extendedFab" color="primary">
+                        Charger
+                      </Button>
+                      {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
             </div>
           </div>
         </VibeDialog>
@@ -55,18 +81,18 @@ export class ArticleListView extends React.Component {
     );
   }
 
-  onDrop = (acceptedFiles: any) => {
-    console.log(acceptedFiles);
+  onDrop = (acceptedFiles: any, rejectedFiles: any) => {
+    console.log(acceptedFiles, rejectedFiles);
   };
 
   get CreateArticleButtons() {
     return (
       <div>
         <Button onClick={this.closePopin} color="primary">
-          Disagree
+          Annuler
         </Button>
         <Button onClick={this.closePopin} color="primary">
-          Agree
+          Créer
         </Button>
       </div>
     );
