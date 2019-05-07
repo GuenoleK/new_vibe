@@ -13,7 +13,7 @@ entity Role {
 entity Article {
 	title String required
     description String
-    content String required
+    content String
     creationDate LocalDate required
     editionDate LocalDate required
 }
