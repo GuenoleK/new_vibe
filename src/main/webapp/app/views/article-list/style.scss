@@ -41,15 +41,18 @@
       justify-content: space-around;
 
       .upload-dropzone {
+        display: flex;
+
+        .label {
+          width: 70%;
+          margin-right: 10px;
+        }
+
         > div {
           display: flex;
           align-items: center;
           justify-content: center;
           margin-bottom: 15px;
-
-          .label {
-            margin-right: 10px;
-          }
         }
       }
     }
