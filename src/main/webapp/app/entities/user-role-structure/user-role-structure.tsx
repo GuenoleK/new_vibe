@@ -26,7 +26,8 @@ export class UserRoleStructure extends React.Component<IUserRoleStructureProps> 
         <h2 id="user-role-structure-heading">
           <Translate contentKey="vibeApp.userRoleStructure.home.title">User Role Structures</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="vibeApp.userRoleStructure.home.createLabel">Create new User Role Structure</Translate>
           </Link>
         </h2>

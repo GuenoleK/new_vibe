@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -99,14 +99,14 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
               <AvForm model={isNew ? {} : articleMediaEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
+                    <Label for="article-media-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
                     <AvInput id="article-media-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="nameLabel" for="name">
+                  <Label id="nameLabel" for="article-media-name">
                     <Translate contentKey="vibeApp.articleMedia.name">Name</Translate>
                   </Label>
                   <AvField
@@ -119,7 +119,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="article.id">
+                  <Label for="article-media-article">
                     <Translate contentKey="vibeApp.articleMedia.article">Article</Translate>
                   </Label>
                   <AvInput id="article-media-article" type="select" className="form-control" name="article.id">
@@ -134,7 +134,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="articleMediaType.code">
+                  <Label for="article-media-articleMediaType">
                     <Translate contentKey="vibeApp.articleMedia.articleMediaType">Article Media Type</Translate>
                   </Label>
                   <AvInput id="article-media-articleMediaType" type="select" className="form-control" name="articleMediaType.id">
@@ -149,7 +149,7 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="user.id">
+                  <Label for="article-media-user">
                     <Translate contentKey="vibeApp.articleMedia.user">User</Translate>
                   </Label>
                   <AvInput id="article-media-user" type="select" className="form-control" name="user.id">
@@ -164,14 +164,16 @@ export class ArticleMediaUpdate extends React.Component<IArticleMediaUpdateProps
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/article-media" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>

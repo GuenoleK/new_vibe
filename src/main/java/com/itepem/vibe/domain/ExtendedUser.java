@@ -18,7 +18,7 @@ import java.util.Objects;
 public class ExtendedUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -73,19 +73,15 @@ public class ExtendedUser implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof ExtendedUser)) {
             return false;
         }
-        ExtendedUser extendedUser = (ExtendedUser) o;
-        if (extendedUser.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), extendedUser.getId());
+        return id != null && id.equals(((ExtendedUser) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

@@ -25,9 +25,8 @@ export class UserRoleStructureDetail extends React.Component<IUserRoleStructureD
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="vibeApp.userRoleStructure.detail.title">UserRoleStructure</Translate> [<b>
-              {userRoleStructureEntity.id}
-            </b>]
+            <Translate contentKey="vibeApp.userRoleStructure.detail.title">UserRoleStructure</Translate> [
+            <b>{userRoleStructureEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
@@ -48,7 +47,8 @@ export class UserRoleStructureDetail extends React.Component<IUserRoleStructureD
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/user-role-structure/${userRoleStructureEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

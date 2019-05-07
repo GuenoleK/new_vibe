@@ -18,7 +18,7 @@ import java.util.Objects;
 public class UserRoleStructure implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -90,19 +90,15 @@ public class UserRoleStructure implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof UserRoleStructure)) {
             return false;
         }
-        UserRoleStructure userRoleStructure = (UserRoleStructure) o;
-        if (userRoleStructure.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), userRoleStructure.getId());
+        return id != null && id.equals(((UserRoleStructure) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

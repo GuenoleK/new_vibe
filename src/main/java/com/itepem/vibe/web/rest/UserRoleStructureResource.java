@@ -1,11 +1,14 @@
 package com.itepem.vibe.web.rest;
+
 import com.itepem.vibe.domain.UserRoleStructure;
 import com.itepem.vibe.repository.UserRoleStructureRepository;
 import com.itepem.vibe.web.rest.errors.BadRequestAlertException;
-import com.itepem.vibe.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing UserRoleStructure.
+ * REST controller for managing {@link com.itepem.vibe.domain.UserRoleStructure}.
  */
 @RestController
 @RequestMapping("/api")
@@ -26,6 +29,9 @@ public class UserRoleStructureResource {
 
     private static final String ENTITY_NAME = "userRoleStructure";
 
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
     private final UserRoleStructureRepository userRoleStructureRepository;
 
     public UserRoleStructureResource(UserRoleStructureRepository userRoleStructureRepository) {
@@ -33,11 +39,11 @@ public class UserRoleStructureResource {
     }
 
     /**
-     * POST  /user-role-structures : Create a new userRoleStructure.
+     * {@code POST  /user-role-structures} : Create a new userRoleStructure.
      *
-     * @param userRoleStructure the userRoleStructure to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new userRoleStructure, or with status 400 (Bad Request) if the userRoleStructure has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param userRoleStructure the userRoleStructure to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new userRoleStructure, or with status {@code 400 (Bad Request)} if the userRoleStructure has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/user-role-structures")
     public ResponseEntity<UserRoleStructure> createUserRoleStructure(@RequestBody UserRoleStructure userRoleStructure) throws URISyntaxException {
@@ -47,18 +53,18 @@ public class UserRoleStructureResource {
         }
         UserRoleStructure result = userRoleStructureRepository.save(userRoleStructure);
         return ResponseEntity.created(new URI("/api/user-role-structures/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * PUT  /user-role-structures : Updates an existing userRoleStructure.
+     * {@code PUT  /user-role-structures} : Updates an existing userRoleStructure.
      *
-     * @param userRoleStructure the userRoleStructure to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated userRoleStructure,
-     * or with status 400 (Bad Request) if the userRoleStructure is not valid,
-     * or with status 500 (Internal Server Error) if the userRoleStructure couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param userRoleStructure the userRoleStructure to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated userRoleStructure,
+     * or with status {@code 400 (Bad Request)} if the userRoleStructure is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the userRoleStructure couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/user-role-structures")
     public ResponseEntity<UserRoleStructure> updateUserRoleStructure(@RequestBody UserRoleStructure userRoleStructure) throws URISyntaxException {
@@ -68,14 +74,14 @@ public class UserRoleStructureResource {
         }
         UserRoleStructure result = userRoleStructureRepository.save(userRoleStructure);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userRoleStructure.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userRoleStructure.getId().toString()))
             .body(result);
     }
 
     /**
-     * GET  /user-role-structures : get all the userRoleStructures.
+     * {@code GET  /user-role-structures} : get all the userRoleStructures.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of userRoleStructures in body
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userRoleStructures in body.
      */
     @GetMapping("/user-role-structures")
     public List<UserRoleStructure> getAllUserRoleStructures() {
@@ -84,10 +90,10 @@ public class UserRoleStructureResource {
     }
 
     /**
-     * GET  /user-role-structures/:id : get the "id" userRoleStructure.
+     * {@code GET  /user-role-structures/:id} : get the "id" userRoleStructure.
      *
-     * @param id the id of the userRoleStructure to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the userRoleStructure, or with status 404 (Not Found)
+     * @param id the id of the userRoleStructure to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the userRoleStructure, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/user-role-structures/{id}")
     public ResponseEntity<UserRoleStructure> getUserRoleStructure(@PathVariable Long id) {
@@ -97,15 +103,15 @@ public class UserRoleStructureResource {
     }
 
     /**
-     * DELETE  /user-role-structures/:id : delete the "id" userRoleStructure.
+     * {@code DELETE  /user-role-structures/:id} : delete the "id" userRoleStructure.
      *
-     * @param id the id of the userRoleStructure to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * @param id the id of the userRoleStructure to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/user-role-structures/{id}")
     public ResponseEntity<Void> deleteUserRoleStructure(@PathVariable Long id) {
         log.debug("REST request to delete UserRoleStructure : {}", id);
         userRoleStructureRepository.deleteById(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }
