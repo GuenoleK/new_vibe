@@ -37,8 +37,8 @@ export class ArticleListView extends React.Component {
     this.isPopinOpen = false;
   };
 
-  componentWillMount() {
-    articleApi.getArticleListByStructureId(0);
+  async componentWillMount() {
+    articleStore.articleList = await articleApi.getArticleListByStructureId(0);
   }
 
   componentDidMount() {

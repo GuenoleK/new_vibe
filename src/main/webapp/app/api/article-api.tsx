@@ -26,9 +26,9 @@ class ArticleApi {
     }
 
     try {
-      axios.get(`api/articles/structure/${structureId}`, headers).then(response => {
+      return axios.get(`api/articles/structure/${structureId}`, headers).then(response => {
         if (response && response.status === 200) {
-          articleStore.articleList = response.data;
+          return response.data;
         } else if (response && response.status !== 200) {
           snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
           throw new Error(`Status error ${response.status}`);
@@ -79,13 +79,13 @@ class ArticleApi {
   public saveArticle = async (article: IArticle) => {
     let error;
     const header = apiUtil.getHeader();
-    if (article.title && article.description) {
+    if (article.title) {
       try {
         axios.post(`api/articles`, article).then(response => {
-          if (response && response.status === 200) {
+          if (response && response.status === 201) {
             articleStore.article = response.data;
             snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'YAY');
-          } else if (response && response.status !== 200) {
+          } else if (response && response.status !== 201) {
             snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
             throw new Error(`Status error ${response.status}`);
           }

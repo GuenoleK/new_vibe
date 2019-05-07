@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone';
 import * as ArticleInterface from 'app/shared/model/article.model';
 import { TextField, Button } from '@material-ui/core';
 import { observer } from 'mobx-react';
+import { articleStore } from 'app/stores/article-store';
 
 type IArticle = ArticleInterface.IArticle;
 
@@ -54,7 +55,6 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
             rows={4}
             onChange={this.onChange('description')}
             value={this.article.description}
-            required
           />
 
           <div className="file-upload-zone">
@@ -129,6 +129,10 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
     articleApi.saveArticle(this.article).then(() => {
       this.article = this.defaultValue;
       this.closePopin();
+      articleApi.getArticleListByStructureId(0).then(articleList => {
+        articleStore.articleList = [];
+        articleStore.articleList = articleList;
+      });
     });
   };
 }
