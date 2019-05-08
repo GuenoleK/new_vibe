@@ -96,6 +96,12 @@ public class ExtendedUserResource {
         return ResponseUtil.wrapOrNotFound(extendedUser);
     }
 
+    @GetMapping("/extended-users/user/{userId}")
+    public ExtendedUser getExtendedUserByUser(@PathVariable Long userId) {
+        log.debug("REST request to get ExtendedUser : {}", userId);
+        return extendedUserRepository.findByUserId(userId);
+    }
+
     /**
      * DELETE  /extended-users/:id : delete the "id" extendedUser.
      *

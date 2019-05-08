@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import './style.scss';
 import { observable } from 'mobx';
 import { CreateArticleDialog } from './create-article-dialog';
+import { userStore } from 'app/stores/user-store';
 
 @observer
 export class ArticleListView extends React.Component {
@@ -37,15 +38,13 @@ export class ArticleListView extends React.Component {
     this.isPopinOpen = false;
   };
 
-  async componentWillMount() {
-    articleStore.articleList = await articleApi.getArticleListByStructureId(0);
-  }
+  async componentDidMount() {
+    articleStore.articleList = await articleApi.getArticleListByStructureId(userStore.extendedUser.currentStructure.id);
 
-  componentDidMount() {
     setTimeout(() => {
       const t = document.getElementById('create-article-button');
       t.className = 'show';
-    }, 500);
+    }, 250);
   }
 
   componentWillUnmount() {

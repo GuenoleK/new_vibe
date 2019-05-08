@@ -10,6 +10,7 @@ import com.itepem.vibe.security.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -58,6 +59,9 @@ public class ArticleService {
 
                 newArticle.setUser(extendedUser.getUser());
                 newArticle.setStructure(extendedUser.getCurrentStructure());
+
+                // We create the associated folder
+                new File("D:\\zz_perso\\vibe-files\\" + extendedUser.getCurrentStructure().getName() + "\\" + newArticle.getTitle()).mkdir();
             }
         }
 

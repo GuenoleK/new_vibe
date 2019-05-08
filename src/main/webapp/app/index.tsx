@@ -12,7 +12,6 @@ import { clearAuthentication } from './shared/reducers/authentication';
 import ErrorBoundary from './shared/error/error-boundary';
 import { loadIcons } from './config/icon-loader';
 import { Container } from 'app/container';
-import { userStore } from './stores/user-store';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
@@ -21,9 +20,6 @@ export const theme = createMuiTheme({
     fontFamily: '"Product Sans"'
   }
 });
-
-// Initialize userStore
-userStore.initUserStore();
 
 const devTools = process.env.NODE_ENV === 'development' ? <DevTools /> : null;
 

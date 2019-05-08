@@ -7,6 +7,7 @@ import * as ArticleInterface from 'app/shared/model/article.model';
 import { TextField, Button } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import { articleStore } from 'app/stores/article-store';
+import { userStore } from 'app/stores/user-store';
 
 type IArticle = ArticleInterface.IArticle;
 
@@ -131,7 +132,7 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
       this.closePopin();
 
       setTimeout(() => {
-        articleApi.getArticleListByStructureId(0).then(articleList => {
+        articleApi.getArticleListByStructureId(userStore.extendedUser.currentStructure.id).then(articleList => {
           articleStore.articleList = articleList;
         });
       }, 100);

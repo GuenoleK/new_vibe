@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Storage } from 'react-jhipster';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
+import { toJS } from 'mobx';
 
 export const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
@@ -63,6 +64,11 @@ class LoginApi {
       axios.get('api/account').then(response => {
         if (response && response.status === 200) {
           userStore.user = response.data;
+
+          // We get the associated Extended User
+          axios.get(`api/extended-users/user/${userStore.user.id}`).then(extUserResponse => {
+            userStore.extendedUser = extUserResponse.data;
+          });
         } else if (response && response.status !== 200) {
           snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
           throw new Error(`Status error ${response.status}`);
@@ -82,9 +88,14 @@ class LoginApi {
     let error;
 
     try {
-      axios.get('api/account', { headers: header }).then(response => {
+      return axios.get('api/account', { headers: header }).then(response => {
         if (response && response.status === 200) {
-          userStore.user = response.data;
+          return response.data;
+
+          // We get the associated Extended User
+          // axios.get(`api/extended-users/user/${userStore.user.id}`).then(extUserResponse => {
+          //   userStore.extendedUser = extUserResponse.data;
+          // });
         } else if (response && response.status !== 200) {
           snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
           throw new Error(`Status error ${response.status}`);

@@ -1,11 +1,25 @@
 import * as UserInterface from 'app/shared/model/user.model';
-import { computed, observable } from 'mobx';
+import * as ExtendedUserInterface from 'app/shared/model/extended-user.model';
+import { computed, observable, action } from 'mobx';
 import { AUTH_TOKEN_KEY, loginApi } from 'app/api/login-api';
 import { Storage } from 'react-jhipster';
 
 type IUser = UserInterface.IUser;
+type IExtendedUser = ExtendedUserInterface.IExtendedUser;
 
 class UserStore {
+  @observable
+  private innerExtendedUser: IExtendedUser = {};
+
+  @computed
+  get extendedUser(): IExtendedUser {
+    return this.innerExtendedUser;
+  }
+
+  set extendedUser(extendedUser: IExtendedUser) {
+    this.innerExtendedUser = { ...this.innerExtendedUser, ...extendedUser };
+  }
+
   @observable
   private innerUser: IUser = {};
 
@@ -30,11 +44,11 @@ class UserStore {
     return this.hasCookie || this.hasSession;
   }
 
-  initUserStore() {
+  async initUserStore() {
     if (this.hasCookie) {
-      loginApi.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.session.get(AUTH_TOKEN_KEY) });
+      return loginApi.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.session.get(AUTH_TOKEN_KEY) });
     } else if (this.hasSession) {
-      loginApi.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.local.get(AUTH_TOKEN_KEY) });
+      return loginApi.getAccountWithHeaderToken({ Authorization: 'Bearer ' + Storage.local.get(AUTH_TOKEN_KEY) });
     }
   }
 
