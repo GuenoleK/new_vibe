@@ -1,3 +1,10 @@
+-- UNIQUE INDEXES
+------- STRUCTURE
+CREATE UNIQUE INDEX UK_STRUCTURE_NAME ON STRUCTURE (name);
+------- STRUCTURE
+CREATE UNIQUE INDEX UK_ARTICLE_TITLE ON ARTICLE (title);
+
+
 insert into structure (id, name, owner_id) values 
 (0, 'admin_structure', 3);
 
@@ -19,3 +26,6 @@ insert into article_media_type (id, code) values
 
 insert into article_media (id, name, article_id, article_media_type_id, user_id) values
 (0, 'wtr10-2b_f', 0, 0, 3);
+
+insert into extended_user (id, user_id, current_structure_id) values
+(3, 3, 0);

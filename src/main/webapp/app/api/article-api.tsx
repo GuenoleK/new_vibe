@@ -81,21 +81,30 @@ class ArticleApi {
     const header = apiUtil.getHeader();
     if (article.title) {
       try {
-        axios.post(`api/articles`, article).then(response => {
-          if (response && response.status === 201) {
-            articleStore.article = response.data;
-            snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'YAY');
-          } else if (response && response.status !== 201) {
-            snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
-            throw new Error(`Status error ${response.status}`);
-          }
-        });
+        return axios
+          .post(`api/articles`, article)
+          .then(response => {
+            if (response && response.status === 201) {
+              snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, "L'article a été créé");
+              return response.data;
+            } else if (response && response.status !== 201) {
+              snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
+              throw new Error(`Status error ${response.status}`);
+            } else if (response && response.status === 500) {
+              snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `STATUS: ${response.status}`);
+              throw new Error(`Status error ${response.status}`);
+            }
+          })
+          .catch((err: any) => {
+            snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `${err}, Ce titre existe déjà`);
+            throw new Error(`Regarder les logs pour plus de précision. ${err}`);
+          });
       } catch (e) {
         error = e.response;
         snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Error status: ${error.status}, error text: ${error.statusText}`);
         throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
       }
-    } else {
+    } else if (article.title === undefined || article.title.trim() === '') {
       snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, 'Il faut remplir tous les champs');
       throw new Error('Il faut remplir tous les champs');
     }

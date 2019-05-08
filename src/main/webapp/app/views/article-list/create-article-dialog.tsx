@@ -129,10 +129,12 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
     articleApi.saveArticle(this.article).then(() => {
       this.article = this.defaultValue;
       this.closePopin();
-      articleApi.getArticleListByStructureId(0).then(articleList => {
-        articleStore.articleList = [];
-        articleStore.articleList = articleList;
-      });
+
+      setTimeout(() => {
+        articleApi.getArticleListByStructureId(0).then(articleList => {
+          articleStore.articleList = articleList;
+        });
+      }, 100);
     });
   };
 }
