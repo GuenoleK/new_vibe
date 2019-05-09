@@ -7,10 +7,14 @@ import com.itepem.vibe.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -54,6 +58,11 @@ public class ArticleMediaResource {
         return ResponseEntity.created(new URI("/api/article-medias/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/article-media/{articleId}")
+    public ArticleMedia saveArticleMedia(@RequestParam("articleMediaFile") MultipartFile articleMediaFile, @PathVariable Long articleId) throws IOException {
+        return articleMediaServices.saveArticleMedia(articleMediaFile, articleId);
     }
 
     /**

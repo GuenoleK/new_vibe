@@ -6,6 +6,7 @@ import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 import { articleMediaStore } from 'app/stores/article-media-store';
 
 export const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
+const apiURl = 'api/article-media';
 
 class ArticleMediaApi {
   /**
@@ -22,7 +23,7 @@ class ArticleMediaApi {
     }
 
     try {
-      axios.get(`api/article-media/article/${articleId}`, headers).then(response => {
+      axios.get(`${apiURl}/article/${articleId}`, headers).then(response => {
         if (response && response.status === 200) {
           articleMediaStore.articleMediaList = response.data;
         } else if (response && response.status !== 200) {
@@ -38,6 +39,23 @@ class ArticleMediaApi {
       snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Error status: ${error.status}, error text: ${error.statusText}`);
       throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
     }
+  };
+
+  public saveArticleMedia = (file, articleId) => {
+    const formData = new FormData();
+    formData.append('articleMediaFile', file);
+    formData.append('name', file.name);
+    formData.append('fileType', file.type);
+
+    return axios
+      .post(`${apiURl}/${articleId}`, formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        console.log('RESPONSE', response);
+      });
   };
 }
 

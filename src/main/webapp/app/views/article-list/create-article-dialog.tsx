@@ -8,6 +8,7 @@ import { TextField, Button } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import { articleStore } from 'app/stores/article-store';
 import { userStore } from 'app/stores/user-store';
+import { articleMediaApi } from 'app/api/article-media-api';
 
 type IArticle = ArticleInterface.IArticle;
 
@@ -22,6 +23,9 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
     title: '',
     description: ''
   };
+
+  @observable
+  articleMediaFileList = [];
 
   @observable
   article: IArticle = this.defaultValue;
@@ -110,7 +114,7 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
   };
 
   onDrop = (acceptedFiles: any, rejectedFiles: any) => {
-    console.log(acceptedFiles, rejectedFiles);
+    this.articleMediaFileList = [...this.articleMediaFileList, ...acceptedFiles];
   };
 
   get CreateArticleButtons() {
@@ -127,7 +131,11 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
   }
 
   saveArticle = () => {
-    articleApi.saveArticle(this.article).then(() => {
+    articleApi.saveArticle(this.article).then(article => {
+      this.articleMediaFileList.forEach(articleMediaFile => {
+        articleMediaApi.saveArticleMedia(articleMediaFile, article.id);
+      });
+      this.articleMediaFileList = [];
       this.article = this.defaultValue;
       this.closePopin();
 
