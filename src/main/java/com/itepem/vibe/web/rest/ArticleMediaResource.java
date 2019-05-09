@@ -59,7 +59,7 @@ public class ArticleMediaResource {
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
-    
+
     @RequestMapping(method = RequestMethod.POST, path = "/article-media/{articleId}")
     public ArticleMedia saveArticleMedia(@RequestParam("articleMediaFile") MultipartFile articleMediaFile, @PathVariable Long articleId) throws IOException {
         return articleMediaServices.saveArticleMedia(articleMediaFile, articleId);
