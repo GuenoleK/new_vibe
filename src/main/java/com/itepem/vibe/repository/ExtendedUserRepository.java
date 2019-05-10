@@ -12,4 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExtendedUserRepository extends JpaRepository<ExtendedUser, Long> {
 
+    @Query("select extendedUser from ExtendedUser extendedUser where extendedUser.user.id = ?1")
+    ExtendedUser findByUserId(final Long userId);
 }

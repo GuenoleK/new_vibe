@@ -1,0 +1,26 @@
+.vibe-dialog {
+  > div {
+    > div {
+      width: 40%;
+    }
+  }
+  .dialog-content {
+    padding: 24px;
+  }
+
+  .dialog-title {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+    color: black;
+  }
+
+  .title-divider {
+    border-bottom: 1px solid #dadce0;
+  }
+
+  .action-divider {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}

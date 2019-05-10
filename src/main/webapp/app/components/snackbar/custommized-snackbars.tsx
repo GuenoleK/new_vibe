@@ -43,6 +43,7 @@ class CustomizedSnackbars extends React.Component<ICustomizedSnackbarsProps> {
             variant={snackbarStore.snackbarType}
             className={classes.margin}
             message={snackbarStore.snackbarMessage}
+            onClose={this.handleClose}
           />
         </Snackbar>
       </div>

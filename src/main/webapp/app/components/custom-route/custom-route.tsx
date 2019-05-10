@@ -26,7 +26,7 @@ export class CustomRoute extends React.Component<ICustomRouteProps> {
       );
     }
 
-    if (path === '/') {
+    if (path === '/' || path === '/register') {
       // tslint:disable-next-line: jsx-no-lambda
       return <Route exact path={path} component={props => this.renderComponent(component, props)} />;
     }

@@ -5,7 +5,7 @@ import './article.scss';
 import { observer } from 'mobx-react';
 import { articleMediaApi } from 'app/api/article-media-api';
 import { RouteComponentProps } from 'react-router';
-import { articleApi } from 'app/api/article';
+import { articleApi } from 'app/api/article-api';
 import { articleStore } from 'app/stores/article-store';
 import { articleMediaStore } from 'app/stores/article-media-store';
 

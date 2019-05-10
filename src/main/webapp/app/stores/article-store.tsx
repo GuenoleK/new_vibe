@@ -1,5 +1,6 @@
 import * as ArticleInterface from 'app/shared/model/article.model';
-import { computed, observable, toJS } from 'mobx';
+import { computed, observable } from 'mobx';
+import { orderBy } from 'lodash';
 
 type IArticle = ArticleInterface.IArticle;
 
@@ -9,7 +10,7 @@ class ArticleStore {
 
   @computed
   get articleList(): IArticle[] {
-    return toJS(this.innerArticleList);
+    return orderBy(this.innerArticleList, ['title'], ['asc']);
   }
 
   set articleList(articleList: IArticle[]) {
@@ -21,7 +22,7 @@ class ArticleStore {
 
   @computed
   get article(): IArticle {
-    return toJS(this.innerArticle);
+    return this.innerArticle;
   }
 
   set article(article: IArticle) {

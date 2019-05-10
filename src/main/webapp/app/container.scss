@@ -1,3 +1,14 @@
 body {
   margin: 0;
 }
+
+html {
+  font-family: 'Product Sans' !important;
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(../static/ProductSans.woff2) format('woff2');
+}
