@@ -7,6 +7,8 @@
   [data-component='search-bar'] {
     margin-right: auto;
     margin-left: auto;
+    transition: background-color 0.5s;
+    border-radius: 20px;
   }
 
   .header-account-icon {

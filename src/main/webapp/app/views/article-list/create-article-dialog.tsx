@@ -142,6 +142,7 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
       setTimeout(() => {
         articleApi.getArticleListByStructureId(userStore.extendedUser.currentStructure.id).then(articleList => {
           articleStore.articleList = articleList;
+          articleStore.searchableArticleList = articleList;
         });
       }, 100);
     });

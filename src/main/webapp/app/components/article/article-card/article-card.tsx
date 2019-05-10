@@ -5,6 +5,7 @@ import { VibePdfDocument } from 'app/components/article/article-card/vibe-pdf/vi
 import { computed } from 'mobx';
 import { articleStore } from 'app/stores/article-store';
 import { observer } from 'mobx-react';
+import Dropzone from 'react-dropzone';
 
 @observer
 export class ArticleCard extends React.Component {
@@ -20,6 +21,18 @@ export class ArticleCard extends React.Component {
             <Typography component="p">{this.article.description}</Typography>
           </CardContent>
         )}
+        <div className="upload-dropzone">
+          <div className="label">Audio du chant (TOUS)</div>
+          <Dropzone accept="application/pdf" onDrop={this.onDrop}>
+            {({ getRootProps, getInputProps, isDragActive }) => (
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <div>Zone de chargement</div>
+                {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
+              </div>
+            )}
+          </Dropzone>
+        </div>
       </Card>
     );
   }
@@ -28,4 +41,8 @@ export class ArticleCard extends React.Component {
   get article() {
     return articleStore.article;
   }
+
+  onDrop = (acceptedFiles: any, rejectedFiles: any) => {
+    'hello';
+  };
 }

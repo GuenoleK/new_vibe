@@ -59,7 +59,7 @@ public class ArticleMediaServices {
         String[] strings = articleMedia.getName().split("\\.");
         String mediaType = strings[1];
 
-        if (mediaType == "pdf") {
+        if (mediaType.equals("pdf")) {
             ArticleMediaType articleMediaType = articleMediaTypeRepository.findByCode("PDF");
             articleMedia.setArticleMediaType(articleMediaType);
         } else {

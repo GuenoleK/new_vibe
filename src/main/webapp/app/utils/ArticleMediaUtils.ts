@@ -19,7 +19,7 @@ class ArticleMediaUtils {
   public buildMediaPath(media: IArticleMedia): string {
     if (media) {
       if (media.articleMediaType.code === ArticleMediaTypeCodeEnum.PDF) {
-        return `${media.article.structure.name}/${media.article.title}/${this.buildPDFMedia(media, ArticleMediaTypeCodeEnum.PDF)}`;
+        return `${media.article.structure.name}/${media.article.title}/${media.name}`;
       }
     }
     return '';

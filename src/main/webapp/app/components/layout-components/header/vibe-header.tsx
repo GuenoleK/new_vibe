@@ -65,8 +65,9 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Rechercher..."
                 onChange={this.searchArticle}
+                className="search-input"
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput
@@ -78,7 +79,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
               <IconButton className="header-account-icon-button" onClick={this.openMenu}>
                 <AccountCircleIcon className="header-account-icon" />
                 <Menu open={this.isMenuOpen} anchorEl={this.menuAnchorElement}>
-                  <MenuItem onClick={this.onLogout}>Logout</MenuItem>
+                  <MenuItem onClick={this.onLogout}>Déconnexion</MenuItem>
                 </Menu>
               </IconButton>
             )}
