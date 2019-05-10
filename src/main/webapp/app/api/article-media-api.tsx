@@ -47,15 +47,11 @@ class ArticleMediaApi {
     formData.append('name', file.name);
     formData.append('fileType', file.type);
 
-    return axios
-      .post(`${apiURl}/${articleId}`, formData, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => {
-        console.log('RESPONSE', response);
-      });
+    return axios.post(`${apiURl}/${articleId}`, formData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   };
 }
 
