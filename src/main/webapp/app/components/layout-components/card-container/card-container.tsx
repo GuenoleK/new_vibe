@@ -13,10 +13,10 @@ export class CardContainer extends React.Component {
 
   @computed
   get ArticleList() {
-    if (articleStore.articleList.length > 0) {
+    if (articleStore.searchableArticleList.length > 0) {
       return (
         <div>
-          {articleStore.articleList.map((article, idx) => (
+          {articleStore.searchableArticleList.map((article, idx) => (
             <VibeCard article={article} key={`article-list-card-${idx}`} />
           ))}
         </div>

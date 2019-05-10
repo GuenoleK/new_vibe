@@ -9,9 +9,12 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IconButtonLink } from 'app/components/icon-button-link/icon-button-link';
 import { userStore } from 'app/stores/user-store';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { observable, computed, toJS } from 'mobx';
 import { Storage } from 'react-jhipster';
 import { AUTH_TOKEN_KEY } from 'app/api/login-api';
+import { articleStore } from 'app/stores/article-store';
+import { orderBy } from 'lodash';
+import Fuse from 'fuse.js';
 
 interface ISearchAppBarProps {
   classes: any;
@@ -23,6 +26,26 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
   isMenuOpen = false;
   @observable
   menuAnchorElement: any;
+
+  fuseOptions = {
+    shouldSort: true,
+    threshold: 0.6,
+    location: 0,
+    // Here the parameter to be more or less exigent for the titles
+    // Max : 1000 min 0
+    distance: 25,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: ['title']
+  };
+
+  @computed
+  get fuse() {
+    return new Fuse(articleStore.articleList, this.fuseOptions);
+  }
+
+  @observable
+  articleList = [];
 
   render() {
     const { classes } = this.props;
@@ -43,6 +66,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
               </div>
               <InputBase
                 placeholder="Search…"
+                onChange={this.searchArticle}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput
@@ -63,6 +87,17 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
       </div>
     );
   }
+
+  searchArticle = event => {
+    const results = this.fuse.search(event.target.value);
+
+    // tslint:disable-next-line: prefer-conditional-expression
+    if (event.target.value.trim() === '' || event.target.value === undefined) {
+      articleStore.searchableArticleList = articleStore.articleList;
+    } else {
+      articleStore.searchableArticleList = results;
+    }
+  };
 
   onLogout() {
     if (Storage.local.get(AUTH_TOKEN_KEY)) {
