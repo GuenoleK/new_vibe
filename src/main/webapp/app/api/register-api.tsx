@@ -24,7 +24,7 @@ class RegisterApi {
           if (response && response.status >= 200 && response.status <= 300) {
             // LOGIN NOW ?
             snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, `Registration success`);
-            articleStore.articleList = response.data;
+            // articleStore.articleList = response.data;
           } else if (response && response.status !== 200) {
             snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `Status error ${response.status}`);
             throw new Error(`Status error ${response.status}`);

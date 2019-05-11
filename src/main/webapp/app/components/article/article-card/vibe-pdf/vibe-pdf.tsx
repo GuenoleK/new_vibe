@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import { articleMediaStore } from 'app/stores/article-media-store';
 import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { articleMediaUtils } from 'app/utils/ArticleMediaUtils';
+import './vibe-pdf.scss';
 
 @observer
 export class VibePdfDocument extends React.Component {
@@ -16,7 +17,7 @@ export class VibePdfDocument extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="vibe-pdf">
         {this.media && (
           <Document file={require(`D:/zz_perso/vibe-files/${this.filePath}`)} onLoadSuccess={this.onDocumentLoadSuccess}>
             <Page pageNumber={this.currentPage} />

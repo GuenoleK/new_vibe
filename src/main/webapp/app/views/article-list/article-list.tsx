@@ -40,6 +40,7 @@ export class ArticleListView extends React.Component {
 
   async componentDidMount() {
     articleStore.articleList = await articleApi.getArticleListByStructureId(userStore.extendedUser.currentStructure.id);
+    articleStore.searchableArticleList = articleStore.articleList;
 
     setTimeout(() => {
       const t = document.getElementById('create-article-button');
@@ -49,5 +50,6 @@ export class ArticleListView extends React.Component {
 
   componentWillUnmount() {
     articleStore.articleList = [];
+    articleStore.searchableArticleList = [];
   }
 }

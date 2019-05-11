@@ -23,9 +23,9 @@ class ArticleMediaApi {
     }
 
     try {
-      axios.get(`${apiURl}/article/${articleId}`, headers).then(response => {
+      return axios.get(`${apiURl}/article/${articleId}`, headers).then(response => {
         if (response && response.status === 200) {
-          articleMediaStore.articleMediaList = response.data;
+          return response.data;
         } else if (response && response.status !== 200) {
           snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
           throw new Error(`Status error ${response.status}`);

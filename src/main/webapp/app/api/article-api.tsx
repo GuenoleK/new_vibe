@@ -58,9 +58,9 @@ class ArticleApi {
     }
 
     try {
-      axios.get(`api/articles/${articleId}`, headers).then(response => {
+      return axios.get(`api/articles/${articleId}`, headers).then(response => {
         if (response && response.status === 200) {
-          articleStore.article = response.data;
+          return response.data;
         } else if (response && response.status !== 200) {
           snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
           throw new Error(`Status error ${response.status}`);

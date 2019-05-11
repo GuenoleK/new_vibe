@@ -1,0 +1,9 @@
+.vibe-pdf {
+  .react-pdf__Document {
+    .react-pdf__Page {
+      > canvas {
+        width: 100% !important;
+      }
+    }
+  }
+}

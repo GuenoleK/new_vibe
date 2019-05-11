@@ -8,11 +8,30 @@ class ArticleStore {
   @observable
   private innerArticleList: IArticle[] = [];
 
+  @observable
+  private innerSearchableArticleList: IArticle[] = [];
+
+  @computed
+  get searchableArticleList(): IArticle[] {
+    return orderBy(this.innerSearchableArticleList, ['title'], ['asc']);
+  }
+
+  set searchableArticleList(searchableArticleList: IArticle[]) {
+    this.innerSearchableArticleList = searchableArticleList;
+  }
+
   @computed
   get articleList(): IArticle[] {
     return orderBy(this.innerArticleList, ['title'], ['asc']);
   }
 
+  /**
+   * Can only change when:
+   * The list is loaded
+   * We add an article
+   * We remove an article
+   *
+   */
   set articleList(articleList: IArticle[]) {
     this.innerArticleList = articleList;
   }
