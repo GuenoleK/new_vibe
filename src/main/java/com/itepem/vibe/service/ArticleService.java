@@ -60,6 +60,13 @@ public class ArticleService {
                 newArticle.setUser(extendedUser.getUser());
                 newArticle.setStructure(extendedUser.getCurrentStructure());
 
+                // Here we create the structure folder if it does not exists
+                File tmpDir = new File("D:\\zz_perso\\vibe-files\\" + extendedUser.getCurrentStructure().getName());
+                boolean folderExists = tmpDir.exists();
+                if(!folderExists) {
+                    new File("D:\\zz_perso\\vibe-files\\" + extendedUser.getCurrentStructure().getName()).mkdir();
+                }
+
                 // We create the associated folder
                 new File("D:\\zz_perso\\vibe-files\\" + extendedUser.getCurrentStructure().getName() + "\\" + newArticle.getTitle()).mkdir();
             }
