@@ -16,6 +16,4 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("select article from Article article where article.user.login = ?#{principal.username}")
     List<Article> findByUserIsCurrentUser();
 
-    @Query("select article from Article article where article.structure.id = ?1")
-    List<Article> findByStructureId(final Long structureId);
 }

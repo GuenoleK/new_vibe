@@ -19,7 +19,7 @@ import java.util.Objects;
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -57,19 +57,15 @@ public class Role implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Role)) {
             return false;
         }
-        Role role = (Role) o;
-        if (role.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), role.getId());
+        return id != null && id.equals(((Role) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

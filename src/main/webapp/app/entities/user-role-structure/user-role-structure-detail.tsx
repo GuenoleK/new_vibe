@@ -25,30 +25,57 @@ export class UserRoleStructureDetail extends React.Component<IUserRoleStructureD
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="vibeApp.userRoleStructure.detail.title">UserRoleStructure</Translate> [<b>
-              {userRoleStructureEntity.id}
-            </b>]
+            <Translate contentKey="vibeApp.userRoleStructure.detail.title">UserRoleStructure</Translate> [
+            <b>{userRoleStructureEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
               <Translate contentKey="vibeApp.userRoleStructure.user">User</Translate>
             </dt>
-            <dd>{userRoleStructureEntity.user ? userRoleStructureEntity.user.id : ''}</dd>
+            <dd>
+              {userRoleStructureEntity.users
+                ? userRoleStructureEntity.users.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.id}</a>
+                      {i === userRoleStructureEntity.users.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}{' '}
+            </dd>
             <dt>
               <Translate contentKey="vibeApp.userRoleStructure.role">Role</Translate>
             </dt>
-            <dd>{userRoleStructureEntity.role ? userRoleStructureEntity.role.id : ''}</dd>
+            <dd>
+              {userRoleStructureEntity.roles
+                ? userRoleStructureEntity.roles.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.id}</a>
+                      {i === userRoleStructureEntity.roles.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </dd>
             <dt>
               <Translate contentKey="vibeApp.userRoleStructure.structure">Structure</Translate>
             </dt>
-            <dd>{userRoleStructureEntity.structure ? userRoleStructureEntity.structure.id : ''}</dd>
+            <dd>
+              {userRoleStructureEntity.structures
+                ? userRoleStructureEntity.structures.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.id}</a>
+                      {i === userRoleStructureEntity.structures.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </dd>
           </dl>
           <Button tag={Link} to="/entity/user-role-structure" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/user-role-structure/${userRoleStructureEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

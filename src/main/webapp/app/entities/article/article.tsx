@@ -26,7 +26,8 @@ export class Article extends React.Component<IArticleProps> {
         <h2 id="article-heading">
           <Translate contentKey="vibeApp.article.home.title">Articles</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="vibeApp.article.home.createLabel">Create new Article</Translate>
           </Link>
         </h2>

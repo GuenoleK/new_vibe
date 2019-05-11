@@ -13,7 +13,6 @@ import java.util.Optional;
 /**
  * Spring Data  repository for the Structure entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface StructureRepository extends JpaRepository<Structure, Long> {
 
@@ -24,7 +23,7 @@ public interface StructureRepository extends JpaRepository<Structure, Long> {
         countQuery = "select count(distinct structure) from Structure structure")
     Page<Structure> findAllWithEagerRelationships(Pageable pageable);
 
-    @Query(value = "select distinct structure from Structure structure left join fetch structure.users")
+    @Query("select distinct structure from Structure structure left join fetch structure.users")
     List<Structure> findAllWithEagerRelationships();
 
     @Query("select structure from Structure structure left join fetch structure.users where structure.id =:id")

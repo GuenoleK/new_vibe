@@ -1,20 +1,18 @@
 package com.itepem.vibe.web.rest;
+
 import com.itepem.vibe.domain.ArticleMedia;
 import com.itepem.vibe.repository.ArticleMediaRepository;
-import com.itepem.vibe.service.ArticleMediaServices;
 import com.itepem.vibe.web.rest.errors.BadRequestAlertException;
-import com.itepem.vibe.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -22,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing ArticleMedia.
+ * REST controller for managing {@link com.itepem.vibe.domain.ArticleMedia}.
  */
 @RestController
 @RequestMapping("/api")
@@ -32,21 +30,21 @@ public class ArticleMediaResource {
 
     private static final String ENTITY_NAME = "articleMedia";
 
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
     private final ArticleMediaRepository articleMediaRepository;
 
-    private final ArticleMediaServices articleMediaServices;
-
-    public ArticleMediaResource(ArticleMediaRepository articleMediaRepository, ArticleMediaServices articleMediaServices) {
+    public ArticleMediaResource(ArticleMediaRepository articleMediaRepository) {
         this.articleMediaRepository = articleMediaRepository;
-        this.articleMediaServices = articleMediaServices;
     }
 
     /**
-     * POST  /article-medias : Create a new articleMedia.
+     * {@code POST  /article-medias} : Create a new articleMedia.
      *
-     * @param articleMedia the articleMedia to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new articleMedia, or with status 400 (Bad Request) if the articleMedia has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param articleMedia the articleMedia to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new articleMedia, or with status {@code 400 (Bad Request)} if the articleMedia has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/article-medias")
     public ResponseEntity<ArticleMedia> createArticleMedia(@Valid @RequestBody ArticleMedia articleMedia) throws URISyntaxException {
@@ -56,23 +54,18 @@ public class ArticleMediaResource {
         }
         ArticleMedia result = articleMediaRepository.save(articleMedia);
         return ResponseEntity.created(new URI("/api/article-medias/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/article-media/{articleId}")
-    public ArticleMedia saveArticleMedia(@RequestParam("articleMediaFile") MultipartFile articleMediaFile, @PathVariable Long articleId) throws IOException {
-        return articleMediaServices.saveArticleMedia(articleMediaFile, articleId);
-    }
-
     /**
-     * PUT  /article-medias : Updates an existing articleMedia.
+     * {@code PUT  /article-medias} : Updates an existing articleMedia.
      *
-     * @param articleMedia the articleMedia to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated articleMedia,
-     * or with status 400 (Bad Request) if the articleMedia is not valid,
-     * or with status 500 (Internal Server Error) if the articleMedia couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param articleMedia the articleMedia to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated articleMedia,
+     * or with status {@code 400 (Bad Request)} if the articleMedia is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the articleMedia couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/article-medias")
     public ResponseEntity<ArticleMedia> updateArticleMedia(@Valid @RequestBody ArticleMedia articleMedia) throws URISyntaxException {
@@ -82,14 +75,14 @@ public class ArticleMediaResource {
         }
         ArticleMedia result = articleMediaRepository.save(articleMedia);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, articleMedia.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, articleMedia.getId().toString()))
             .body(result);
     }
 
     /**
-     * GET  /article-medias : get all the articleMedias.
+     * {@code GET  /article-medias} : get all the articleMedias.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of articleMedias in body
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of articleMedias in body.
      */
     @GetMapping("/article-medias")
     public List<ArticleMedia> getAllArticleMedias() {
@@ -97,16 +90,11 @@ public class ArticleMediaResource {
         return articleMediaRepository.findAll();
     }
 
-    @GetMapping("/article-media/article/{articleId}")
-    public List<ArticleMedia> getArticleMediaListByArticleId(@PathVariable Long articleId) {
-        return articleMediaServices.getArticleMediaListByArticleId(articleId);
-    }
-
     /**
-     * GET  /article-medias/:id : get the "id" articleMedia.
+     * {@code GET  /article-medias/:id} : get the "id" articleMedia.
      *
-     * @param id the id of the articleMedia to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the articleMedia, or with status 404 (Not Found)
+     * @param id the id of the articleMedia to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the articleMedia, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/article-medias/{id}")
     public ResponseEntity<ArticleMedia> getArticleMedia(@PathVariable Long id) {
@@ -116,15 +104,15 @@ public class ArticleMediaResource {
     }
 
     /**
-     * DELETE  /article-medias/:id : delete the "id" articleMedia.
+     * {@code DELETE  /article-medias/:id} : delete the "id" articleMedia.
      *
-     * @param id the id of the articleMedia to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * @param id the id of the articleMedia to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/article-medias/{id}")
     public ResponseEntity<Void> deleteArticleMedia(@PathVariable Long id) {
         log.debug("REST request to delete ArticleMedia : {}", id);
         articleMediaRepository.deleteById(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

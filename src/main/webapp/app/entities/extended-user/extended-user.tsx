@@ -26,7 +26,8 @@ export class ExtendedUser extends React.Component<IExtendedUserProps> {
         <h2 id="extended-user-heading">
           <Translate contentKey="vibeApp.extendedUser.home.title">Extended Users</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="vibeApp.extendedUser.home.createLabel">Create new Extended User</Translate>
           </Link>
         </h2>

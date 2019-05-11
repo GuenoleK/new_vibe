@@ -3,7 +3,7 @@
     "fields": [],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-many",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "userRoleStructure",
             "relationshipName": "user",
@@ -11,7 +11,7 @@
             "ownerSide": true
         },
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-many",
             "otherEntityName": "role",
             "otherEntityRelationshipName": "userRoleStructure",
             "relationshipName": "role",
@@ -19,7 +19,7 @@
             "ownerSide": true
         },
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-many",
             "otherEntityName": "structure",
             "otherEntityRelationshipName": "userRoleStructure",
             "relationshipName": "structure",
