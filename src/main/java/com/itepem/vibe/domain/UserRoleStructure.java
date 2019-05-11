@@ -7,6 +7,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -18,23 +20,32 @@ import java.util.Objects;
 public class UserRoleStructure implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private User user;
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "user_role_structure_user",
+               joinColumns = @JoinColumn(name = "user_role_structure_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Role role;
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "user_role_structure_role",
+               joinColumns = @JoinColumn(name = "user_role_structure_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles = new HashSet<>();
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Structure structure;
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "user_role_structure_structure",
+               joinColumns = @JoinColumn(name = "user_role_structure_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "structure_id", referencedColumnName = "id"))
+    private Set<Structure> structures = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -45,43 +56,77 @@ public class UserRoleStructure implements Serializable {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public UserRoleStructure user(User user) {
-        this.user = user;
+    public UserRoleStructure users(Set<User> users) {
+        this.users = users;
         return this;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public UserRoleStructure role(Role role) {
-        this.role = role;
+    public UserRoleStructure addUser(User user) {
+        this.users.add(user);
         return this;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Structure getStructure() {
-        return structure;
-    }
-
-    public UserRoleStructure structure(Structure structure) {
-        this.structure = structure;
+    public UserRoleStructure removeUser(User user) {
+        this.users.remove(user);
         return this;
     }
 
-    public void setStructure(Structure structure) {
-        this.structure = structure;
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public UserRoleStructure roles(Set<Role> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    public UserRoleStructure addRole(Role role) {
+        this.roles.add(role);
+        role.getUserRoleStructures().add(this);
+        return this;
+    }
+
+    public UserRoleStructure removeRole(Role role) {
+        this.roles.remove(role);
+        role.getUserRoleStructures().remove(this);
+        return this;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<Structure> getStructures() {
+        return structures;
+    }
+
+    public UserRoleStructure structures(Set<Structure> structures) {
+        this.structures = structures;
+        return this;
+    }
+
+    public UserRoleStructure addStructure(Structure structure) {
+        this.structures.add(structure);
+        structure.getUserRoleStructures().add(this);
+        return this;
+    }
+
+    public UserRoleStructure removeStructure(Structure structure) {
+        this.structures.remove(structure);
+        structure.getUserRoleStructures().remove(this);
+        return this;
+    }
+
+    public void setStructures(Set<Structure> structures) {
+        this.structures = structures;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -90,19 +135,15 @@ public class UserRoleStructure implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof UserRoleStructure)) {
             return false;
         }
-        UserRoleStructure userRoleStructure = (UserRoleStructure) o;
-        if (userRoleStructure.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), userRoleStructure.getId());
+        return id != null && id.equals(((UserRoleStructure) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

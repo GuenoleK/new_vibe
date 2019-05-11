@@ -19,7 +19,7 @@ import java.util.Objects;
 public class ArticleMediaType implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -57,19 +57,15 @@ public class ArticleMediaType implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof ArticleMediaType)) {
             return false;
         }
-        ArticleMediaType articleMediaType = (ArticleMediaType) o;
-        if (articleMediaType.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), articleMediaType.getId());
+        return id != null && id.equals(((ArticleMediaType) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
