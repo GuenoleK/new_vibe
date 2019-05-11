@@ -13,7 +13,7 @@ entity Role {
 entity Article {
 	title String required
     description String
-    content String required
+    content String
     creationDate LocalDate required
     editionDate LocalDate required
 }
@@ -41,12 +41,12 @@ relationship ManyToOne {
 
 relationship ManyToMany {
 	Structure{user(id)} to User{structure(id)}
+    UserRoleStructure{user(id)} to User,
+    UserRoleStructure{role(id)} to Role,
+    UserRoleStructure{Structure(id)} to Structure
 }
 
 relationship OneToOne {
 	ExtendedUser{user(id)} to User,
-    ExtendedUser{currentStructure(id)} to Structure,
-    UserRoleStructure{user(id)} to User,
-    UserRoleStructure{role(id)} to Role,
-    UserRoleStructure{structure(id)} to Structure
+    ExtendedUser{currentStructure(id)} to Structure
 }
