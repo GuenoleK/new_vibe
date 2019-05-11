@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -94,14 +94,14 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
               <AvForm model={isNew ? {} : articleEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
+                    <Label for="article-id">
                       <Translate contentKey="global.field.id">ID</Translate>
                     </Label>
                     <AvInput id="article-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="titleLabel" for="title">
+                  <Label id="titleLabel" for="article-title">
                     <Translate contentKey="vibeApp.article.title">Title</Translate>
                   </Label>
                   <AvField
@@ -114,26 +114,19 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="descriptionLabel" for="description">
+                  <Label id="descriptionLabel" for="article-description">
                     <Translate contentKey="vibeApp.article.description">Description</Translate>
                   </Label>
                   <AvField id="article-description" type="text" name="description" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="contentLabel" for="content">
+                  <Label id="contentLabel" for="article-content">
                     <Translate contentKey="vibeApp.article.content">Content</Translate>
                   </Label>
-                  <AvField
-                    id="article-content"
-                    type="text"
-                    name="content"
-                    validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
-                    }}
-                  />
+                  <AvField id="article-content" type="text" name="content" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="creationDateLabel" for="creationDate">
+                  <Label id="creationDateLabel" for="article-creationDate">
                     <Translate contentKey="vibeApp.article.creationDate">Creation Date</Translate>
                   </Label>
                   <AvField
@@ -147,7 +140,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="editionDateLabel" for="editionDate">
+                  <Label id="editionDateLabel" for="article-editionDate">
                     <Translate contentKey="vibeApp.article.editionDate">Edition Date</Translate>
                   </Label>
                   <AvField
@@ -161,7 +154,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="user.id">
+                  <Label for="article-user">
                     <Translate contentKey="vibeApp.article.user">User</Translate>
                   </Label>
                   <AvInput id="article-user" type="select" className="form-control" name="user.id">
@@ -176,7 +169,7 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="structure.id">
+                  <Label for="article-structure">
                     <Translate contentKey="vibeApp.article.structure">Structure</Translate>
                   </Label>
                   <AvInput id="article-structure" type="select" className="form-control" name="structure.id">
@@ -191,14 +184,16 @@ export class ArticleUpdate extends React.Component<IArticleUpdateProps, IArticle
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/article" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>

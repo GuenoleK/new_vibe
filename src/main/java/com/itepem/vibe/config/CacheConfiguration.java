@@ -48,6 +48,17 @@ public class CacheConfiguration {
             cm.createCache(com.itepem.vibe.domain.ArticleMediaType.class.getName(), jcacheConfiguration);
             cm.createCache(com.itepem.vibe.domain.ExtendedUser.class.getName(), jcacheConfiguration);
             cm.createCache(com.itepem.vibe.domain.UserRoleStructure.class.getName(), jcacheConfiguration);
+            createCache(cm, com.itepem.vibe.domain.Structure.class.getName());
+            createCache(cm, com.itepem.vibe.domain.Structure.class.getName() + ".users");
+            createCache(cm, com.itepem.vibe.domain.Role.class.getName());
+            createCache(cm, com.itepem.vibe.domain.Article.class.getName());
+            createCache(cm, com.itepem.vibe.domain.ArticleMedia.class.getName());
+            createCache(cm, com.itepem.vibe.domain.ArticleMediaType.class.getName());
+            createCache(cm, com.itepem.vibe.domain.ExtendedUser.class.getName());
+            createCache(cm, com.itepem.vibe.domain.UserRoleStructure.class.getName());
+            createCache(cm, com.itepem.vibe.domain.UserRoleStructure.class.getName() + ".users");
+            createCache(cm, com.itepem.vibe.domain.UserRoleStructure.class.getName() + ".roles");
+            createCache(cm, com.itepem.vibe.domain.UserRoleStructure.class.getName() + ".structures");
             // jhipster-needle-ehcache-add-entry
         };
     }

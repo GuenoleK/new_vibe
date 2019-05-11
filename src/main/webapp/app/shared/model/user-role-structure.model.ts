@@ -4,9 +4,9 @@ import { IStructure } from 'app/shared/model/structure.model';
 
 export interface IUserRoleStructure {
   id?: number;
-  user?: IUser;
-  role?: IRole;
-  structure?: IStructure;
+  users?: IUser[];
+  roles?: IRole[];
+  structures?: IStructure[];
 }
 
 export const defaultValue: Readonly<IUserRoleStructure> = {};
