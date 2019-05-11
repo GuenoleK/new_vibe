@@ -1,8 +1,26 @@
 [data-component='audio-card'] {
-  display: flex;
-  width: 360px;
+  position: relative;
+  .audio-card {
+    display: flex;
+    width: 360px;
 
-  .media {
-    width: 145px;
+    .media {
+      width: 145px;
+    }
+  }
+
+  .audio-upload-dropzone {
+    position: absolute;
+    bottom: -7px;
+    right: -16px;
+    cursor: pointer;
+
+    > div {
+      outline: none;
+    }
+    .add-audio-button {
+      width: 46px;
+      height: 46px;
+    }
   }
 }

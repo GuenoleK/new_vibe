@@ -16,10 +16,10 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
       <div data-component="vibe-article">
         <ArticleCard />
         <div className="audio-list">
-          <AudioCard />
-          <AudioCard />
-          <AudioCard />
-          <AudioCard />
+          <AudioCard name="Général" />
+          <AudioCard name="Soprano" />
+          <AudioCard name="Alto" />
+          <AudioCard name="Ténor" />
         </div>
       </div>
     );
