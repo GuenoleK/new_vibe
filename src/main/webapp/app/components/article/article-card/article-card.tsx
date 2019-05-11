@@ -6,6 +6,11 @@ import { computed } from 'mobx';
 import { articleStore } from 'app/stores/article-store';
 import { observer } from 'mobx-react';
 import Dropzone from 'react-dropzone';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { articleMediaStore } from 'app/stores/article-media-store';
+import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
+import { articleMediaApi } from 'app/api/article-media-api';
+import { articleApi } from 'app/api/article-api';
 
 @observer
 export class ArticleCard extends React.Component {
@@ -21,18 +26,20 @@ export class ArticleCard extends React.Component {
             <Typography component="p">{this.article.description}</Typography>
           </CardContent>
         )}
-        <div className="upload-dropzone">
-          <div className="label">Audio du chant (TOUS)</div>
-          <Dropzone accept="application/pdf" onDrop={this.onDrop}>
-            {({ getRootProps, getInputProps, isDragActive }) => (
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <div>Zone de chargement</div>
-                {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
-              </div>
-            )}
-          </Dropzone>
-        </div>
+        {!this.pdfMedia && (
+          <div className="lyrics-upload-dropzone">
+            <Dropzone multiple={false} accept="application/pdf" onDrop={this.onDrop}>
+              {({ getRootProps, getInputProps, isDragActive }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <CloudUploadIcon className="upload-icon" />
+                  <div>Cliquer ou déposer pour charger le fichier PDF</div>
+                  {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
+                </div>
+              )}
+            </Dropzone>
+          </div>
+        )}
       </Card>
     );
   }
@@ -42,7 +49,14 @@ export class ArticleCard extends React.Component {
     return articleStore.article;
   }
 
-  onDrop = (acceptedFiles: any, rejectedFiles: any) => {
-    'hello';
+  @computed
+  get pdfMedia() {
+    return articleMediaStore.articleMediaList.find(media => media.articleMediaType.code === ArticleMediaTypeCodeEnum.PDF);
+  }
+
+  onDrop = async acceptedFiles => {
+    await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id);
+    articleStore.article = await articleApi.getArticle(this.article.id);
+    articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
   };
 }

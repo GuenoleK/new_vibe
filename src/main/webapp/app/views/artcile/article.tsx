@@ -28,11 +28,11 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
   get articleId() {
     return this.props.match.params.id;
   }
-  async componentWillMount() {
+  async componentDidMount() {
     // Here call the web service that will give the file names
     if (this.articleId) {
-      articleApi.getArticle(this.articleId);
-      articleMediaApi.getArticleMediaListByArticleId(this.articleId);
+      articleStore.article = await articleApi.getArticle(this.articleId);
+      articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.articleId);
     }
   }
 
