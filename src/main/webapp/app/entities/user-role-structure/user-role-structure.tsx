@@ -26,7 +26,8 @@ export class UserRoleStructure extends React.Component<IUserRoleStructureProps> 
         <h2 id="user-role-structure-heading">
           <Translate contentKey="vibeApp.userRoleStructure.home.title">User Role Structures</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="vibeApp.userRoleStructure.home.createLabel">Create new User Role Structure</Translate>
           </Link>
         </h2>
@@ -57,14 +58,35 @@ export class UserRoleStructure extends React.Component<IUserRoleStructureProps> 
                       {userRoleStructure.id}
                     </Button>
                   </td>
-                  <td>{userRoleStructure.user ? userRoleStructure.user.id : ''}</td>
-                  <td>{userRoleStructure.role ? <Link to={`role/${userRoleStructure.role.id}`}>{userRoleStructure.role.id}</Link> : ''}</td>
                   <td>
-                    {userRoleStructure.structure ? (
-                      <Link to={`structure/${userRoleStructure.structure.id}`}>{userRoleStructure.structure.id}</Link>
-                    ) : (
-                      ''
-                    )}
+                    {userRoleStructure.users
+                      ? userRoleStructure.users.map((val, j) => (
+                          <span key={j}>
+                            {val.id}
+                            {j === userRoleStructure.users.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
+                  <td>
+                    {userRoleStructure.roles
+                      ? userRoleStructure.roles.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`role/${val.id}`}>{val.id}</Link>
+                            {j === userRoleStructure.roles.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
+                  <td>
+                    {userRoleStructure.structures
+                      ? userRoleStructure.structures.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`structure/${val.id}`}>{val.id}</Link>
+                            {j === userRoleStructure.structures.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

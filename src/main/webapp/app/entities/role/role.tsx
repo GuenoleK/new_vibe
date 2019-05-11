@@ -26,7 +26,8 @@ export class Role extends React.Component<IRoleProps> {
         <h2 id="role-heading">
           <Translate contentKey="vibeApp.role.home.title">Roles</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="vibeApp.role.home.createLabel">Create new Role</Translate>
           </Link>
         </h2>

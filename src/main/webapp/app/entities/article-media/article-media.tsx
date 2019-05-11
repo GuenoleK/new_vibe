@@ -26,7 +26,8 @@ export class ArticleMedia extends React.Component<IArticleMediaProps> {
         <h2 id="article-media-heading">
           <Translate contentKey="vibeApp.articleMedia.home.title">Article Medias</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="vibeApp.articleMedia.home.createLabel">Create new Article Media</Translate>
           </Link>
         </h2>

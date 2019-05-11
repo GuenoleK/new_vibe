@@ -20,7 +20,7 @@ import java.util.Objects;
 public class ArticleMedia implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -109,19 +109,15 @@ public class ArticleMedia implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof ArticleMedia)) {
             return false;
         }
-        ArticleMedia articleMedia = (ArticleMedia) o;
-        if (articleMedia.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), articleMedia.getId());
+        return id != null && id.equals(((ArticleMedia) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
