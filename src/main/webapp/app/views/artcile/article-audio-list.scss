@@ -1,0 +1,14 @@
+[data-component='audio-list'] {
+  .list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding-top: 15px;
+  }
+
+  [data-component='audio-card'] {
+    height: 150px;
+    margin-bottom: 15px;
+  }
+}

@@ -2,16 +2,4 @@
   display: flex;
   justify-content: center;
   margin: 20px 0;
-
-  .audio-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-
-    [data-component='audio-card'] {
-      height: 150px;
-      margin-bottom: 15px;
-    }
-  }
 }
