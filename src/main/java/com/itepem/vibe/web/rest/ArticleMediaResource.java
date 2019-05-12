@@ -65,6 +65,11 @@ public class ArticleMediaResource {
         return articleMediaServices.saveArticleMedia(articleMediaFile, articleId);
     }
 
+    @RequestMapping(method = RequestMethod.PUT, path = "/article-media/{articleMediaId}")
+    public ArticleMedia changeArticleMedia(@RequestParam("articleMediaFile") MultipartFile articleMediaFile, @PathVariable Long articleMediaId) throws IOException {
+        return articleMediaServices.updateArticleMedia(articleMediaFile, articleMediaId);
+    }
+
     /**
      * PUT  /article-medias : Updates an existing articleMedia.
      *

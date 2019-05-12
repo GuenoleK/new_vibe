@@ -11,9 +11,9 @@ import Dropzone from 'react-dropzone';
 import { articleMediaApi } from 'app/api/article-media-api';
 import { articleMediaStore } from 'app/stores/article-media-store';
 import { articleApi } from 'app/api/article-api';
-import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 import { articleMediaUtils } from 'app/utils/ArticleMediaUtils';
 import { observable, computed } from 'mobx';
+import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -59,7 +59,6 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
                 <Fab color="secondary" className="add-audio-button">
                   <AddIcon />
                 </Fab>
-                {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
               </div>
             )}
           </Dropzone>
@@ -99,7 +98,12 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   }
 
   onDrop = async acceptedFiles => {
-    await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id);
+    if (this.media) {
+      await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.media.id);
+    } else {
+      await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id);
+    }
+
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
   };
@@ -135,7 +139,6 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
     this.audioFile.pause();
     this.audioFile.currentTime = 0;
     this.isMusicPlaying = false;
-    console.log(this.audioFile, this.isMusicPlaying);
   };
 
   @computed

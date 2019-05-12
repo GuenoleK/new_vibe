@@ -84,4 +84,36 @@ public class ArticleMediaServices {
 
         return articleMedia;
     }
+
+    public ArticleMedia updateArticleMedia(final MultipartFile articleMediaFile, final Long articleMediaId) throws IOException {
+
+        ArticleMedia articleMedia = articleMediaRepository.getOne(articleMediaId);
+        final String articleMediaName = articleMedia.getName();
+        articleMedia.setName(articleMediaFile.getOriginalFilename());
+        // We get the article
+        Article article = articleRepository.findById(articleMedia.getArticle().getId()).get();
+
+        Optional<String> userLogin = SecurityUtils.getCurrentUserLogin();
+
+        if (userLogin.isPresent()) {
+            Optional<User> optionalUser = userRepository.findOneByLogin(userLogin.get());
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                ExtendedUser extendedUser = extendedUserRepository.findByUserId(user.getId());
+
+                // We update the articleMedia
+                articleMedia = articleMediaRepository.save(articleMedia);
+
+                // We delete file previous file
+                File fileToDelete = new File("D:\\zz_perso\\vibe-files\\" + extendedUser.getCurrentStructure().getName() + "\\" + article.getTitle() + "\\" + articleMediaName);
+                fileToDelete.delete();
+
+                // We create the new one
+                File fileToSave = new File("D:\\zz_perso\\vibe-files\\" + extendedUser.getCurrentStructure().getName() + "\\" + article.getTitle() + "\\" + articleMediaFile.getOriginalFilename());
+                articleMediaFile.transferTo(fileToSave);
+            }
+        }
+
+        return articleMedia;
+    }
 }
