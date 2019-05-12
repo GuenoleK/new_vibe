@@ -1,6 +1,5 @@
 import React from 'react';
 import { ArticleCard } from 'app/components/article/article-card/article-card';
-import { AudioCard } from 'app/components/article/audio-card/audio-card';
 import './article.scss';
 import { observer } from 'mobx-react';
 import { articleMediaApi } from 'app/api/article-media-api';
@@ -8,6 +7,9 @@ import { RouteComponentProps } from 'react-router';
 import { articleApi } from 'app/api/article-api';
 import { articleStore } from 'app/stores/article-store';
 import { articleMediaStore } from 'app/stores/article-media-store';
+import { computed, toJS } from 'mobx';
+import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
+import { AudioCardList } from './article-audio-list';
 
 @observer
 export class ArticleView extends React.Component<RouteComponentProps<any>> {
@@ -16,13 +18,15 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
       <div data-component="vibe-article">
         <ArticleCard />
         <div className="audio-list">
-          <AudioCard />
-          <AudioCard />
-          <AudioCard />
-          <AudioCard />
+          <AudioCardList audioList={this.audioList} />
         </div>
       </div>
     );
+  }
+
+  @computed
+  get audioList() {
+    return articleMediaStore.articleMediaList.filter(media => media.articleMediaType.code === ArticleMediaTypeCodeEnum.AUDIO);
   }
 
   get articleId() {

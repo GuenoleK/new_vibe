@@ -3,6 +3,10 @@
 CREATE UNIQUE INDEX UK_STRUCTURE_NAME ON STRUCTURE (name);
 ------- STRUCTURE
 CREATE UNIQUE INDEX UK_ARTICLE_TITLE ON ARTICLE (title);
+-- ARTICLE
+CREATE UNIQUE INDEX UK_ARTICLE_TITLE_STRUCTURE_ID ON ARTICLE (title, structure_id);
+-- ARTICLE MEDIA
+CREATE UNIQUE INDEX UK_ARTICLE_ID_ARTICLE_MEDIA_NAME ON ARTICLE_MEDIA (article_id, name);
 
 
 insert into structure (id, name, owner_id) values 
@@ -10,7 +14,6 @@ insert into structure (id, name, owner_id) values
 (1, 'Chorale', 3),
 (2, 'CCR', 3);
 
-select * from structure_user
 insert into structure_user (user_id, structure_id) values
 (3, 0),
 (3, 1),
@@ -22,10 +25,13 @@ insert into role (id, name) values
 (2, 'VIEWER'),
 (3, 'MANAGER');
 
+select * from user_role_structure
+
+-- DROP UNIQUE INDEXES AND UNIQUE CONSTRAINTS
 insert into user_role_structure (id, user_id, role_id, structure_id) values
 (0, 3, 0, 0),
-(0, 3, 0, 1),
-(0, 3, 0, 2);
+(1, 3, 0, 1),
+(2, 3, 0, 2);
 
 insert into article_media_type (id, code) values
 (0, 'PDF'),

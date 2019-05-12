@@ -4,6 +4,9 @@ import { Storage } from 'react-jhipster';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 import { articleMediaStore } from 'app/stores/article-media-store';
+import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
+
+type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
 export const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 const apiURl = 'api/article-media';
@@ -48,6 +51,19 @@ class ArticleMediaApi {
     formData.append('fileType', file.type);
 
     return axios.post(`${apiURl}/${articleId}`, formData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  };
+
+  public updateArticleMedia = (file, articleMediaId) => {
+    const formData = new FormData();
+    formData.append('articleMediaFile', file);
+    formData.append('name', file.name);
+    formData.append('fileType', file.type);
+
+    return axios.put(`${apiURl}/${articleMediaId}`, formData, {
       headers: {
         'Content-Type': 'application/json'
       }
