@@ -16,12 +16,10 @@ export class AudioCardList extends React.Component<{ audioList: IArticleMedia[] 
   renderAudioList = () => {
     const audioCardList = [];
     if (this.audioList && this.audioList.length > 0) {
-      this.audioList.forEach(audio =>
-        audioCardList.push(<AudioCard key={`audio-card-${audio.id}`} name={articleMediaUtils.processArticleMediaName(audio)} />)
-      );
+      this.audioList.forEach(audio => audioCardList.push(<AudioCard key={`audio-card-${audio.id}`} media={audio} />));
     }
     for (let i = 0; i < 4 - this.audioList.length; i++) {
-      audioCardList.push(<AudioCard key={`empty-audio-card-${i}`} name="Audio à uploader" />);
+      audioCardList.push(<AudioCard key={`empty-audio-card-${i}`} media={undefined} />);
     }
     return <div className="list">{audioCardList}</div>;
   };

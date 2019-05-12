@@ -1,11 +1,17 @@
 [data-component='audio-card'] {
   position: relative;
+  height: 150px;
+  margin-bottom: 20px;
   .audio-card {
     display: flex;
     width: 360px;
 
     .media {
       width: 145px;
+    }
+
+    .media-button-zone {
+      height: 48px;
     }
   }
 

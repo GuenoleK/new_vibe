@@ -48,6 +48,10 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
           }
         ]
       },
+      {
+        test: /\.mp3$/,
+        loader: 'file-loader'
+      }
     ]
   },
   optimization: {
@@ -91,7 +95,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
     }),
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
-      skipWaiting: true,
+      skipWaiting: true
     })
   ]
 });
