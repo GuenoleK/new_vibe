@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Typography, CardContent, IconButton, CardMedia, Button } from '@material-ui/core';
+import { Card, Typography, CardContent, IconButton, CardMedia, Fab } from '@material-ui/core';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
@@ -20,7 +20,7 @@ export class AudioCard extends React.Component<{ name: string }> {
         <Card className="audio-card">
           <div>
             <CardContent>
-              <Typography component="h5" variant="h5">
+              <Typography className="audio-name" component="h5" variant="h5">
                 {this.props.name}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
@@ -46,9 +46,9 @@ export class AudioCard extends React.Component<{ name: string }> {
             {({ getRootProps, getInputProps, isDragActive }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <Button color="secondary" variant="fab" className="add-audio-button">
+                <Fab color="secondary" className="add-audio-button">
                   <AddIcon />
-                </Button>
+                </Fab>
                 {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
               </div>
             )}

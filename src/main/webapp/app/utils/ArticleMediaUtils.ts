@@ -24,6 +24,11 @@ class ArticleMediaUtils {
     }
     return '';
   }
+
+  public processArticleMediaName(media: IArticleMedia) {
+    const stringArray = media.name.split('.');
+    return stringArray[0];
+  }
 }
 
 export const articleMediaUtils = new ArticleMediaUtils();

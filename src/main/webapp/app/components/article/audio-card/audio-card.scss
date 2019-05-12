@@ -9,6 +9,10 @@
     }
   }
 
+  .audio-name {
+    text-transform: capitalize;
+  }
+
   .audio-upload-dropzone {
     position: absolute;
     bottom: -7px;
