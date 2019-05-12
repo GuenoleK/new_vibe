@@ -12,7 +12,7 @@ export class VibeHome extends React.Component {
     return (
       <form className="login-form" method="post" autoComplete="off">
         <TextField
-          label="Username"
+          label="Nom d'utilisateur"
           onChange={this.handleChange('login')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -21,7 +21,7 @@ export class VibeHome extends React.Component {
         />
 
         <TextField
-          label="Password"
+          label="Mot de passe"
           onChange={this.handleChange('password')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -31,9 +31,9 @@ export class VibeHome extends React.Component {
         />
         <div className="buttons">
           <Button variant="contained" color="primary" onClick={this.login}>
-            Login
+            Connexion
           </Button>
-          <ButtonLink buttonClassName="register-redirection-button" variant="text" link="/register" label="register" />
+          <ButtonLink buttonClassName="register-redirection-button" variant="text" link="/register" label="S'inscrire" />
         </div>
       </form>
     );

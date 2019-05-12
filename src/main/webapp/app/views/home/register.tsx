@@ -23,7 +23,7 @@ class Register extends React.Component<{ classes: any }> {
     return (
       <form className="register-form" method="post" autoComplete="off">
         <TextField
-          label="Username"
+          label="Nom d'utilisateur"
           onChange={this.handleChange('login')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -42,7 +42,7 @@ class Register extends React.Component<{ classes: any }> {
         />
 
         <TextField
-          label="Password"
+          label="Mot de passe"
           onChange={this.handleChange('password')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -52,7 +52,7 @@ class Register extends React.Component<{ classes: any }> {
         />
 
         <TextField
-          label="Validate Password"
+          label="Validation mot de passe"
           onChange={this.onValidationChange('validate_password')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -62,8 +62,8 @@ class Register extends React.Component<{ classes: any }> {
         />
 
         <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="language-input-label" htmlFor="outlined-language">
-            Language
+          <InputLabel id="language-input-label" htmlFor="outlined-language" required>
+            Langue
           </InputLabel>
           <Select
             value={userStore.user.langKey}
@@ -76,7 +76,7 @@ class Register extends React.Component<{ classes: any }> {
         </FormControl>
 
         <Button variant="contained" color="primary" onClick={this.register}>
-          Register
+          Inscription
         </Button>
       </form>
     );
