@@ -12,7 +12,7 @@ import { articleMediaApi } from 'app/api/article-media-api';
 import { articleMediaStore } from 'app/stores/article-media-store';
 import { articleApi } from 'app/api/article-api';
 import { articleMediaUtils } from 'app/utils/ArticleMediaUtils';
-import { observable, computed } from 'mobx';
+import { observable, computed, autorun } from 'mobx';
 import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
@@ -25,11 +25,18 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   @observable
   audio: HTMLAudioElement;
 
+  reaction = autorun(async () => {
+    if (this.media) {
+      this.audio = new Audio(await articleMediaApi.getArticleMediaSrcFile(this.media.id));
+      this.audio.addEventListener('ended', this.audioEnded);
+    }
+  });
+
   render() {
     return (
       <div data-component="audio-card">
         <Card className="audio-card">
-          <div>
+          <div className="content">
             <CardContent>
               <Typography className="audio-name" component="h5" variant="h5">
                 {this.audioName}
@@ -49,7 +56,7 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
               )}
             </div>
           </div>
-          <CardMedia className="media" image="../static/images/Music-icon.png" />
+          {/* <CardMedia className="media" image="../static/images/Music-icon.png" /> */}
         </Card>
         <div className="audio-upload-dropzone">
           <Dropzone multiple={false} accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3" onDrop={this.onDrop}>
@@ -112,32 +119,23 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
     return articleMediaUtils.buildMediaPath(this.props.media);
   }
 
-  @computed
-  get audioFile(): HTMLAudioElement {
-    if (this.media && this.audio !== undefined) {
-      return this.audio;
-    }
-    this.audio = new Audio(require(`D:/zz_perso/vibe-files/${this.filePath}`));
-    return this.audio;
-  }
-
-  playMusic = () => {
+  playMusic = async () => {
     if (!this.isMusicPlaying) {
-      this.audioFile.play();
+      this.audio.play();
       this.isMusicPlaying = true;
     }
   };
 
-  pauseMusic = () => {
+  pauseMusic = async () => {
     if (this.isMusicPlaying) {
-      this.audioFile.pause();
+      this.audio.pause();
       this.isMusicPlaying = false;
     }
   };
 
   stopMusic = () => {
-    this.audioFile.pause();
-    this.audioFile.currentTime = 0;
+    this.audio.pause();
+    this.audio.currentTime = 0;
     this.isMusicPlaying = false;
   };
 
@@ -145,4 +143,9 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   get media() {
     return this.props.media;
   }
+
+  audioEnded = () => {
+    this.audio.currentTime = 0;
+    this.isMusicPlaying = false;
+  };
 }

@@ -69,6 +69,11 @@ class ArticleMediaApi {
       }
     });
   };
+
+  public getArticleMediaSrcFile = async articleMediaId => {
+    const response = await axios.get(`${apiURl}/file/src/${articleMediaId}`);
+    return response.data;
+  };
 }
 
 export const articleMediaApi = new ArticleMediaApi();
