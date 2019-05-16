@@ -137,7 +137,7 @@ public class ArticleMediaServices {
                 // We delete file previous file
                 Storage storage = StorageOptions.getDefaultInstance().getService();
 
-                BlobId blobId = BlobId.of("epe-m-vibe", articleMediaName);
+                BlobId blobId = BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + article.getTitle() + "/" + articleMediaName);
                 storage.delete(blobId);
 
                 // We create the new one

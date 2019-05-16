@@ -18,7 +18,10 @@ export class VibeCard extends React.Component<IVibeCardProps> {
       <Card data-component="vibe-card">
         <Link to={`/article/${this.article.id}`}>
           <CardActionArea>
-            <CardMedia className="media" image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg" />
+            <CardMedia
+              className="media"
+              image="https://image.freepik.com/free-photo/creative-design-made-with-blue-orange-paper_23-2147981636.jpg"
+            />
           </CardActionArea>
         </Link>
         <CardContent className="content">

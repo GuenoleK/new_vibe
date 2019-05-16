@@ -46,14 +46,12 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
               </Typography>
             </CardContent>
             <div className="media-button-zone">
-              {this.props.media && (
-                <div className="audio-buttons">
-                  {this.PlayPauseIcon}
-                  <IconButton onClick={this.stopMusic} aria-label="Stop">
-                    <StopIcon />
-                  </IconButton>
-                </div>
-              )}
+              <div className="audio-buttons">
+                {this.PlayPauseIcon}
+                <IconButton disabled={this.media === undefined} onClick={this.stopMusic} aria-label="Stop">
+                  <StopIcon />
+                </IconButton>
+              </div>
             </div>
           </div>
           {/* <CardMedia className="media" image="../static/images/Music-icon.png" /> */}
@@ -77,13 +75,13 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   get PlayPauseIcon() {
     if (this.isMusicPlaying) {
       return (
-        <IconButton onClick={this.pauseMusic} aria-label="Pause">
+        <IconButton disabled={this.media === undefined} onClick={this.pauseMusic} aria-label="Pause">
           <PauseIcon />
         </IconButton>
       );
     }
     return (
-      <IconButton onClick={this.playMusic} aria-label="Play">
+      <IconButton disabled={this.media === undefined} onClick={this.playMusic} aria-label="Play">
         <PlayArrowIcon />
       </IconButton>
     );
