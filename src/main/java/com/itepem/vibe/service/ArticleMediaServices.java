@@ -1,18 +1,19 @@
 package com.itepem.vibe.service;
 
+import com.google.cloud.storage.*;
 import com.itepem.vibe.domain.*;
 import com.itepem.vibe.repository.*;
-
 import com.itepem.vibe.security.SecurityUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Base64;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Service class for Article Medias.
@@ -40,6 +41,7 @@ public class ArticleMediaServices {
 
     /**
      * We load an article media list for a given article
+     *
      * @param articleId
      * @return
      */
@@ -76,13 +78,41 @@ public class ArticleMediaServices {
                 ExtendedUser extendedUser = extendedUserRepository.findByUserId(user.getId());
                 articleMedia.setUser(user);
                 articleMedia = articleMediaRepository.save(articleMedia);
+
                 // We create the associated folder
-                File fileToSave = new File("D:\\zz_perso\\vibe-files\\" + extendedUser.getCurrentStructure().getName() + "\\" + article.getTitle() + "\\" + articleMediaFile.getOriginalFilename());
-                articleMediaFile.transferTo(fileToSave);
+                // If you don't specify credentials when constructing the client, the client library will
+                // look for credentials via the environment variable GOOGLE_APPLICATION_CREDENTIALS.
+                Storage storage = StorageOptions.getDefaultInstance().getService();
+
+                BlobId blobId = BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + article.getTitle() + "/" + articleMediaFile.getOriginalFilename());
+                BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(articleMediaFile.getContentType()).build();
+                Blob blob = storage.create(blobInfo, articleMediaFile.getBytes());
             }
         }
 
         return articleMedia;
+    }
+
+    public String getArticleMediaSrcFile(Long articleMediaId) {
+        ArticleMedia articleMedia = articleMediaRepository.getOne(articleMediaId);
+
+        // Instantiate a Google Cloud Storage client
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        Optional<String> userLogin = SecurityUtils.getCurrentUserLogin();
+
+        if (userLogin.isPresent()) {
+            Optional<User> optionalUser = userRepository.findOneByLogin(userLogin.get());
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                ExtendedUser extendedUser = extendedUserRepository.findByUserId(user.getId());
+                Blob blob = storage.get(BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + articleMedia.getArticle().getTitle() + "/" + articleMedia.getName()));
+                String mediaSrc = "data:" + blob.getContentType() + ";base64," + Base64.getEncoder().encodeToString(blob.getContent());
+                return mediaSrc;
+            }
+        }
+
+        return null;
     }
 
     public ArticleMedia updateArticleMedia(final MultipartFile articleMediaFile, final Long articleMediaId) throws IOException {
@@ -105,12 +135,16 @@ public class ArticleMediaServices {
                 articleMedia = articleMediaRepository.save(articleMedia);
 
                 // We delete file previous file
-                File fileToDelete = new File("D:\\zz_perso\\vibe-files\\" + extendedUser.getCurrentStructure().getName() + "\\" + article.getTitle() + "\\" + articleMediaName);
-                fileToDelete.delete();
+                Storage storage = StorageOptions.getDefaultInstance().getService();
+
+                BlobId blobId = BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + article.getTitle() + "/" + articleMediaName);
+                storage.delete(blobId);
 
                 // We create the new one
-                File fileToSave = new File("D:\\zz_perso\\vibe-files\\" + extendedUser.getCurrentStructure().getName() + "\\" + article.getTitle() + "\\" + articleMediaFile.getOriginalFilename());
-                articleMediaFile.transferTo(fileToSave);
+
+                BlobId newBlobId = BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + article.getTitle() + "/" + articleMediaFile.getOriginalFilename());
+                BlobInfo blobInfo = BlobInfo.newBuilder(newBlobId).setContentType(articleMediaFile.getContentType()).build();
+                Blob blob = storage.create(blobInfo, articleMediaFile.getBytes());
             }
         }
 

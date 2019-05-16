@@ -1,4 +1,6 @@
 package com.itepem.vibe.web.rest;
+
+import com.google.cloud.storage.Blob;
 import com.itepem.vibe.domain.ArticleMedia;
 import com.itepem.vibe.repository.ArticleMediaRepository;
 import com.itepem.vibe.service.ArticleMediaServices;
@@ -7,17 +9,14 @@ import com.itepem.vibe.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -100,6 +99,11 @@ public class ArticleMediaResource {
     public List<ArticleMedia> getAllArticleMedias() {
         log.debug("REST request to get all ArticleMedias");
         return articleMediaRepository.findAll();
+    }
+    @GetMapping("/article-media/file/src/{articleMediaId}")
+    public String getArticleMediaSrcFile(@PathVariable Long articleMediaId) {
+        log.debug("REST request to get the article media file");
+        return articleMediaServices.getArticleMediaSrcFile(articleMediaId);
     }
 
     @GetMapping("/article-media/article/{articleId}")

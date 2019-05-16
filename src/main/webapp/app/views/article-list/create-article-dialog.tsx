@@ -4,7 +4,7 @@ import { articleApi } from 'app/api/article-api';
 import { observable, toJS, action } from 'mobx';
 import Dropzone from 'react-dropzone';
 import * as ArticleInterface from 'app/shared/model/article.model';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Fab } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import { articleStore } from 'app/stores/article-store';
 import { userStore } from 'app/stores/user-store';
@@ -70,9 +70,9 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
                 {({ getRootProps, getInputProps, isDragActive }) => (
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <Button size="small" variant="extendedFab" color="primary">
+                    <Fab size="small" variant="extended" color="primary">
                       Charger
-                    </Button>
+                    </Fab>
                     {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
                   </div>
                 )}
@@ -86,9 +86,9 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
                 {({ getRootProps, getInputProps, isDragActive }) => (
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <Button size="small" variant="extendedFab" color="primary">
+                    <Fab size="small" variant="extended" color="primary">
                       Charger
-                    </Button>
+                    </Fab>
                     {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
                   </div>
                 )}

@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const writeFilePlugin = require('write-file-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
@@ -76,7 +75,6 @@ module.exports = options =>
         : new SimpleProgressWebpackPlugin({
             format: options.stats === 'minimal' ? 'compact' : 'expanded'
           }),
-      new FriendlyErrorsWebpackPlugin(),
       new BrowserSyncPlugin(
         {
           host: 'localhost',

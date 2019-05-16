@@ -2,7 +2,6 @@ import React from 'react';
 import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 import { observer } from 'mobx-react';
 import { AudioCard } from 'app/components/article/audio-card/audio-card';
-import { articleMediaUtils } from 'app/utils/ArticleMediaUtils';
 import './article-audio-list.scss';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;

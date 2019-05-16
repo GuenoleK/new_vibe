@@ -6,6 +6,10 @@
     display: flex;
     width: 360px;
 
+    .content {
+      width: 100%;
+    }
+
     .media {
       width: 145px;
     }
@@ -17,6 +21,9 @@
 
   .audio-name {
     text-transform: capitalize;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .audio-upload-dropzone {

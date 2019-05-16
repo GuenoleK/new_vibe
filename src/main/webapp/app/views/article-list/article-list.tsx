@@ -3,7 +3,7 @@ import { CardContainer } from 'app/components/layout-components/card-container/c
 import { articleApi } from 'app/api/article-api';
 import { articleStore } from 'app/stores/article-store';
 import { observer } from 'mobx-react';
-import { Button } from '@material-ui/core';
+import { Button, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import './style.scss';
 import { observable } from 'mobx';
@@ -20,10 +20,10 @@ export class ArticleListView extends React.Component {
       <div data-component="article-list">
         <CardContainer />
         <div id="create-article-button" className="hide">
-          <Button onClick={this.openPopin} className="create-button" color="primary" variant="extendedFab">
+          <Fab onClick={this.openPopin} className="create-button" color="primary" variant="extended">
             <AddIcon className="add-icon" />
             <div className="button-text">Créer un article</div>
-          </Button>
+          </Fab>
           <CreateArticleDialog isPopinOpen={this.isPopinOpen} closePopin={this.closePopin} />
         </div>
       </div>
