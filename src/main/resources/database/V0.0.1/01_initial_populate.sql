@@ -28,6 +28,9 @@ insert into role (id, name) values
 select * from user_role_structure
 
 -- DROP UNIQUE INDEXES AND UNIQUE CONSTRAINTS
+alter table user_role_structure drop constraint ux_user_role_structure_user_id;
+alter table user_role_structure drop constraint ux_user_role_structure_role_id;
+
 insert into user_role_structure (id, user_id, role_id, structure_id) values
 (0, 3, 0, 0),
 (1, 3, 0, 1),
