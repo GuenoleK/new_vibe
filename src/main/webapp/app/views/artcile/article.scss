@@ -1,5 +1,43 @@
 [data-component='vibe-article'] {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
+  @media (min-width: 1000px) {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+
+    [data-component='article-card'] {
+      width: 40%;
+      margin-right: 15px;
+    }
+
+    .audio-list {
+      width: 30%;
+    }
+  }
+
+  @media (max-width: 999px) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 15px 0;
+
+    [data-component='article-card'],
+    .audio-list {
+      width: 90%;
+    }
+
+    .audio-list {
+      .list {
+        flex-flow: row wrap !important;
+
+        [data-component='audio-card'] {
+          width: 100%;
+          margin: 10px 20px;
+
+          @media (min-width: 750px) {
+            width: 40%;
+          }
+        }
+      }
+    }
+  }
 }
