@@ -6,13 +6,11 @@
   padding-bottom: 30px;
   display: flex;
   flex-wrap: wrap;
-  margin-right: auto;
-  margin-left: auto;
-  width: 80%;
   justify-content: center;
 
   > div {
-    width: 90%;
-    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap;
   }
 }

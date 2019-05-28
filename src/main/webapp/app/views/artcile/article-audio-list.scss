@@ -1,9 +1,11 @@
-[data-component='audio-list'] {
-  .list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    padding-top: 15px;
+.audio-list {
+  [data-component='audio-list'] {
+    .list {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      padding-top: 15px;
+    }
   }
 }
