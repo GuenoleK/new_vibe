@@ -20,13 +20,27 @@ export class ArticleListView extends React.Component {
       <div data-component="article-list">
         <CardContainer />
         <div id="create-article-button" className="hide">
-          <Fab onClick={this.openPopin} className="create-button" color="primary" variant="extended">
-            <AddIcon className="add-icon" />
-            <div className="button-text">Créer un article</div>
-          </Fab>
+          {this.CreateArticleButton}
           <CreateArticleDialog isPopinOpen={this.isPopinOpen} closePopin={this.closePopin} />
         </div>
       </div>
+    );
+  }
+
+  get CreateArticleButton() {
+    if (window.innerWidth > 999) {
+      return (
+        <Fab onClick={this.openPopin} className="create-button" color="primary" variant="extended">
+          <AddIcon className="add-icon" />
+          <div className="button-text">Créer un article</div>
+        </Fab>
+      );
+    }
+
+    return (
+      <Fab onClick={this.openPopin} color="primary">
+        <AddIcon className="add-icon" />
+      </Fab>
     );
   }
 
