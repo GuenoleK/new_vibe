@@ -30,6 +30,10 @@ select * from user_role_structure
 -- DROP UNIQUE INDEXES AND UNIQUE CONSTRAINTS
 alter table user_role_structure drop constraint ux_user_role_structure_user_id;
 alter table user_role_structure drop constraint ux_user_role_structure_role_id;
+alter table user_role_structure drop constraint ux_user_role_structure_structure_id;
+
+-- TODO: AJOUTER UNE CLÉ UNIQUE SUR LE TRIPLET USERID/ROLEID/STRUCTUREID
+-- UN UTILISATEUR A UN ROLE PAR STRUCTURR
 
 insert into user_role_structure (id, user_id, role_id, structure_id) values
 (0, 3, 0, 0),
