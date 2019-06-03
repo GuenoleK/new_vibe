@@ -60,20 +60,22 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
             <Typography className={`${classes.title} vibe-title`} variant="h6" color="inherit" noWrap>
               Vibe
             </Typography>
-            <div data-component="search-bar" className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+            {userStore.isConnected && (
+              <div data-component="search-bar" className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Rechercher..."
+                  onChange={this.searchArticle}
+                  className="search-input"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                  }}
+                />
               </div>
-              <InputBase
-                placeholder="Rechercher..."
-                onChange={this.searchArticle}
-                className="search-input"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
-            </div>
+            )}
             <div className="after-bar-separator" />
             {userStore.isConnected && (
               <IconButton className="header-account-icon-button" onClick={this.openMenu}>
