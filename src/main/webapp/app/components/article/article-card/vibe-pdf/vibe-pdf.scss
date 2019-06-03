@@ -2,7 +2,38 @@
   .react-pdf__Document {
     .react-pdf__Page {
       > canvas {
+        user-select: initial;
         width: 100% !important;
+      }
+
+      @media (max-width: 399px) {
+        > canvas {
+          height: 430px !important;
+        }
+      }
+
+      @media (min-width: 400px) {
+        > canvas {
+          height: 500px !important;
+        }
+      }
+
+      @media (min-width: 700px) {
+        > canvas {
+          height: 560px !important;
+        }
+      }
+
+      @media (min-width: 880px) {
+        > canvas {
+          height: 690px !important;
+        }
+      }
+
+      @media (min-width: 1000px) {
+        > canvas {
+          height: 530px !important;
+        }
       }
     }
   }

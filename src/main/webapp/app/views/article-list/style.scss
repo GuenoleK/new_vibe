@@ -25,16 +25,51 @@
   > div {
     > div {
       max-width: unset;
-      width: 600px;
+    }
+  }
+
+  @media (max-width: 750px) {
+    > div {
+      > div {
+        width: 93%;
+        margin: 3%;
+
+        .dialog-content {
+          padding: 15px;
+
+          .create-article-content {
+            .article-name {
+              width: unset;
+            }
+
+            .file-upload-zone {
+              flex-direction: column;
+              align-items: flex-start;
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 751px) {
+    > div {
+      > div {
+        width: 600px;
+
+        .create-article-content {
+          .article-name {
+            width: 40%;
+          }
+        }
+      }
     }
   }
 
   .create-article-content {
     display: flex;
     flex-direction: column;
-    .article-name {
-      width: 40%;
-    }
 
     .file-upload-zone {
       display: flex;
