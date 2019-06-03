@@ -1,12 +1,8 @@
 package com.itepem.vibe.service;
 
 import com.itepem.vibe.config.Constants;
-import com.itepem.vibe.domain.Authority;
-import com.itepem.vibe.domain.ExtendedUser;
-import com.itepem.vibe.domain.User;
-import com.itepem.vibe.repository.AuthorityRepository;
-import com.itepem.vibe.repository.ExtendedUserRepository;
-import com.itepem.vibe.repository.UserRepository;
+import com.itepem.vibe.domain.*;
+import com.itepem.vibe.repository.*;
 import com.itepem.vibe.security.AuthoritiesConstants;
 import com.itepem.vibe.security.SecurityUtils;
 import com.itepem.vibe.service.dto.UserDTO;
@@ -39,6 +35,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final RoleRepository roleRepository;
+
+    private final UserRoleStructureRepository userRoleStructureRepository;
+
+    private final StructureRepository structureRepository;
+
     private final ExtendedUserRepository extendedUserRepository;
 
     private final PasswordEncoder passwordEncoder;
@@ -47,12 +49,19 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager, ExtendedUserRepository extendedUserRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       AuthorityRepository authorityRepository, CacheManager cacheManager,
+                       ExtendedUserRepository extendedUserRepository,
+                       RoleRepository roleRepository, UserRoleStructureRepository userRoleStructureRepository,
+                       StructureRepository structureRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
         this.extendedUserRepository = extendedUserRepository;
+        this.roleRepository = roleRepository;
+        this.userRoleStructureRepository = userRoleStructureRepository;
+        this.structureRepository = structureRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -126,6 +135,21 @@ public class UserService {
         // After saving the user, we save the extended user
         createExtendedUser(newUser);
 
+        // We associate the user to a structure
+        UserRoleStructure userRoleStructure = new UserRoleStructure();
+        userRoleStructure.setUser(newUser);
+
+        // We get the wanted role (HERE IT WILL BE "EDITOR")
+        Role role = roleRepository.getOne(1L);
+        userRoleStructure.setRole(role);
+
+        // We give the role to the given structure (P&W Team by default by the moment)
+        Structure structure = structureRepository.getOne(0L);
+        userRoleStructure.setStructure(structure);
+
+        // We save the User Role Structure
+        userRoleStructureRepository.save(userRoleStructure);
+
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -134,6 +158,10 @@ public class UserService {
     private void createExtendedUser(User user) {
         ExtendedUser extUser = new ExtendedUser();
         extUser.setUser(user);
+
+        // By default we will give the P&W Team structure
+        Structure structure = structureRepository.getOne(0L);
+        extUser.setCurrentStructure(structure);
         extendedUserRepository.save(extUser);
     }
 
