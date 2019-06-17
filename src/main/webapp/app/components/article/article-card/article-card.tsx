@@ -1,8 +1,7 @@
 import React from 'react';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import './article-card.scss';
-import { VibePdfDocument } from 'app/components/article/article-card/vibe-pdf/vibe-pdf';
-import { computed } from 'mobx';
+import { computed, autorun, observable } from 'mobx';
 import { articleStore } from 'app/stores/article-store';
 import { observer } from 'mobx-react';
 import Dropzone from 'react-dropzone';
@@ -14,10 +13,23 @@ import { articleApi } from 'app/api/article-api';
 
 @observer
 export class ArticleCard extends React.Component {
+  @observable
+  pdfFileSrc: any;
+
+  reaction = autorun(async () => {
+    if (this.pdfMedia) {
+      // Mettre une sécurité de connexion ici et mettre un sécurité d'appartenance (fichier) dans le back
+      this.pdfFileSrc = await articleMediaApi.getArticleMediaSrcFile(this.pdfMedia.id);
+      console.log(encodeURI(this.pdfFileSrc));
+    }
+  });
+
   render() {
     return (
       <Card data-component="article-card">
-        <VibePdfDocument />
+        <div className="responsive-iframe">
+          <iframe src={encodeURI(this.pdfFileSrc)} />
+        </div>
         {this.article && (
           <CardContent className="content">
             <Typography gutterBottom variant="h5" component="h2">
