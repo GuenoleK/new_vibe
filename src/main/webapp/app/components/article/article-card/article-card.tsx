@@ -20,7 +20,6 @@ export class ArticleCard extends React.Component {
     if (this.pdfMedia) {
       // Mettre une sécurité de connexion ici et mettre un sécurité d'appartenance (fichier) dans le back
       this.pdfFileSrc = await articleMediaApi.getArticleMediaSrcFile(this.pdfMedia.id);
-      console.log(encodeURI(this.pdfFileSrc));
     }
   });
 
