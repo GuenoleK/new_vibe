@@ -19,7 +19,8 @@ export class ArticleCard extends React.Component {
   reaction = autorun(async () => {
     if (this.pdfMedia) {
       // Mettre une sécurité de connexion ici et mettre un sécurité d'appartenance (fichier) dans le back
-      this.pdfFileSrc = await articleMediaApi.getArticleMediaSrcFile(this.pdfMedia.id);
+      const response = await articleMediaApi.getArticleMediaSrcFile(this.pdfMedia.id);
+      this.pdfFileSrc = encodeURI(response);
     }
   });
 
@@ -27,7 +28,9 @@ export class ArticleCard extends React.Component {
     return (
       <Card data-component="article-card">
         <div className="responsive-iframe">
-          <iframe src={encodeURI(this.pdfFileSrc)} />
+          <object data={this.pdfFileSrc} type="application/pdf">
+            <iframe src={`https://docs.google.com/viewer?url=${this.pdfFileSrc}&embedded=true`} />
+          </object>
         </div>
         {this.article && (
           <CardContent className="content">
