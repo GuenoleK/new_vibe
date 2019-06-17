@@ -98,6 +98,8 @@ public class ArticleMediaServices {
 
         // Instantiate a Google Cloud Storage client
         Storage storage = StorageOptions.getDefaultInstance().getService();
+        StorageOptions option = StorageOptions.getDefaultInstance();
+        String projectId = option.getProjectId();
 
         Optional<String> userLogin = SecurityUtils.getCurrentUserLogin();
 
@@ -107,8 +109,7 @@ public class ArticleMediaServices {
                 User user = optionalUser.get();
                 ExtendedUser extendedUser = extendedUserRepository.findByUserId(user.getId());
                 Blob blob = storage.get(BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + articleMedia.getArticle().getTitle() + "/" + articleMedia.getName()));
-                String mediaSrc = "data:" + blob.getContentType() + ";base64," + Base64.getEncoder().encodeToString(blob.getContent());
-                return mediaSrc;
+                return "https://storage.cloud.google.com/" + blob.getBucket() + "/" + blob.getName();
             }
         }
 
