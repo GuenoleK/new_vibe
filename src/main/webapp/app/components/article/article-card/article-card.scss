@@ -7,23 +7,34 @@
     height: 550px;
   }
 
-  .responsive-iframe {
-    position: relative;
-    height: 0;
-    overflow: hidden;
-    height: 100%;
+  .pdf-zone {
+    flex-basis: 100%;
 
-    object {
+    .responsive-iframe {
+      position: relative;
+      height: 0;
+      overflow: hidden;
       height: 100%;
-      width: 100%;
-    }
 
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      object {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      object,
+      embed,
+      iframe {
+        height: 100%;
+        width: 100%;
+      }
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
     }
   }
 

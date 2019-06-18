@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Card, CardContent, Typography, CircularProgress } from '@material-ui/core';
 import './article-card.scss';
 import { computed, autorun, observable } from 'mobx';
 import { articleStore } from 'app/stores/article-store';
@@ -16,21 +16,24 @@ export class ArticleCard extends React.Component {
   @observable
   pdfFileSrc: any;
 
+  @observable
+  isLoadingSrcFile = true;
+
   reaction = autorun(async () => {
     if (this.pdfMedia) {
       // Mettre une sécurité de connexion ici et mettre un sécurité d'appartenance (fichier) dans le back
       const response = await articleMediaApi.getArticleMediaSrcFile(this.pdfMedia.id);
       this.pdfFileSrc = encodeURI(response);
+      this.isLoadingSrcFile = false;
     }
   });
 
   render() {
     return (
       <Card data-component="article-card">
-        <div className="responsive-iframe">
-          <object data={this.pdfFileSrc} type="application/pdf">
-            <iframe src={`https://docs.google.com/viewer?url=${this.pdfFileSrc}&embedded=true`} />
-          </object>
+        <div className="pdf-zone">
+          {this.isLoadingSrcFile && <CircularProgress />}
+          {!this.isLoadingSrcFile && <div className="responsive-iframe">{this.renderPdfZone()}</div>}
         </div>
         {this.article && (
           <CardContent className="content">
@@ -55,6 +58,17 @@ export class ArticleCard extends React.Component {
           </div>
         )}
       </Card>
+    );
+  }
+
+  renderPdfZone() {
+    return (
+      <object data={this.pdfFileSrc} type="application/pdf">
+        Votre navigateur ne supporte pas les PDFs.
+        <a href={this.pdfFileSrc} target="_blank">
+          Télécharger le PDF
+        </a>
+      </object>
     );
   }
 
