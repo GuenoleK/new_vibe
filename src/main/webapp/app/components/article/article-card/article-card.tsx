@@ -1,11 +1,14 @@
+// PDF icon from https://icons8.com/icon/set/pdf/material
 import React from 'react';
-import { Card, CardContent, Typography, CircularProgress } from '@material-ui/core';
+import { Card, CardContent, Typography, CircularProgress, Button } from '@material-ui/core';
 import './article-card.scss';
 import { computed, autorun, observable } from 'mobx';
 import { articleStore } from 'app/stores/article-store';
 import { observer } from 'mobx-react';
 import Dropzone from 'react-dropzone';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import OpenInNew from '@material-ui/icons/OpenInNew';
 import { articleMediaStore } from 'app/stores/article-media-store';
 import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { articleMediaApi } from 'app/api/article-media-api';
@@ -28,11 +31,15 @@ export class ArticleCard extends React.Component {
     }
   });
 
+  componentDidMount() {
+    window.scroll(0, 0);
+  }
+
   render() {
     return (
       <Card data-component="article-card">
         <div className="pdf-zone">
-          {this.isLoadingSrcFile && <CircularProgress />}
+          {this.isLoadingSrcFile && this.LoadingComponent}
           {!this.isLoadingSrcFile && <div className="responsive-iframe">{this.renderPdfZone()}</div>}
         </div>
         {this.article && (
@@ -61,16 +68,38 @@ export class ArticleCard extends React.Component {
     );
   }
 
+  get LoadingComponent() {
+    return (
+      <div className="loading-component">
+        <CircularProgress className="circular-progress" />
+        <div className="loading-text">Chargement...</div>
+      </div>
+    );
+  }
+
   renderPdfZone() {
     return (
       <object data={this.pdfFileSrc} type="application/pdf">
-        Votre navigateur ne supporte pas les PDFs.
-        <a href={`https://docs.google.com/gview?url=${this.pdfFileSrc}`} target="_blank">
-          Télécharger le PDF
-        </a>
+        <div className="pdf-mobile-zone">
+          <p className="zone-description-text">Ouvrir le fichier des paroles</p>
+          <ArrowDownward className="down-arrow" />
+          <img className="pdf-icon" src="https://img.icons8.com/material/96/000000/pdf-2.png" />
+          <Button className="open-button" color="primary" onClick={this.openPdf}>
+            PAROLES.PDF
+            <OpenInNew className="open-in-new-icon" />
+          </Button>
+        </div>
       </object>
     );
   }
+
+  openPdf = () => {
+    window.open(
+      encodeURI(`https://docs.google.com/gview?url=${this.pdfFileSrc}`),
+      '_blank',
+      'fullscreen=yes,location=yes,EnableViewPortScale=yes'
+    );
+  };
 
   @computed
   get article() {
