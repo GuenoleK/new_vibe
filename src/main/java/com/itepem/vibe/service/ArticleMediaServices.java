@@ -109,7 +109,7 @@ public class ArticleMediaServices {
                 User user = optionalUser.get();
                 ExtendedUser extendedUser = extendedUserRepository.findByUserId(user.getId());
                 Blob blob = storage.get(BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + articleMedia.getArticle().getTitle() + "/" + articleMedia.getName()));
-                return "https://storage.cloud.google.com/" + blob.getBucket() + "/" + blob.getName();
+                return "https://storage.googleapis.com/" + blob.getBucket() + "/" + blob.getName();
             }
         }
 

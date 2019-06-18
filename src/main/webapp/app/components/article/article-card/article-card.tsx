@@ -65,7 +65,7 @@ export class ArticleCard extends React.Component {
     return (
       <object data={this.pdfFileSrc} type="application/pdf">
         Votre navigateur ne supporte pas les PDFs.
-        <a href={this.pdfFileSrc} target="_blank">
+        <a href={`https://docs.google.com/gview?url=${this.pdfFileSrc}`} target="_blank">
           Télécharger le PDF
         </a>
       </object>
