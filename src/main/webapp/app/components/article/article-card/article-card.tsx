@@ -109,7 +109,7 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
           <ArrowDownward className="down-arrow" />
           <img className="pdf-icon" src="https://img.icons8.com/material/96/000000/pdf-2.png" />
           <Button className="open-button" color="primary" onClick={this.openPdf}>
-            PAROLES.PDF
+            VOIR LES PAROLES
             <OpenInNew className="open-in-new-icon" />
           </Button>
         </div>
