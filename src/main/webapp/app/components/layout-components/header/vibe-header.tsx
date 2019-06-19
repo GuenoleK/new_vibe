@@ -53,7 +53,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
 
     return (
       <div className={classes.root} data-component="vibe-header">
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <IconButtonLink link={this.homeLink} buttonClassName={classes.menuButton}>
               <HomeIcon />
@@ -92,6 +92,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
   }
 
   searchArticle = event => {
+    window.scroll(0, 0);
     const results = this.fuse.search(event.target.value);
 
     // tslint:disable-next-line: prefer-conditional-expression

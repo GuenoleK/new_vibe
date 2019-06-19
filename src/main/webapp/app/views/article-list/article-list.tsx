@@ -49,12 +49,18 @@ export class ArticleListView extends React.Component {
   }
 
   openPopin = () => {
-    this.isButtonClicked = true;
+    if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
+      this.isButtonClicked = true;
+      setTimeout(() => {
+        this.isPopinOpen = true;
+      }, 100);
 
-    setTimeout(() => {
+      setTimeout(() => {
+        this.isButtonClicked = false;
+      }, 610);
+    } else {
       this.isPopinOpen = true;
-      this.isButtonClicked = false;
-    }, 260);
+    }
   };
 
   closePopin = () => {
@@ -73,7 +79,7 @@ export class ArticleListView extends React.Component {
     setTimeout(() => {
       const t = document.getElementById('create-article-button');
       t.className = 'show';
-    }, 801);
+    }, 250);
   }
 
   componentWillUnmount() {
