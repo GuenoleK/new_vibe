@@ -16,11 +16,14 @@ export class ArticleListView extends React.Component {
   @observable
   isPopinOpen = false;
 
+  @observable
+  isButtonClicked = false;
+
   render() {
     return (
       <div data-component="article-list">
         <CardContainer />
-        <div id="create-article-button" className="hide">
+        <div id="create-article-button" className="hide" data-is-clicked={this.isButtonClicked}>
           {this.CreateArticleButton}
           <CreateArticleDialog isPopinOpen={this.isPopinOpen} closePopin={this.closePopin} />
         </div>
@@ -46,7 +49,12 @@ export class ArticleListView extends React.Component {
   }
 
   openPopin = () => {
-    this.isPopinOpen = true;
+    this.isButtonClicked = true;
+
+    setTimeout(() => {
+      this.isPopinOpen = true;
+      this.isButtonClicked = false;
+    }, 260);
   };
 
   closePopin = () => {
@@ -65,7 +73,7 @@ export class ArticleListView extends React.Component {
     setTimeout(() => {
       const t = document.getElementById('create-article-button');
       t.className = 'show';
-    }, 250);
+    }, 801);
   }
 
   componentWillUnmount() {
