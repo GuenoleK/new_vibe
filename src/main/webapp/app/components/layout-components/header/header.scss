@@ -3,9 +3,7 @@
     cursor: default;
     user-select: none;
     font-size: 1.25rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    width: 100%;
   }
 
   [data-component='search-bar'] {
@@ -13,10 +11,6 @@
     margin-left: auto;
     transition: background-color 0.5s;
     border-radius: 20px;
-  }
-
-  .header-separator {
-    width: 80%;
   }
 
   .header-account-icon {
