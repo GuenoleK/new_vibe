@@ -15,6 +15,7 @@ import { AUTH_TOKEN_KEY } from 'app/api/login-api';
 import { articleStore } from 'app/stores/article-store';
 import { orderBy } from 'lodash';
 import Fuse from 'fuse.js';
+import { headerStore } from 'app/stores/header-store';
 
 interface ISearchAppBarProps {
   classes: any;
@@ -57,25 +58,25 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
             <IconButtonLink link={this.homeLink} buttonClassName={classes.menuButton}>
               <HomeIcon />
             </IconButtonLink>
-            <Typography className={`${classes.title} vibe-title`} variant="h6" color="inherit" noWrap>
-              Vibe
-            </Typography>
-            {userStore.isConnected && (
-              <div data-component="search-bar" className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
+            {!headerStore.canShowSearchBar && <div className="header-title">{headerStore.headerTitle}</div>}
+            {!headerStore.canShowSearchBar && <div className="header-separator" />}
+            {headerStore.canShowSearchBar &&
+              userStore.isConnected && (
+                <div data-component="search-bar" className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder="Rechercher..."
+                    onChange={this.searchArticle}
+                    className="search-input"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput
+                    }}
+                  />
                 </div>
-                <InputBase
-                  placeholder="Rechercher..."
-                  onChange={this.searchArticle}
-                  className="search-input"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput
-                  }}
-                />
-              </div>
-            )}
+              )}
             <div className="after-bar-separator" />
             {userStore.isConnected && (
               <IconButton className="header-account-icon-button" onClick={this.openMenu}>

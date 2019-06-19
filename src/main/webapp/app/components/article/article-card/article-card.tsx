@@ -14,16 +14,21 @@ import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { articleMediaApi } from 'app/api/article-media-api';
 import { articleApi } from 'app/api/article-api';
 
+interface IArticleCardProps {
+  isLoadingData: boolean;
+}
+
 @observer
-export class ArticleCard extends React.Component {
+export class ArticleCard extends React.Component<IArticleCardProps> {
   @observable
   pdfFileSrc: any;
 
   @observable
-  isLoadingSrcFile = true;
+  isLoadingSrcFile = false;
 
   reaction = autorun(async () => {
-    if (this.pdfMedia) {
+    if (!this.isLoadingData && this.pdfMedia) {
+      this.isLoadingSrcFile = true;
       // Mettre une sécurité de connexion ici et mettre un sécurité d'appartenance (fichier) dans le back
       const response = await articleMediaApi.getArticleMediaSrcFile(this.pdfMedia.id);
       this.pdfFileSrc = encodeURI(response);
@@ -38,34 +43,53 @@ export class ArticleCard extends React.Component {
   render() {
     return (
       <Card data-component="article-card">
-        <div className="pdf-zone">
-          {this.isLoadingSrcFile && this.LoadingComponent}
-          {!this.isLoadingSrcFile && <div className="responsive-iframe">{this.renderPdfZone()}</div>}
-        </div>
         {this.article && (
           <CardContent className="content">
             <Typography gutterBottom variant="h5" component="h2">
-              {this.article.title}
+              Paroles
             </Typography>
             <Typography component="p">{this.article.description}</Typography>
           </CardContent>
         )}
-        {!this.pdfMedia && (
-          <div className="lyrics-upload-dropzone">
-            <Dropzone multiple={false} accept="application/pdf" onDrop={this.onDrop}>
-              {({ getRootProps, getInputProps, isDragActive }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <CloudUploadIcon className="upload-icon" />
-                  <div>Cliquer ou déposer pour charger le fichier PDF</div>
-                  {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
-                </div>
-              )}
-            </Dropzone>
-          </div>
-        )}
+        <div className="title-divider" />
+        <div className="pdf-zone">
+          {this.isLoadingSrcFile && this.LoadingComponent}
+          {!this.isLoadingData &&
+            !this.isLoadingSrcFile &&
+            this.pdfMedia && <div className="responsive-iframe">{this.renderPdfZone()}</div>}
+          {!this.isLoadingData && !this.pdfMedia && this.UploadComponent}
+        </div>
       </Card>
     );
+  }
+
+  @computed
+  get isLoadingData() {
+    return this.props.isLoadingData;
+  }
+
+  get UploadComponent() {
+    return (
+      <div className="lyrics-upload-dropzone">
+        <Dropzone multiple={false} accept="application/pdf" onDrop={this.onDrop}>
+          {({ getRootProps, getInputProps, isDragActive }) => (
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              <CloudUploadIcon className="upload-icon" />
+              <div className="upload-description-text">{this.uploadDescriptionText}</div>
+              {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
+            </div>
+          )}
+        </Dropzone>
+      </div>
+    );
+  }
+
+  get uploadDescriptionText() {
+    if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
+      return 'Appuyer pour charger le fichier de paroles (PDF)';
+    }
+    return 'Cliquer ou déposer pour charger le fichier de paroles (PDF)';
   }
 
   get LoadingComponent() {

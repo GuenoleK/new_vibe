@@ -9,6 +9,7 @@ import './style.scss';
 import { observable } from 'mobx';
 import { CreateArticleDialog } from './create-article-dialog';
 import { userStore } from 'app/stores/user-store';
+import { headerStore } from 'app/stores/header-store';
 
 @observer
 export class ArticleListView extends React.Component {
@@ -53,6 +54,10 @@ export class ArticleListView extends React.Component {
   };
 
   async componentDidMount() {
+    if (userStore.isConnected) {
+      headerStore.canShowSearchBar = true;
+    }
+
     window.scroll(0, 0);
     articleStore.articleList = await articleApi.getArticleListByStructureId(userStore.extendedUser.currentStructure.id);
     articleStore.searchableArticleList = articleStore.articleList;

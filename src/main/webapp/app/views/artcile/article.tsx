@@ -7,16 +7,20 @@ import { RouteComponentProps } from 'react-router';
 import { articleApi } from 'app/api/article-api';
 import { articleStore } from 'app/stores/article-store';
 import { articleMediaStore } from 'app/stores/article-media-store';
-import { computed, toJS } from 'mobx';
+import { computed, observable } from 'mobx';
 import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { AudioCardList } from './article-audio-list';
+import { headerStore } from 'app/stores/header-store';
 
 @observer
 export class ArticleView extends React.Component<RouteComponentProps<any>> {
+  @observable
+  isLoading = false;
+
   render() {
     return (
       <div data-component="vibe-article">
-        <ArticleCard />
+        <ArticleCard isLoadingData={this.isLoading} />
         <div className="audio-list">
           <AudioCardList audioList={this.audioList} />
         </div>
@@ -33,10 +37,14 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
     return this.props.match.params.id;
   }
   async componentDidMount() {
+    headerStore.canShowSearchBar = false;
     // Here call the web service that will give the file names
     if (this.articleId) {
+      this.isLoading = true;
       articleStore.article = await articleApi.getArticle(this.articleId);
       articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.articleId);
+      this.isLoading = false;
+      headerStore.headerTitle = articleStore.article.title;
     }
   }
 
