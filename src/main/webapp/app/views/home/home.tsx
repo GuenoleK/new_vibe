@@ -6,6 +6,7 @@ import React from 'react';
 import './home.scss';
 import { ButtonLink } from 'app/components/button-link/button-link';
 import { observable } from 'mobx';
+import { headerStore } from 'app/stores/header-store';
 
 @observer
 export class VibeHome extends React.Component {
@@ -56,6 +57,7 @@ export class VibeHome extends React.Component {
 
   componentWillMount() {
     userStore.clearUser();
+    headerStore.headerTitle = 'Vibe';
   }
 
   /**
@@ -64,10 +66,15 @@ export class VibeHome extends React.Component {
    */
   login = () => {
     this.isLoading = true;
-    loginApi.authenticate().then(() => {
-      window.location.reload();
-      this.isLoading = false;
-    });
+    loginApi
+      .authenticate()
+      .then(() => {
+        window.location.reload();
+        this.isLoading = false;
+      })
+      .catch(() => {
+        this.isLoading = false;
+      });
   };
 
   handleChange = name => event => {

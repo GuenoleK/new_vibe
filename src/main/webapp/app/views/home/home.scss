@@ -2,13 +2,15 @@
 .register-form {
   display: flex;
   flex-direction: column;
-  height: calc(100% - 15px);
   align-items: center;
   margin-top: 15px;
 }
 
 .login-form {
-  .loading-component {
+  justify-content: center;
+  height: calc(100% - 200px);
+
+  .loading-zone {
     margin-top: 35px;
   }
 
@@ -20,6 +22,7 @@
 }
 
 .register-form {
+  height: calc(100% - 15px);
   .language-select {
     margin-top: 16px;
     margin-bottom: 25px;
