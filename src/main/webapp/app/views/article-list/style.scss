@@ -16,6 +16,10 @@
     transform: scale(1);
   }
 
+  #create-article-button.show[data-is-clicked='true'] {
+    animation: button_bounce 0.8s;
+  }
+
   #create-article-button.hide {
     transform: scale(0);
   }
@@ -91,5 +95,18 @@
         }
       }
     }
+  }
+}
+
+@keyframes button_bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(0.7);
   }
 }
