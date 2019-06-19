@@ -53,6 +53,7 @@ export class ArticleListView extends React.Component {
   };
 
   async componentDidMount() {
+    window.scroll(0, 0);
     articleStore.articleList = await articleApi.getArticleListByStructureId(userStore.extendedUser.currentStructure.id);
     articleStore.searchableArticleList = articleStore.articleList;
 
