@@ -3,6 +3,9 @@
     cursor: default;
     user-select: none;
     font-size: 1.25rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   [data-component='search-bar'] {
@@ -13,7 +16,7 @@
   }
 
   .header-separator {
-    width: 100%;
+    width: 80%;
   }
 
   .header-account-icon {
