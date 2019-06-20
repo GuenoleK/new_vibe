@@ -2,7 +2,6 @@
 # Project Specific
 ######################
 /src/main/webapp/content/css/main.css
-/target/www/**
 /src/test/javascript/coverage/
 
 ######################
@@ -72,7 +71,9 @@ out/
 # Maven
 ######################
 /log/
-/target/
+target/*
+!target/vibe-*.war
+
 
 ######################
 # Gradle
@@ -84,7 +85,6 @@ out/
 # Package Files
 ######################
 *.jar
-*.war
 *.ear
 *.db
 

@@ -49,7 +49,7 @@ export class VibeHome extends React.Component {
           />
         </div>
         <div className="loading-zone" data-loading={this.isLoading}>
-          {this.isLoading && <CircularProgress className="circular-progress" />}
+          <CircularProgress className="circular-progress" />
         </div>
       </form>
     );
@@ -70,7 +70,6 @@ export class VibeHome extends React.Component {
       .authenticate()
       .then(() => {
         window.location.reload();
-        this.isLoading = false;
       })
       .catch(() => {
         this.isLoading = false;

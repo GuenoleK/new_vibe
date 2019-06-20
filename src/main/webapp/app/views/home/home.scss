@@ -12,6 +12,15 @@
 
   .loading-zone {
     margin-top: 35px;
+    transition: transform 0.2s;
+  }
+
+  .loading-zone[data-loading='true'] {
+    transform: scale(1);
+  }
+
+  .loading-zone[data-loading='false'] {
+    transform: scale(0);
   }
 
   .buttons {
