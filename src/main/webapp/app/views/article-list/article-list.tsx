@@ -12,6 +12,7 @@ import { userStore } from 'app/stores/user-store';
 import { headerStore } from 'app/stores/header-store';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 @observer
 export class ArticleListView extends React.Component {
@@ -28,13 +29,20 @@ export class ArticleListView extends React.Component {
     return (
       <div data-component="article-list" data-has-list={articleStore.articleList.length > 0}>
         {this.ArticleList}
-        {articleStore.articleList.length === 0 && <ArrowForwardIcon className="arrow-forward-icon" data-show-arrow={this.showArrow} />}
+        {articleStore.articleList.length === 0 && this.ArrowIcon}
         <div id="create-article-button" className="hide" data-is-clicked={this.isButtonClicked}>
           {this.CreateArticleButton}
           <CreateArticleDialog isPopinOpen={this.isPopinOpen} closePopin={this.closePopin} />
         </div>
       </div>
     );
+  }
+
+  get ArrowIcon() {
+    if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
+      return <ArrowForwardIcon className="arrow-forward-icon" data-show-arrow={this.showArrow} />;
+    }
+    return <ArrowDownwardIcon className="down-arrow" data-show-arrow={this.showArrow} />;
   }
 
   @computed
@@ -60,7 +68,7 @@ export class ArticleListView extends React.Component {
   }
 
   get CreateArticleButton() {
-    if (window.innerWidth > 999) {
+    if (!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
       return (
         <Fab onClick={this.openPopin} className="create-button" color="primary" variant="extended">
           <AddIcon className="add-icon" />

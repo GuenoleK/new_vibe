@@ -1,3 +1,5 @@
+@import '../../../style/variables.scss';
+
 [data-component='article-card'] {
   max-width: unset;
   display: flex;
@@ -67,7 +69,7 @@
       }
 
       .loading-text {
-        color: #757575;
+        color: $description-text-color;
       }
     }
 
@@ -94,7 +96,7 @@
 
           .zone-description-text,
           .down-arrow {
-            color: #757575;
+            color: $black-icon-grey-color;
             cursor: default;
             user-select: none;
           }

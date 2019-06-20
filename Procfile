@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/vibe-0.0.1-SNAPSHOT.war
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/vibe-1.0.0-beta1-SNAPSHOT.war

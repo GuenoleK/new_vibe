@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 [data-component='article-list'][data-has-list='false'] {
   height: 100%;
   display: flex;
@@ -11,14 +13,17 @@
     .file-icon {
       font-size: 70px;
       margin-bottom: 25px;
+      color: $black-icon-grey-color;
     }
 
     .title {
       font-size: 23px;
       margin-bottom: 10px;
+      color: $description-text-header-color;
     }
 
     .description {
+      color: $description-text-color;
       width: 270px;
       font-size: 15px;
       text-align: center;
@@ -30,14 +35,32 @@
     transition: opacity 0.3s ease-in;
     bottom: 30px;
     right: 80px;
+    color: $black-icon-grey-color;
+  }
+
+  .down-arrow {
+    position: fixed;
+    transition: opacity 0.3s ease-in;
+    bottom: 75px;
+    right: 85px;
+    color: $black-icon-grey-color;
+  }
+
+  .down-arrow[data-show-arrow='true'] {
+    animation: bounce 2s;
   }
 
   .arrow-forward-icon[data-show-arrow='true'] {
     animation: bounce_right 2s;
+  }
+
+  .arrow-forward-icon[data-show-arrow='true'],
+  .down-arrow[data-show-arrow='true'] {
     opacity: 1;
   }
 
-  .arrow-forward-icon[data-show-arrow='false'] {
+  .arrow-forward-icon[data-show-arrow='false'],
+  .down-arrow[data-show-arrow='false'] {
     opacity: 0;
   }
 

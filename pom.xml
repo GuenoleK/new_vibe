@@ -4,7 +4,7 @@
 
     <groupId>com.itepem.vibe</groupId>
     <artifactId>vibe</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-beta1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Vibe</name>
 

@@ -120,7 +120,7 @@ jhipster:
         default-include-pattern: /api/.*
         title: vibe API
         description: vibe API documentation
-        version: 0.0.1
+        version: 1.0.0-beta1
         terms-of-service-url:
         contact-name:
         contact-url:
