@@ -49,7 +49,7 @@ export class VibeHome extends React.Component {
           />
         </div>
         <div className="loading-zone" data-loading={this.isLoading}>
-          <CircularProgress className="circular-progress" />
+          <CircularProgress className="circular-progress" variant={this.isLoading ? 'indeterminate' : 'static'} />
         </div>
       </form>
     );

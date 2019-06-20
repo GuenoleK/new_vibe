@@ -16,11 +16,11 @@
   }
 
   .loading-zone[data-loading='true'] {
-    transform: scale(1);
+    opacity: 1;
   }
 
   .loading-zone[data-loading='false'] {
-    transform: scale(0);
+    opacity: 0;
   }
 
   .buttons {
