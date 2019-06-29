@@ -146,4 +146,8 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
     this.audio.currentTime = 0;
     this.isMusicPlaying = false;
   };
+
+  componentWillUnmount() {
+    this.stopMusic();
+  }
 }
