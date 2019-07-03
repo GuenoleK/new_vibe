@@ -62,6 +62,20 @@ class Register extends React.Component<{ classes: any }> {
         />
 
         <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="structure-input-label" htmlFor="outlined-language" required>
+            Structure
+          </InputLabel>
+          <Select
+            value={userStore.user.langKey}
+            onChange={this.onSelectChange}
+            input={<OutlinedInput name="structure" labelWidth={this.labelWidth} id="outlined-structure" />}
+          >
+            <MenuItem value={LanguageEnum.FRANCAIS}>Français</MenuItem>
+            <MenuItem value={LanguageEnum.ENGLISH}>English</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="language-input-label" htmlFor="outlined-language" required>
             Langue
           </InputLabel>
@@ -118,6 +132,11 @@ class Register extends React.Component<{ classes: any }> {
     if (event.key === 'Enter') {
       this.register();
     }
+  };
+
+  @action
+  onStructureSelectChange = event => {
+    userStore.user.s = event.target.value;
   };
 
   @action
