@@ -8,6 +8,8 @@ import { registerApi } from 'app/api/register-api';
 import { LanguageEnum } from 'app/enums/LanguageEnum';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
+import { structureStore } from 'app/stores/structure-store';
+import { structureAPi as structureApi } from 'app/api/structure-api';
 
 @observer
 class Register extends React.Component<{ classes: any }> {
@@ -17,7 +19,11 @@ class Register extends React.Component<{ classes: any }> {
   @observable
   labelWidth = 0;
 
+  @observable
+  structureNameList: string[] = [];
+
   render() {
+    console.log(this.structureNameList);
     const { classes } = this.props;
 
     return (
@@ -96,8 +102,9 @@ class Register extends React.Component<{ classes: any }> {
     );
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.labelWidth = document.getElementById('language-input-label').offsetWidth;
+    this.structureNameList = await structureApi.getAllStructuresNames();
   }
 
   componentWillMount() {
@@ -134,10 +141,10 @@ class Register extends React.Component<{ classes: any }> {
     }
   };
 
-  @action
-  onStructureSelectChange = event => {
-    userStore.user.s = event.target.value;
-  };
+  // @action
+  // onStructureSelectChange = event => {
+  //   userStore.user.s = event.target.value;
+  // };
 
   @action
   onSelectChange = event => {
