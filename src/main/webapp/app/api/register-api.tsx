@@ -11,10 +11,10 @@ class RegisterApi {
   /**
    * Authenticate the user
    */
-  public register = async () => {
-    if (userStore.user.login && userStore.user.password && userStore.user.email && userStore.user.langKey) {
+  public register = async (structureName: string) => {
+    if (userStore.user.login && userStore.user.password && userStore.user.email && userStore.user.langKey && structureName.trim() !== '') {
       axios
-        .post('api/register', {
+        .post(`api/register/${structureName}`, {
           login: userStore.user.login,
           password: userStore.user.password,
           email: userStore.user.email,
@@ -23,7 +23,7 @@ class RegisterApi {
         .then(response => {
           if (response && response.status >= 200 && response.status <= 300) {
             // LOGIN NOW ?
-            snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, `Registration success`);
+            snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, `Inscription réussi`);
             // articleStore.articleList = response.data;
           } else if (response && response.status !== 200) {
             snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `Status error ${response.status}`);

@@ -1,5 +1,6 @@
 package com.itepem.vibe.repository;
 
+import com.itepem.vibe.domain.Article;
 import com.itepem.vibe.domain.Structure;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,5 +30,8 @@ public interface StructureRepository extends JpaRepository<Structure, Long> {
 
     @Query("select structure from Structure structure left join fetch structure.users where structure.id =:id")
     Optional<Structure> findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query("select structure from Structure structure where structure.name = ?1")
+    Optional<Structure> findByName(final String structureName);
 
 }

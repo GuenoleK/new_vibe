@@ -8,6 +8,8 @@ import { registerApi } from 'app/api/register-api';
 import { LanguageEnum } from 'app/enums/LanguageEnum';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
+import { structureStore } from 'app/stores/structure-store';
+import { structureAPi as structureApi } from 'app/api/structure-api';
 
 @observer
 class Register extends React.Component<{ classes: any }> {
@@ -16,6 +18,12 @@ class Register extends React.Component<{ classes: any }> {
 
   @observable
   labelWidth = 0;
+
+  @observable
+  structureNameList: string[] = [];
+
+  @observable
+  selectedStructureName = '';
 
   render() {
     const { classes } = this.props;
@@ -62,6 +70,19 @@ class Register extends React.Component<{ classes: any }> {
         />
 
         <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="structure-input-label" htmlFor="outlined-language" required>
+            Structure
+          </InputLabel>
+          <Select
+            value={this.selectedStructureName}
+            onChange={this.onStructureNameSelectChange}
+            input={<OutlinedInput name="structure" labelWidth={this.labelWidth} id="outlined-structure" />}
+          >
+            {this.StructureNameItemList}
+          </Select>
+        </FormControl>
+
+        <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="language-input-label" htmlFor="outlined-language" required>
             Langue
           </InputLabel>
@@ -82,8 +103,17 @@ class Register extends React.Component<{ classes: any }> {
     );
   }
 
-  componentDidMount() {
+  get StructureNameItemList() {
+    return this.structureNameList.map((name, idx) => (
+      <MenuItem key={`${idx}-${name}`} value={name}>
+        {name}
+      </MenuItem>
+    ));
+  }
+
+  async componentDidMount() {
     this.labelWidth = document.getElementById('language-input-label').offsetWidth;
+    this.structureNameList = await structureApi.getAllStructuresNames();
   }
 
   componentWillMount() {
@@ -95,11 +125,12 @@ class Register extends React.Component<{ classes: any }> {
     if (
       this.passwordValidation.trim() !== '' &&
       userStore.user.password.trim() !== '' &&
-      this.passwordValidation !== userStore.user.password
+      this.passwordValidation !== userStore.user.password &&
+      this.selectedStructureName.trim() !== ''
     ) {
       snackbarStore.openSnackbar(SnackbarTypeEnum.WARNING, `You have to tap the same passowrd`);
     } else {
-      registerApi.register();
+      registerApi.register(this.selectedStructureName);
     }
   };
 
@@ -118,6 +149,11 @@ class Register extends React.Component<{ classes: any }> {
     if (event.key === 'Enter') {
       this.register();
     }
+  };
+
+  @action
+  onStructureNameSelectChange = event => {
+    this.selectedStructureName = event.target.value;
   };
 
   @action
