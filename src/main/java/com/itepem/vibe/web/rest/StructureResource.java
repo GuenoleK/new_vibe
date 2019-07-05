@@ -7,10 +7,8 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -96,7 +94,7 @@ public class StructureResource {
      * @return the ResponseEntity with status 200 (OK) and the list of structures in body
      */
     @GetMapping("/structures/names")
-    public List<String> getAllStructureNames(@Valid @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<String> getAllStructureNames(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Structures");
         List<Structure> structureList = structureRepository.findAllWithEagerRelationships();
         if(!structureList.isEmpty()) {

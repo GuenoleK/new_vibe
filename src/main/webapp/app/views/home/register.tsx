@@ -22,8 +22,10 @@ class Register extends React.Component<{ classes: any }> {
   @observable
   structureNameList: string[] = [];
 
+  @observable
+  selectedStructureName = '';
+
   render() {
-    console.log(this.structureNameList);
     const { classes } = this.props;
 
     return (
@@ -72,12 +74,11 @@ class Register extends React.Component<{ classes: any }> {
             Structure
           </InputLabel>
           <Select
-            value={userStore.user.langKey}
-            onChange={this.onSelectChange}
+            value={this.selectedStructureName}
+            onChange={this.onStructureNameSelectChange}
             input={<OutlinedInput name="structure" labelWidth={this.labelWidth} id="outlined-structure" />}
           >
-            <MenuItem value={LanguageEnum.FRANCAIS}>Français</MenuItem>
-            <MenuItem value={LanguageEnum.ENGLISH}>English</MenuItem>
+            {this.StructureNameItemList}
           </Select>
         </FormControl>
 
@@ -102,6 +103,14 @@ class Register extends React.Component<{ classes: any }> {
     );
   }
 
+  get StructureNameItemList() {
+    return this.structureNameList.map((name, idx) => (
+      <MenuItem key={`${idx}-${name}`} value={name}>
+        {name}
+      </MenuItem>
+    ));
+  }
+
   async componentDidMount() {
     this.labelWidth = document.getElementById('language-input-label').offsetWidth;
     this.structureNameList = await structureApi.getAllStructuresNames();
@@ -116,11 +125,12 @@ class Register extends React.Component<{ classes: any }> {
     if (
       this.passwordValidation.trim() !== '' &&
       userStore.user.password.trim() !== '' &&
-      this.passwordValidation !== userStore.user.password
+      this.passwordValidation !== userStore.user.password &&
+      this.selectedStructureName.trim() !== ''
     ) {
       snackbarStore.openSnackbar(SnackbarTypeEnum.WARNING, `You have to tap the same passowrd`);
     } else {
-      registerApi.register();
+      registerApi.register(this.selectedStructureName);
     }
   };
 
@@ -141,10 +151,10 @@ class Register extends React.Component<{ classes: any }> {
     }
   };
 
-  // @action
-  // onStructureSelectChange = event => {
-  //   userStore.user.s = event.target.value;
-  // };
+  @action
+  onStructureNameSelectChange = event => {
+    this.selectedStructureName = event.target.value;
+  };
 
   @action
   onSelectChange = event => {

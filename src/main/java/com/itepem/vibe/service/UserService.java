@@ -101,7 +101,7 @@ public class UserService {
             });
     }
 
-    public User registerUser(UserDTO userDTO, String password) {
+    public User registerUser(UserDTO userDTO, String password, String structureName) {
         userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
@@ -132,8 +132,11 @@ public class UserService {
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
 
+        // We get the structure
+        Structure structure = structureRepository.findByName(structureName).get();
+
         // After saving the user, we save the extended user
-        createExtendedUser(newUser);
+        createExtendedUser(newUser, structure);
 
         // We associate the user to a structure
         UserRoleStructure userRoleStructure = new UserRoleStructure();
@@ -143,8 +146,7 @@ public class UserService {
         Role role = roleRepository.getOne(1L);
         userRoleStructure.setRole(role);
 
-        // We give the role to the given structure (P&W Team by default by the moment)
-        Structure structure = structureRepository.getOne(0L);
+        // We set the structure
         userRoleStructure.setStructure(structure);
 
         // We save the User Role Structure
@@ -155,12 +157,9 @@ public class UserService {
         return newUser;
     }
 
-    private void createExtendedUser(User user) {
+    private void createExtendedUser(User user, Structure structure) {
         ExtendedUser extUser = new ExtendedUser();
         extUser.setUser(user);
-
-        // By default we will give the P&W Team structure
-        Structure structure = structureRepository.getOne(0L);
         extUser.setCurrentStructure(structure);
         extendedUserRepository.save(extUser);
     }
