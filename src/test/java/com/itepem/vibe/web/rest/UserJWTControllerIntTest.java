@@ -4,6 +4,7 @@ import com.itepem.vibe.VibeApp;
 import com.itepem.vibe.domain.User;
 import com.itepem.vibe.repository.UserRepository;
 import com.itepem.vibe.security.jwt.TokenProvider;
+import com.itepem.vibe.service.UserService;
 import com.itepem.vibe.web.rest.errors.ExceptionTranslator;
 import com.itepem.vibe.web.rest.vm.LoginVM;
 import org.junit.Before;
@@ -42,6 +43,9 @@ public class UserJWTControllerIntTest {
     private AuthenticationManager authenticationManager;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -54,7 +58,7 @@ public class UserJWTControllerIntTest {
 
     @Before
     public void setup() {
-        UserJWTController userJWTController = new UserJWTController(tokenProvider, authenticationManager);
+        UserJWTController userJWTController = new UserJWTController(tokenProvider, authenticationManager, userService);
         this.mockMvc = MockMvcBuilders.standaloneSetup(userJWTController)
             .setControllerAdvice(exceptionTranslator)
             .build();

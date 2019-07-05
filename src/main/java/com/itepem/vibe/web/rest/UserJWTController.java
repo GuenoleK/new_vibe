@@ -1,7 +1,10 @@
 package com.itepem.vibe.web.rest;
 
+import com.itepem.vibe.domain.User;
+import com.itepem.vibe.repository.UserRepository;
 import com.itepem.vibe.security.jwt.JWTFilter;
 import com.itepem.vibe.security.jwt.TokenProvider;
+import com.itepem.vibe.service.UserService;
 import com.itepem.vibe.web.rest.vm.LoginVM;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * Controller to authenticate users.
@@ -28,9 +32,12 @@ public class UserJWTController {
 
     private final AuthenticationManager authenticationManager;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+    private final UserService userService;
+
+    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager, UserService userService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
     }
 
     @PostMapping("/authenticate")
@@ -38,6 +45,9 @@ public class UserJWTController {
 
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
+
+        User user = userService.getUserByLogin(loginVM.getUsername()).get();
+        userService.clearUserCaches(user);
 
         Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
