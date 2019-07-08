@@ -31,6 +31,7 @@ select * from user_role_structure
 alter table user_role_structure drop constraint ux_user_role_structure_user_id;
 alter table user_role_structure drop constraint ux_user_role_structure_role_id;
 alter table user_role_structure drop constraint ux_user_role_structure_structure_id;
+alter table extended_user drop constraint ux_extended_user_user_id;
 
 -- TODO: AJOUTER UNE CLÉ UNIQUE SUR LE TRIPLET USERID/ROLEID/STRUCTUREID
 -- UN UTILISATEUR A UN ROLE PAR STRUCTURR
