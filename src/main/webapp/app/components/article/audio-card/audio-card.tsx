@@ -127,10 +127,4 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   get media() {
     return this.props.media;
   }
-
-  componentWillUnmount() {
-    if (this.audio) {
-      audioStore.stopMusic();
-    }
-  }
 }
