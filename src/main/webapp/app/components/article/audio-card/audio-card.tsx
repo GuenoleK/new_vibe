@@ -14,19 +14,21 @@ import { articleApi } from 'app/api/article-api';
 import { articleMediaUtils } from 'app/utils/ArticleMediaUtils';
 import { observable, computed, autorun } from 'mobx';
 import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
-import { audioStore } from 'app/stores/audio-store';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
 @observer
 export class AudioCard extends React.Component<{ media: IArticleMedia | undefined }> {
   @observable
+  isMusicPlaying = false;
+
+  @observable
   audio: HTMLAudioElement;
 
   reaction = autorun(async () => {
     if (this.media) {
       this.audio = new Audio(await articleMediaApi.getArticleMediaSrcFile(this.media.id));
-      this.audio.addEventListener('ended', audioStore.audioEnded);
+      this.audio.addEventListener('ended', this.audioEnded);
     }
   });
 
@@ -46,7 +48,7 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
             <div className="media-button-zone">
               <div className="audio-buttons">
                 {this.PlayPauseIcon}
-                <IconButton disabled={this.isMediaButtonDisabled} onClick={audioStore.stopMusic} aria-label="Stop">
+                <IconButton disabled={this.media === undefined} onClick={this.stopMusic} aria-label="Stop">
                   <StopIcon />
                 </IconButton>
               </div>
@@ -70,28 +72,20 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
     );
   }
 
-  get isMediaButtonDisabled() {
-    return !this.media || !this.audio;
-  }
-
   get PlayPauseIcon() {
-    if (audioStore.isMusicPlaying && audioStore.currentPlayingAudio === this.audio) {
+    if (this.isMusicPlaying) {
       return (
-        <IconButton disabled={this.isMediaButtonDisabled} onClick={audioStore.pauseMusic} aria-label="Pause">
+        <IconButton disabled={this.media === undefined} onClick={this.pauseMusic} aria-label="Pause">
           <PauseIcon />
         </IconButton>
       );
     }
     return (
-      <IconButton disabled={this.isMediaButtonDisabled} onClick={this.playMusic} aria-label="Play">
+      <IconButton disabled={this.media === undefined} onClick={this.playMusic} aria-label="Play">
         <PlayArrowIcon />
       </IconButton>
     );
   }
-
-  playMusic = () => {
-    audioStore.playMusic(this.audio);
-  };
 
   get audioName() {
     if (this.props.media) {
@@ -123,14 +117,33 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
     return articleMediaUtils.buildMediaPath(this.props.media);
   }
 
+  playMusic = async () => {
+    if (!this.isMusicPlaying) {
+      this.audio.play();
+      this.isMusicPlaying = true;
+    }
+  };
+
+  pauseMusic = async () => {
+    if (this.isMusicPlaying) {
+      this.audio.pause();
+      this.isMusicPlaying = false;
+    }
+  };
+
+  stopMusic = () => {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.isMusicPlaying = false;
+  };
+
   @computed
   get media() {
     return this.props.media;
   }
 
-  componentWillUnmount() {
-    if (this.audio) {
-      audioStore.stopMusic();
-    }
-  }
+  audioEnded = () => {
+    this.audio.currentTime = 0;
+    this.isMusicPlaying = false;
+  };
 }
