@@ -11,6 +11,7 @@ import { computed, observable } from 'mobx';
 import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { AudioCardList } from './article-audio-list';
 import { headerStore } from 'app/stores/header-store';
+import { audioStore } from 'app/stores/audio-store';
 
 @observer
 export class ArticleView extends React.Component<RouteComponentProps<any>> {
@@ -52,5 +53,12 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
     // Here clear articleMediaList in the store
     articleStore.article = undefined;
     articleMediaStore.articleMediaList = [];
+
+    // We stop any music if we change the page
+    // And unset the audio element in the store
+    if (audioStore.isMusicPlaying) {
+      audioStore.stopMusic();
+    }
+    audioStore.currentPlayingAudio = undefined;
   }
 }
