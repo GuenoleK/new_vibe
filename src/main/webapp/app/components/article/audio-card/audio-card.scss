@@ -26,6 +26,12 @@
         .slider {
           height: 5px;
           padding: unset;
+
+          .MuiSlider-rail,
+          .MuiSlider-track {
+            height: 3px;
+            border-radius: 20px;
+          }
         }
       }
     }
