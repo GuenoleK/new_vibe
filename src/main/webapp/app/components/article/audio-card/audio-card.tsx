@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Typography, CardContent, IconButton, CardMedia, Fab } from '@material-ui/core';
+import { Card, Typography, CardContent, IconButton, Fab, LinearProgress } from '@material-ui/core';
+import Slider from '@material-ui/core/Slider';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import StopIcon from '@material-ui/icons/Stop';
@@ -12,7 +13,7 @@ import { articleMediaApi } from 'app/api/article-media-api';
 import { articleMediaStore } from 'app/stores/article-media-store';
 import { articleApi } from 'app/api/article-api';
 import { articleMediaUtils } from 'app/utils/ArticleMediaUtils';
-import { observable, computed, autorun } from 'mobx';
+import { observable, computed, autorun, action } from 'mobx';
 import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 import { audioStore } from 'app/stores/audio-store';
 
@@ -23,10 +24,14 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   @observable
   audio: HTMLAudioElement;
 
+  @observable
+  completed = 0;
+
   reaction = autorun(async () => {
     if (this.media) {
       this.audio = new Audio(await articleMediaApi.getArticleMediaSrcFile(this.media.id));
       this.audio.addEventListener('ended', audioStore.audioEnded);
+      this.audio.ontimeupdate = () => (this.completed = this.setCompleted());
     }
   });
 
@@ -50,7 +55,13 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
                   <StopIcon />
                 </IconButton>
               </div>
+              {this.audio && (
+                <div className="audio-slider">
+                  <Slider className="slider" value={this.completed} onChange={this.handleChange} aria-labelledby="continuous-slider" />
+                </div>
+              )}
             </div>
+            {/* <LinearProgress variant="determinate" value={this.completed} /> */}
           </div>
           {/* <CardMedia className="media" image="../static/images/Music-icon.png" /> */}
         </Card>
@@ -69,6 +80,17 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
       </div>
     );
   }
+
+  handleChange = (event, newValue) => {
+    this.audio.currentTime = Math.floor((this.audio.duration * newValue) / 100);
+  };
+
+  setCompleted = () => {
+    if (this.audio) {
+      return (this.audio.currentTime * 100) / this.audio.duration;
+    }
+    return 0;
+  };
 
   get isMediaButtonDisabled() {
     return !this.media || !this.audio;

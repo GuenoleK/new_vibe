@@ -15,6 +15,19 @@
 
     .media-button-zone {
       height: 48px;
+      display: flex;
+      align-items: center;
+
+      .audio-slider {
+        width: 50%;
+        padding-bottom: 3px;
+        padding-left: 15px;
+
+        .slider {
+          height: 5px;
+          padding: unset;
+        }
+      }
     }
   }
 

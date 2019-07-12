@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, computed } from 'mobx';
 
 class AudioStore {
   @observable
@@ -24,16 +24,18 @@ class AudioStore {
   };
 
   pauseMusic = async () => {
-    if (audioStore.isMusicPlaying) {
+    if (this.currentPlayingAudio && this.isMusicPlaying) {
       this.currentPlayingAudio.pause();
-      audioStore.isMusicPlaying = false;
+      this.isMusicPlaying = false;
     }
   };
 
   stopMusic = () => {
-    this.currentPlayingAudio.pause();
-    this.currentPlayingAudio.currentTime = 0;
-    this.isMusicPlaying = false;
+    if (this.currentPlayingAudio) {
+      this.currentPlayingAudio.pause();
+      this.currentPlayingAudio.currentTime = 0;
+      this.isMusicPlaying = false;
+    }
   };
 
   audioEnded = () => {
