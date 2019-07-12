@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Typography, CardContent, IconButton, Fab, LinearProgress } from '@material-ui/core';
+import Slider from '@material-ui/core/Slider';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import StopIcon from '@material-ui/icons/Stop';
@@ -37,7 +38,6 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   render() {
     return (
       <div data-component="audio-card">
-        {this.audio && this.completed}
         <Card className="audio-card">
           <div className="content">
             <CardContent>
@@ -55,8 +55,13 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
                   <StopIcon />
                 </IconButton>
               </div>
+              {this.audio && (
+                <div className="audio-slider">
+                  <Slider className="slider" value={this.completed} onChange={this.handleChange} aria-labelledby="continuous-slider" />
+                </div>
+              )}
             </div>
-            <LinearProgress variant="determinate" value={this.completed} />
+            {/* <LinearProgress variant="determinate" value={this.completed} /> */}
           </div>
           {/* <CardMedia className="media" image="../static/images/Music-icon.png" /> */}
         </Card>
@@ -75,6 +80,10 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
       </div>
     );
   }
+
+  handleChange = (event, newValue) => {
+    this.audio.currentTime = Math.floor((this.audio.duration * newValue) / 100);
+  };
 
   setCompleted = () => {
     if (this.audio) {

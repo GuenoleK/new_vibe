@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { VibeLayout } from 'app/components/layout-components/layout';
 import './container.scss';
-import { MuiThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
 import { theme } from '.';
 import { userStore } from './stores/user-store';
 import { observable } from 'mobx';
@@ -16,9 +16,9 @@ export class Container extends React.Component {
   render() {
     return (
       <div data-component="vibe-container">
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <Router>{this.canRenderChildren && <VibeLayout />}</Router>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </div>
     );
   }
