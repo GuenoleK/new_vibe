@@ -7,6 +7,9 @@ import com.itepem.vibe.repository.ArticleRepository;
 import com.itepem.vibe.repository.ExtendedUserRepository;
 import com.itepem.vibe.repository.UserRepository;
 import com.itepem.vibe.security.SecurityUtils;
+import org.hibernate.service.spi.InjectService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,9 @@ import java.util.Optional;
 @Service
 @Transactional
 public class ArticleService {
+
+    @Autowired
+    ApplicationContext context;
 
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
@@ -39,6 +45,7 @@ public class ArticleService {
      * @return
      */
     public List<Article> getArticleListByStructureId(final Long structureId) {
+        System.out.println("==================HELLOOOOOOOOOOOOOOOOO==================" + context.getEnvironment());
         return articleRepository.findByStructureId(structureId);
     }
 
