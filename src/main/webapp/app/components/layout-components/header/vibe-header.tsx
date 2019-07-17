@@ -25,6 +25,7 @@ interface ISearchAppBarProps {
 class SearchAppBar extends React.Component<ISearchAppBarProps> {
   @observable
   isMenuOpen = false;
+
   @observable
   menuAnchorElement: any;
 
@@ -80,7 +81,18 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
             {userStore.isConnected && (
               <IconButton className="header-account-icon-button" onClick={this.openMenu}>
                 <AccountCircleIcon className="header-account-icon" />
-                <Menu open={this.isMenuOpen} anchorEl={this.menuAnchorElement}>
+                <Menu
+                  open={this.isMenuOpen}
+                  getContentAnchorEl={null}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                >
                   <MenuItem onClick={this.onLogout}>Déconnexion</MenuItem>
                 </Menu>
               </IconButton>

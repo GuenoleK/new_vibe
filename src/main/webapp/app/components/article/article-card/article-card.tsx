@@ -1,6 +1,7 @@
 // PDF icon from https://icons8.com/icon/set/pdf/material
 import React from 'react';
-import { Card, CardContent, Typography, CircularProgress, Button } from '@material-ui/core';
+import { Card, CardContent, Typography, CircularProgress, Button, IconButton, Menu, MenuItem } from '@material-ui/core';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import './article-card.scss';
 import { computed, autorun, observable } from 'mobx';
 import { articleStore } from 'app/stores/article-store';
@@ -26,6 +27,12 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
   @observable
   isLoadingSrcFile = false;
 
+  @observable
+  isMenuOpen = false;
+
+  @observable
+  menuAnchorElement: any;
+
   reaction = autorun(async () => {
     if (!this.isLoadingData && this.pdfMedia) {
       this.isLoadingSrcFile = true;
@@ -45,10 +52,31 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
       <Card data-component="article-card">
         {this.article && (
           <CardContent className="content">
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography className="card-title" gutterBottom variant="h5" component="h2">
               Paroles
             </Typography>
             <Typography component="p">{this.article.description}</Typography>
+            <input id="upload-updated-pdf" multiple={false} type="file" accept="application/pdf" onChange={this.onChangeLyrics} />
+            {this.pdfMedia && (
+              <IconButton className="article-more-button" onClick={this.openMenu}>
+                <MoreVertIcon className="article-more-icon" />
+                <Menu
+                  open={this.isMenuOpen}
+                  anchorEl={this.menuAnchorElement}
+                  getContentAnchorEl={null}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                >
+                  <MenuItem onClick={this.onChangePdfSelected}>Modifier PDF</MenuItem>
+                </Menu>
+              </IconButton>
+            )}
           </CardContent>
         )}
         <div className="title-divider" />
@@ -62,6 +90,11 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
       </Card>
     );
   }
+
+  openMenu = event => {
+    this.isMenuOpen = !this.isMenuOpen;
+    this.menuAnchorElement = event.currentTarget;
+  };
 
   @computed
   get isLoadingData() {
@@ -136,8 +169,25 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
   }
 
   onDrop = async acceptedFiles => {
-    await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id);
+    if (this.pdfMedia) {
+      await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.pdfMedia.id);
+    } else {
+      await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id);
+    }
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
+  };
+
+  onChangeLyrics = e => {
+    if (e.target.files.length > 0) {
+      this.onDrop(e.target.files);
+    }
+  };
+
+  onChangePdfSelected = () => {
+    const input = document.querySelector('#upload-updated-pdf') as HTMLElement;
+    if (input) {
+      input.click();
+    }
   };
 }
