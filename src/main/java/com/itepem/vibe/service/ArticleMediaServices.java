@@ -86,15 +86,7 @@ public class ArticleMediaServices {
                 articleMedia = articleMediaRepository.save(articleMedia);
 
                 if (isDevMode()) {
-                    String pathStorage = System.getenv("VIBE_LOCAL_STORAGE_PATH");
-                    String filePath = pathStorage + "\\" + extendedUser.getCurrentStructure().getName() + "\\" + article.getTitle();
-                    File file = new File(filePath, articleMediaFile.getOriginalFilename());
-
-                    // Create the file using the touch method of the FileUtils class.
-                    // FileUtils.touch(file);
-
-                    // Write bytes from the multipart file to disk.
-                    FileUtils.writeByteArrayToFile(file, articleMediaFile.getBytes());
+                    localCreateFile(extendedUser, article, articleMediaFile);
                 } else {
                     // We create the associated folder
                     // If you don't specify credentials when constructing the client, the client library will
@@ -161,21 +153,43 @@ public class ArticleMediaServices {
                 // We update the articleMedia
                 articleMedia = articleMediaRepository.save(articleMedia);
 
-                // We delete file previous file
-                Storage storage = StorageOptions.getDefaultInstance().getService();
+                if (isDevMode()) {
+                    // We get the file
+                    String pathStorage = System.getenv("VIBE_LOCAL_STORAGE_PATH");
+                    String filePath = pathStorage + "\\" + extendedUser.getCurrentStructure().getName() + "\\" + article.getTitle() + "\\" + articleMediaName;
+                    File file = new File(filePath);
 
-                BlobId blobId = BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + article.getTitle() + "/" + articleMediaName);
-                storage.delete(blobId);
+                    // We delete it
+                    file.delete();
+                } else {
+                    // We delete file previous file
+                    Storage storage = StorageOptions.getDefaultInstance().getService();
 
-                // We create the new one
+                    BlobId blobId = BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + article.getTitle() + "/" + articleMediaName);
+                    storage.delete(blobId);
 
-                BlobId newBlobId = BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + article.getTitle() + "/" + articleMediaFile.getOriginalFilename());
-                BlobInfo blobInfo = BlobInfo.newBuilder(newBlobId).setContentType(articleMediaFile.getContentType()).build();
-                Blob blob = storage.create(blobInfo, articleMediaFile.getBytes());
+                    // We create the new one
+                    BlobId newBlobId = BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + article.getTitle() + "/" + articleMediaFile.getOriginalFilename());
+                    BlobInfo blobInfo = BlobInfo.newBuilder(newBlobId).setContentType(articleMediaFile.getContentType()).build();
+                    Blob blob = storage.create(blobInfo, articleMediaFile.getBytes());
+                }
             }
         }
 
         return articleMedia;
+    }
+
+    private void localCreateFile(ExtendedUser extendedUser, Article article, MultipartFile articleMediaFile) throws IOException {
+
+        String pathStorage = System.getenv("VIBE_LOCAL_STORAGE_PATH");
+        String filePath = pathStorage + "\\" + extendedUser.getCurrentStructure().getName() + "\\" + article.getTitle();
+        File file = new File(filePath, articleMediaFile.getOriginalFilename());
+
+        // Create the file using the touch method of the FileUtils class.
+        // FileUtils.touch(file);
+
+        // Write bytes from the multipart file to disk.
+        FileUtils.writeByteArrayToFile(file, articleMediaFile.getBytes());
     }
 
     private Boolean isDevMode() {
