@@ -83,6 +83,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
                 <AccountCircleIcon className="header-account-icon" />
                 <Menu
                   open={this.isMenuOpen}
+                  anchorEl={this.menuAnchorElement}
                   getContentAnchorEl={null}
                   anchorOrigin={{
                     vertical: 'bottom',

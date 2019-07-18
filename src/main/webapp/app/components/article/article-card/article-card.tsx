@@ -73,7 +73,8 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
                     horizontal: 'right'
                   }}
                 >
-                  <MenuItem onClick={this.onChangePdfSelected}>Modifier PDF</MenuItem>
+                  <MenuItem onClick={this.onChangePdfSelected}>Modifier les paroles</MenuItem>
+                  <MenuItem onClick={this.deletePdfFile}>Supprimer les paroles</MenuItem>
                 </Menu>
               </IconButton>
             )}
@@ -173,6 +174,14 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
       await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.pdfMedia.id);
     } else {
       await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id);
+    }
+    articleStore.article = await articleApi.getArticle(this.article.id);
+    articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
+  };
+
+  deletePdfFile = async () => {
+    if (this.pdfMedia) {
+      await articleMediaApi.deleteArticleMedia(this.pdfMedia.id);
     }
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
