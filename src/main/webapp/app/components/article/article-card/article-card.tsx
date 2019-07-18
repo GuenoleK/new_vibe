@@ -57,7 +57,7 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
             </Typography>
             <Typography component="p">{this.article.description}</Typography>
             {this.pdfMedia && (
-              <div>
+              <div className="card-menu">
                 <input id="upload-updated-pdf" multiple={false} type="file" accept="application/pdf" onChange={this.onChangeLyrics} />
                 <IconButton className="article-more-button" onClick={this.openMenu}>
                   <MoreVertIcon className="article-more-icon" />
