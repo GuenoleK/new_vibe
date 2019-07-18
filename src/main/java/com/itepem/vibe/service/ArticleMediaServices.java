@@ -233,13 +233,6 @@ public class ArticleMediaServices {
     }
 
     private Boolean isDevMode() {
-        Boolean isDevMode = false;
-
-        for(String profile: context.getEnvironment().getActiveProfiles()) {
-            if(profile.equals("dev")) {
-                isDevMode = true;
-            }
-        }
-        return isDevMode;
+        return System.getenv("VIBE_APP_MODE").equals("dev");
     }
 }
