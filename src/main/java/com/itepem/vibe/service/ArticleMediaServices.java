@@ -161,6 +161,9 @@ public class ArticleMediaServices {
 
                     // We delete it
                     file.delete();
+
+                    // We create the new one
+                    localCreateFile(extendedUser, article, articleMediaFile);
                 } else {
                     // We delete file previous file
                     Storage storage = StorageOptions.getDefaultInstance().getService();
@@ -177,6 +180,43 @@ public class ArticleMediaServices {
         }
 
         return articleMedia;
+    }
+
+    public void deleteArticleMedia(final Long articleMediaId) {
+
+        ArticleMedia articleMedia = articleMediaRepository.getOne(articleMediaId);
+        final String articleMediaName = articleMedia.getName();
+
+        // We get the article
+        Article article = articleRepository.findById(articleMedia.getArticle().getId()).get();
+
+        Optional<String> userLogin = SecurityUtils.getCurrentUserLogin();
+
+        if (userLogin.isPresent()) {
+            Optional<User> optionalUser = userRepository.findOneByLogin(userLogin.get());
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                ExtendedUser extendedUser = extendedUserRepository.findByUserId(user.getId());
+
+                // We delete the articleMedia in the DB
+                articleMediaRepository.delete(articleMedia);
+
+                if (isDevMode()) {
+                    // We get the file
+                    String pathStorage = System.getenv("VIBE_LOCAL_STORAGE_PATH");
+                    String filePath = pathStorage + "\\" + extendedUser.getCurrentStructure().getName() + "\\" + article.getTitle() + "\\" + articleMediaName;
+                    File file = new File(filePath);
+
+                    // We delete it
+                    file.delete();
+                } else {
+                    // We delete file previous file
+                    Storage storage = StorageOptions.getDefaultInstance().getService();
+                    BlobId blobId = BlobId.of("epe-m-vibe", extendedUser.getCurrentStructure().getName() + "/" + article.getTitle() + "/" + articleMediaName);
+                    storage.delete(blobId);
+                }
+            }
+        }
     }
 
     private void localCreateFile(ExtendedUser extendedUser, Article article, MultipartFile articleMediaFile) throws IOException {

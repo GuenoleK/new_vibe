@@ -74,6 +74,11 @@ class ArticleMediaApi {
     const response = await axios.get(`${apiURl}/file/src/${articleMediaId}`);
     return response.data;
   };
+
+  public deleteArticleMedia = async articleMediaId => {
+    const response = await axios.delete(`${apiURl}/${articleMediaId}`);
+    return response.data;
+  };
 }
 
 export const articleMediaApi = new ArticleMediaApi();

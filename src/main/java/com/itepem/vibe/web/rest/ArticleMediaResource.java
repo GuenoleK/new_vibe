@@ -112,6 +112,19 @@ public class ArticleMediaResource {
     }
 
     /**
+     * DELETE  /article-medias/:id : delete the "id" articleMedia.
+     *
+     * @param id the id of the articleMedia to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/article-media/{id}")
+    public ResponseEntity<Void> deleteArticleMedia(@PathVariable Long id) {
+        log.debug("REST request to delete ArticleMedia : {}", id);
+        articleMediaServices.deleteArticleMedia(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
      * GET  /article-medias/:id : get the "id" articleMedia.
      *
      * @param id the id of the articleMedia to retrieve
@@ -131,7 +144,7 @@ public class ArticleMediaResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/article-medias/{id}")
-    public ResponseEntity<Void> deleteArticleMedia(@PathVariable Long id) {
+    public ResponseEntity<Void> removeArticleMedia(@PathVariable Long id) {
         log.debug("REST request to delete ArticleMedia : {}", id);
         articleMediaRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
