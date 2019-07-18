@@ -56,27 +56,29 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
               Paroles
             </Typography>
             <Typography component="p">{this.article.description}</Typography>
-            <input id="upload-updated-pdf" multiple={false} type="file" accept="application/pdf" onChange={this.onChangeLyrics} />
             {this.pdfMedia && (
-              <IconButton className="article-more-button" onClick={this.openMenu}>
-                <MoreVertIcon className="article-more-icon" />
-                <Menu
-                  open={this.isMenuOpen}
-                  anchorEl={this.menuAnchorElement}
-                  getContentAnchorEl={null}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right'
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
-                >
-                  <MenuItem onClick={this.onChangePdfSelected}>Modifier les paroles</MenuItem>
-                  <MenuItem onClick={this.deletePdfFile}>Supprimer les paroles</MenuItem>
-                </Menu>
-              </IconButton>
+              <div>
+                <input id="upload-updated-pdf" multiple={false} type="file" accept="application/pdf" onChange={this.onChangeLyrics} />
+                <IconButton className="article-more-button" onClick={this.openMenu}>
+                  <MoreVertIcon className="article-more-icon" />
+                  <Menu
+                    open={this.isMenuOpen}
+                    anchorEl={this.menuAnchorElement}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right'
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}
+                  >
+                    <MenuItem onClick={this.onChangePdfSelected}>Modifier les paroles</MenuItem>
+                    <MenuItem onClick={this.deletePdfFile}>Supprimer les paroles</MenuItem>
+                  </Menu>
+                </IconButton>
+              </div>
             )}
           </CardContent>
         )}
