@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Typography, CardContent, IconButton, Fab, LinearProgress } from '@material-ui/core';
+import { Card, Typography, CardContent, IconButton, Fab, LinearProgress, Menu, MenuItem } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
@@ -13,9 +13,10 @@ import { articleMediaApi } from 'app/api/article-media-api';
 import { articleMediaStore } from 'app/stores/article-media-store';
 import { articleApi } from 'app/api/article-api';
 import { articleMediaUtils } from 'app/utils/ArticleMediaUtils';
-import { observable, computed, autorun, action } from 'mobx';
+import { observable, computed, autorun } from 'mobx';
 import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 import { audioStore } from 'app/stores/audio-store';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -26,6 +27,12 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
 
   @observable
   completed = 0;
+
+  @observable
+  isMenuOpen = false;
+
+  @observable
+  menuAnchorElement: any;
 
   reaction = autorun(async () => {
     if (this.media) {
@@ -41,12 +48,46 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
         <Card className="audio-card">
           <div className="content">
             <CardContent>
-              <Typography className="audio-name" component="h5" variant="h5">
-                {this.audioName}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {this.articleName}
-              </Typography>
+              <div className="card-header">
+                <div className="information-zone">
+                  <Typography className="audio-name" component="h5" variant="h5">
+                    {this.audioName}
+                  </Typography>
+                  <Typography variant="subtitle1" color="textSecondary">
+                    {this.articleName}
+                  </Typography>
+                </div>
+                {this.media && (
+                  <div className="audio-menu">
+                    <input
+                      id="upload-updated-audio"
+                      multiple={false}
+                      type="file"
+                      accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3"
+                      onChange={this.onAudioChange}
+                    />
+                    <IconButton className="article-more-button" onClick={this.openMenu}>
+                      <MoreVertIcon className="article-more-icon" />
+                      <Menu
+                        open={this.isMenuOpen}
+                        anchorEl={this.menuAnchorElement}
+                        getContentAnchorEl={null}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'right'
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right'
+                        }}
+                      >
+                        <MenuItem onClick={this.onChangeAudioSelected}>Modifier l'audio</MenuItem>
+                        <MenuItem onClick={this.deleteFile}>Supprimer l'audio</MenuItem>
+                      </Menu>
+                    </IconButton>
+                  </div>
+                )}
+              </div>
             </CardContent>
             <div className="media-button-zone">
               <div className="audio-buttons">
@@ -65,18 +106,20 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
           </div>
           {/* <CardMedia className="media" image="../static/images/Music-icon.png" /> */}
         </Card>
-        <div className="audio-upload-dropzone">
-          <Dropzone multiple={false} accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3" onDrop={this.onDrop}>
-            {({ getRootProps, getInputProps, isDragActive }) => (
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <Fab color="secondary" className="add-audio-button">
-                  <AddIcon />
-                </Fab>
-              </div>
-            )}
-          </Dropzone>
-        </div>
+        {!this.media && (
+          <div className="audio-upload-dropzone">
+            <Dropzone multiple={false} accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3" onDrop={this.onDrop}>
+              {({ getRootProps, getInputProps, isDragActive }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <Fab color="secondary" className="add-audio-button">
+                    <AddIcon />
+                  </Fab>
+                </div>
+              )}
+            </Dropzone>
+          </div>
+        )}
       </div>
     );
   }
@@ -149,4 +192,30 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   get media() {
     return this.props.media;
   }
+
+  openMenu = event => {
+    this.isMenuOpen = !this.isMenuOpen;
+    this.menuAnchorElement = event.currentTarget;
+  };
+
+  onAudioChange = e => {
+    if (e.target.files.length > 0) {
+      this.onDrop(e.target.files);
+    }
+  };
+
+  onChangeAudioSelected = () => {
+    const input = document.querySelector('#upload-updated-audio') as HTMLElement;
+    if (input) {
+      input.click();
+    }
+  };
+
+  deleteFile = async () => {
+    if (this.media) {
+      await articleMediaApi.deleteArticleMedia(this.media.id);
+    }
+    articleStore.article = await articleApi.getArticle(this.article.id);
+    articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
+  };
 }

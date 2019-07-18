@@ -1,12 +1,36 @@
 [data-component='audio-card'] {
   position: relative;
   height: 150px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+
   .audio-card {
     display: flex;
 
     .content {
       width: 100%;
+
+      .card-header {
+        display: flex;
+
+        .information-zone {
+          width: 80%;
+          padding-top: 8px;
+        }
+
+        .audio-menu {
+          width: 20%;
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-start;
+        }
+      }
+
+      #upload-updated-audio {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        cursor: default;
+      }
     }
 
     .media {
@@ -46,7 +70,7 @@
 
   .audio-upload-dropzone {
     position: absolute;
-    bottom: -7px;
+    bottom: -18px;
     right: -16px;
     cursor: pointer;
 
