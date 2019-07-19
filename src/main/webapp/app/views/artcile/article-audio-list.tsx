@@ -3,6 +3,7 @@ import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 import { observer } from 'mobx-react';
 import { AudioCard } from 'app/components/article/audio-card/audio-card';
 import './article-audio-list.scss';
+import { orderBy } from 'lodash';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -20,7 +21,7 @@ export class AudioCardList extends React.Component<{ audioList: IArticleMedia[] 
     for (let i = 0; i < 4 - this.audioList.length; i++) {
       audioCardList.push(<AudioCard key={`empty-audio-card-${i}`} media={undefined} />);
     }
-    return <div className="list">{audioCardList}</div>;
+    return <div className="list">{orderBy(audioCardList, ['id'], ['asc'])}</div>;
   };
 
   get audioList() {
