@@ -17,6 +17,7 @@ import { observable, computed, autorun } from 'mobx';
 import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 import { audioStore } from 'app/stores/audio-store';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { Spinner } from 'app/components/spinner/spinner';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -33,6 +34,9 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
 
   @observable
   menuAnchorElement: any;
+
+  @observable
+  isLoading = false;
 
   reaction = autorun(async () => {
     if (this.media) {
@@ -96,11 +100,13 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
                   <StopIcon />
                 </IconButton>
               </div>
-              {this.audio && (
-                <div className="audio-slider">
-                  <Slider className="slider" value={this.completed} onChange={this.handleChange} aria-labelledby="continuous-slider" />
-                </div>
-              )}
+              {this.isLoading && <Spinner hasDescription={false} />}
+              {!this.isLoading &&
+                this.audio && (
+                  <div className="audio-slider">
+                    <Slider className="slider" value={this.completed} onChange={this.handleChange} aria-labelledby="continuous-slider" />
+                  </div>
+                )}
             </div>
             {/* <LinearProgress variant="determinate" value={this.completed} /> */}
           </div>
@@ -136,7 +142,7 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   };
 
   get isMediaButtonDisabled() {
-    return !this.media || !this.audio;
+    return !this.media || !this.audio || this.isLoading;
   }
 
   get PlayPauseIcon() {
@@ -174,6 +180,7 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   }
 
   onDrop = async acceptedFiles => {
+    this.isLoading = true;
     if (this.media) {
       await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.media.id);
     } else {
@@ -182,6 +189,7 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
 
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
+    this.isLoading = false;
   };
 
   get filePath() {
@@ -212,10 +220,12 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
   };
 
   deleteFile = async () => {
+    this.isLoading = true;
     if (this.media) {
       await articleMediaApi.deleteArticleMedia(this.media.id);
     }
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
+    this.isLoading = false;
   };
 }

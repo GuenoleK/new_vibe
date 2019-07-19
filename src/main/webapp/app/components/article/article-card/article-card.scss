@@ -78,21 +78,6 @@
       }
     }
 
-    .loading-component {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      .circular-progress {
-        margin-bottom: 35px;
-      }
-
-      .loading-text {
-        color: $description-text-color;
-      }
-    }
-
     .responsive-iframe {
       position: relative;
       height: 0;

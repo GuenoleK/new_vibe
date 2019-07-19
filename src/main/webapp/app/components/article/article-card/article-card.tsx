@@ -14,6 +14,7 @@ import { articleMediaStore } from 'app/stores/article-media-store';
 import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { articleMediaApi } from 'app/api/article-media-api';
 import { articleApi } from 'app/api/article-api';
+import { Spinner } from 'app/components/spinner/spinner';
 
 interface IArticleCardProps {
   isLoadingData: boolean;
@@ -32,6 +33,9 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
 
   @observable
   menuAnchorElement: any;
+
+  @observable
+  isLoading = false;
 
   reaction = autorun(async () => {
     if (!this.isLoadingData && this.pdfMedia) {
@@ -84,11 +88,11 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
         )}
         <div className="title-divider" />
         <div className="pdf-zone">
-          {this.isLoadingSrcFile && this.LoadingComponent}
+          {(this.isLoadingSrcFile || this.isLoading) && <Spinner hasDescription loadingText="Chargement..." />}
           {!this.isLoadingData &&
-            !this.isLoadingSrcFile &&
+            (!this.isLoading && !this.isLoadingSrcFile) &&
             this.pdfMedia && <div className="responsive-iframe">{this.renderPdfZone()}</div>}
-          {!this.isLoadingData && !this.pdfMedia && this.UploadComponent}
+          {!this.isLoadingData && !this.isLoading && !this.pdfMedia && this.UploadComponent}
         </div>
       </Card>
     );
@@ -128,15 +132,6 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
     return 'Cliquer ou déposer pour charger le fichier de paroles (PDF)';
   }
 
-  get LoadingComponent() {
-    return (
-      <div className="loading-component">
-        <CircularProgress className="circular-progress" />
-        <div className="loading-text">Chargement...</div>
-      </div>
-    );
-  }
-
   renderPdfZone() {
     return (
       <object data={this.pdfFileSrc} type="application/pdf">
@@ -172,6 +167,7 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
   }
 
   onDrop = async acceptedFiles => {
+    this.isLoading = true;
     if (this.pdfMedia) {
       await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.pdfMedia.id);
     } else {
@@ -179,14 +175,17 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
     }
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
+    this.isLoading = false;
   };
 
   deletePdfFile = async () => {
+    this.isLoading = true;
     if (this.pdfMedia) {
       await articleMediaApi.deleteArticleMedia(this.pdfMedia.id);
     }
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
+    this.isLoading = false;
   };
 
   onChangeLyrics = e => {
