@@ -26,9 +26,6 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
   pdfFileSrc: any;
 
   @observable
-  isLoadingSrcFile = false;
-
-  @observable
   isMenuOpen = false;
 
   @observable
@@ -39,11 +36,11 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
 
   reaction = autorun(async () => {
     if (!this.isLoadingData && this.pdfMedia) {
-      this.isLoadingSrcFile = true;
+      this.isLoading = true;
       // Mettre une sécurité de connexion ici et mettre un sécurité d'appartenance (fichier) dans le back
       const response = await articleMediaApi.getArticleMediaSrcFile(this.pdfMedia.id);
       this.pdfFileSrc = encodeURI(response);
-      this.isLoadingSrcFile = false;
+      this.isLoading = false;
     }
   });
 
@@ -63,7 +60,11 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
             {this.pdfMedia && (
               <div className="card-menu">
                 <input id="upload-updated-pdf" multiple={false} type="file" accept="application/pdf" onChange={this.onChangeLyrics} />
-                <IconButton className="article-more-button" onClick={this.openMenu}>
+                <IconButton
+                  disabled={this.isLoading || this.isLoadingData || articleMediaStore.isAMediaLoading}
+                  className="article-more-button"
+                  onClick={this.openMenu}
+                >
                   <MoreVertIcon className="article-more-icon" />
                   <Menu
                     open={this.isMenuOpen}
@@ -88,10 +89,8 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
         )}
         <div className="title-divider" />
         <div className="pdf-zone">
-          {(this.isLoadingSrcFile || this.isLoading) && <Spinner hasDescription loadingText="Chargement..." />}
-          {!this.isLoadingData &&
-            (!this.isLoading && !this.isLoadingSrcFile) &&
-            this.pdfMedia && <div className="responsive-iframe">{this.renderPdfZone()}</div>}
+          {this.isLoading && <Spinner hasDescription loadingText="Chargement..." />}
+          {!this.isLoadingData && !this.isLoading && this.pdfMedia && <div className="responsive-iframe">{this.renderPdfZone()}</div>}
           {!this.isLoadingData && !this.isLoading && !this.pdfMedia && this.UploadComponent}
         </div>
       </Card>
@@ -168,6 +167,7 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
 
   onDrop = async acceptedFiles => {
     this.isLoading = true;
+    articleMediaStore.isAMediaLoading = this.isLoading;
     if (this.pdfMedia) {
       await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.pdfMedia.id);
     } else {
@@ -176,16 +176,19 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
     this.isLoading = false;
+    articleMediaStore.isAMediaLoading = this.isLoading;
   };
 
   deletePdfFile = async () => {
     this.isLoading = true;
+    articleMediaStore.isAMediaLoading = this.isLoading;
     if (this.pdfMedia) {
       await articleMediaApi.deleteArticleMedia(this.pdfMedia.id);
     }
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
     this.isLoading = false;
+    articleMediaStore.isAMediaLoading = this.isLoading;
   };
 
   onChangeLyrics = e => {
