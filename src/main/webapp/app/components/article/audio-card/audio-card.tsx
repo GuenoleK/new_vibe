@@ -13,7 +13,7 @@ import { articleMediaApi } from 'app/api/article-media-api';
 import { articleMediaStore } from 'app/stores/article-media-store';
 import { articleApi } from 'app/api/article-api';
 import { articleMediaUtils } from 'app/utils/ArticleMediaUtils';
-import { observable, computed, autorun } from 'mobx';
+import { observable, computed, autorun, action } from 'mobx';
 import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 import { audioStore } from 'app/stores/audio-store';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -21,8 +21,13 @@ import { Spinner } from 'app/components/spinner/spinner';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
+interface IAudioCardProps {
+  media: IArticleMedia | undefined;
+  isAMediaLoading: boolean;
+}
+
 @observer
-export class AudioCard extends React.Component<{ media: IArticleMedia | undefined }> {
+export class AudioCard extends React.Component<IAudioCardProps> {
   @observable
   audio: HTMLAudioElement;
 
@@ -70,7 +75,11 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
                       accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3"
                       onChange={this.onAudioChange}
                     />
-                    <IconButton className="article-more-button" onClick={this.openMenu}>
+                    <IconButton
+                      disabled={this.isLoading || this.props.isAMediaLoading}
+                      className="article-more-button"
+                      onClick={this.openMenu}
+                    >
                       <MoreVertIcon className="article-more-icon" />
                       <Menu
                         open={this.isMenuOpen}
@@ -96,7 +105,7 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
             <div className="media-button-zone">
               <div className="audio-buttons">
                 {this.PlayPauseIcon}
-                <IconButton disabled={this.isMediaButtonDisabled} onClick={audioStore.stopMusic} aria-label="Stop">
+                <IconButton disabled={this.isLoading || this.isMediaButtonDisabled} onClick={audioStore.stopMusic} aria-label="Stop">
                   <StopIcon />
                 </IconButton>
               </div>
@@ -114,11 +123,16 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
         </Card>
         {!this.media && (
           <div className="audio-upload-dropzone">
-            <Dropzone multiple={false} accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3" onDrop={this.onDrop}>
+            <Dropzone
+              disabled={this.props.isAMediaLoading}
+              multiple={false}
+              accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3"
+              onDrop={this.onDrop}
+            >
               {({ getRootProps, getInputProps, isDragActive }) => (
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
-                  <Fab color="secondary" className="add-audio-button">
+                  <Fab disabled={this.props.isAMediaLoading} color="secondary" className="add-audio-button">
                     <AddIcon />
                   </Fab>
                 </div>
@@ -179,8 +193,10 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
     return this.article ? this.article.title : '';
   }
 
+  @action
   onDrop = async acceptedFiles => {
     this.isLoading = true;
+    articleMediaStore.isAMediaLoading = this.isLoading;
     if (this.media) {
       await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.media.id);
     } else {
@@ -190,6 +206,7 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
     this.isLoading = false;
+    articleMediaStore.isAMediaLoading = this.isLoading;
   };
 
   get filePath() {
@@ -221,11 +238,13 @@ export class AudioCard extends React.Component<{ media: IArticleMedia | undefine
 
   deleteFile = async () => {
     this.isLoading = true;
+    articleMediaStore.isAMediaLoading = this.isLoading;
     if (this.media) {
       await articleMediaApi.deleteArticleMedia(this.media.id);
     }
     articleStore.article = await articleApi.getArticle(this.article.id);
     articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
     this.isLoading = false;
+    articleMediaStore.isAMediaLoading = this.isLoading;
   };
 }

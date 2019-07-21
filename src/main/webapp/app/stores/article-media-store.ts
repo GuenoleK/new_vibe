@@ -5,6 +5,9 @@ type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
 class ArticleMediaStore {
   @observable
+  isAMediaLoading = false;
+
+  @observable
   private innerArticleMediaList: IArticleMedia[] = [];
 
   @computed

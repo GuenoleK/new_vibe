@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { AudioCard } from 'app/components/article/audio-card/audio-card';
 import './article-audio-list.scss';
 import { orderBy } from 'lodash';
+import { articleMediaStore } from 'app/stores/article-media-store';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -16,10 +17,12 @@ export class AudioCardList extends React.Component<{ audioList: IArticleMedia[] 
   renderAudioList = () => {
     const audioCardList = [];
     if (this.audioList && this.audioList.length > 0) {
-      this.audioList.forEach(audio => audioCardList.push(<AudioCard key={`audio-card-${audio.id}`} media={audio} />));
+      this.audioList.forEach(audio =>
+        audioCardList.push(<AudioCard isAMediaLoading={articleMediaStore.isAMediaLoading} key={`audio-card-${audio.id}`} media={audio} />)
+      );
     }
     for (let i = 0; i < 4 - this.audioList.length; i++) {
-      audioCardList.push(<AudioCard key={`empty-audio-card-${i}`} media={undefined} />);
+      audioCardList.push(<AudioCard isAMediaLoading={articleMediaStore.isAMediaLoading} key={`empty-audio-card-${i}`} media={undefined} />);
     }
     return <div className="list">{orderBy(audioCardList, ['id'], ['asc'])}</div>;
   };
