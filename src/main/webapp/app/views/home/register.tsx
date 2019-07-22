@@ -8,8 +8,11 @@ import { registerApi } from 'app/api/register-api';
 import { LanguageEnum } from 'app/enums/LanguageEnum';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
-import { structureStore } from 'app/stores/structure-store';
 import { structureAPi as structureApi } from 'app/api/structure-api';
+import HelpIcon from '@material-ui/icons/Help';
+import { Tooltip } from 'react-tippy';
+// tslint:disable-next-line: no-submodule-imports
+import 'react-tippy/dist/tippy.css';
 
 @observer
 class Register extends React.Component<{ classes: any }> {
@@ -30,14 +33,33 @@ class Register extends React.Component<{ classes: any }> {
 
     return (
       <form className="register-form" method="post" autoComplete="off">
-        <TextField
-          label="Nom d'utilisateur"
-          onChange={this.handleChange('login')}
-          onKeyPress={this.fireLoginOnEnterKey}
-          margin="normal"
-          variant="outlined"
-          required
-        />
+        <div className="rich-field">
+          <TextField
+            className="username-field"
+            label="Nom d'utilisateur"
+            onChange={this.handleChange('login')}
+            onKeyPress={this.fireLoginOnEnterKey}
+            margin="normal"
+            variant="outlined"
+            required
+          />
+
+          <Tooltip
+            className="username-tooltip"
+            position="right"
+            trigger="mouseenter"
+            duration={200}
+            interactive
+            html={
+              <div className="tooltip-text">
+                <div>Le nom d'utilisateur ne peut contenir</div>
+                <div>de majusucle ou d'espace</div>
+              </div>
+            }
+          >
+            <HelpIcon />
+          </Tooltip>
+        </div>
 
         <TextField
           label="Email"
@@ -136,7 +158,12 @@ class Register extends React.Component<{ classes: any }> {
 
   @action
   handleChange = name => event => {
-    userStore.user[name] = event.target.value;
+    if (name === 'login') {
+      const login: string = event.target.value.toLowerCase();
+      userStore.user[name] = login;
+    } else {
+      userStore.user[name] = event.target.value;
+    }
   };
 
   onValidationChange = name => event => {

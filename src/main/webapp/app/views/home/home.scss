@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .login-form,
 .register-form {
   display: flex;
@@ -35,5 +37,34 @@
   .language-select {
     margin-top: 16px;
     margin-bottom: 25px;
+  }
+
+  div.rich-field {
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+
+    .username-field {
+      input {
+        text-transform: lowercase;
+      }
+    }
+
+    .MuiFormControl-root.MuiTextField-root {
+      margin-right: 15px;
+    }
+
+    .username-tooltip {
+      color: $help-icon-color;
+      outline: none;
+      margin-top: 16px;
+    }
+  }
+}
+
+.tippy-popper {
+  .tooltip-text {
+    text-align: left;
+    cursor: default;
   }
 }

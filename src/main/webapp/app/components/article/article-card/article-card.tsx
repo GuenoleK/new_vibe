@@ -110,7 +110,12 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
   get UploadComponent() {
     return (
       <div className="lyrics-upload-dropzone">
-        <Dropzone multiple={false} accept="application/pdf" onDrop={this.onDrop}>
+        <Dropzone
+          disabled={this.isLoading || this.isLoadingData || articleMediaStore.isAMediaLoading}
+          multiple={false}
+          accept="application/pdf"
+          onDrop={this.onDrop}
+        >
           {({ getRootProps, getInputProps, isDragActive }) => (
             <div {...getRootProps()}>
               <input {...getInputProps()} />
