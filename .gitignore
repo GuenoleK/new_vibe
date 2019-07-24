@@ -3,6 +3,7 @@
 ######################
 /src/main/webapp/content/css/main.css
 /src/main/webapp/storage/*
+/src/main/webapp/libs/pace/templates
 /src/test/javascript/coverage/
 /keys
 
