@@ -10,6 +10,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import WarningIcon from '@material-ui/icons/Warning';
 import classNames from 'classnames';
 import React from 'react';
+import './snackbar.scss';
 
 const variantIcon = {
   success: CheckCircleIcon,

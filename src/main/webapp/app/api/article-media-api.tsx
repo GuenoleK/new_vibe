@@ -5,6 +5,9 @@ import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 import { articleMediaStore } from 'app/stores/article-media-store';
 import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
+import { articleStore } from 'app/stores/article-store';
+import { articleApi } from './article-api';
+import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -44,30 +47,82 @@ class ArticleMediaApi {
     }
   };
 
-  public saveArticleMedia = (file, articleId) => {
+  public saveArticleMedia = async (file, articleId, mediaTypeCode: ArticleMediaTypeCodeEnum) => {
     const formData = new FormData();
     formData.append('articleMediaFile', file);
     formData.append('name', file.name);
     formData.append('fileType', file.type);
 
-    return axios.post(`${apiURl}/${articleId}`, formData, {
-      headers: {
-        'Content-Type': 'application/json'
+    try {
+      await axios.post(`${apiURl}/${articleId}`, formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      articleStore.article = await articleApi.getArticle(articleId);
+      articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(articleId);
+      if (mediaTypeCode === ArticleMediaTypeCodeEnum.AUDIO) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier audio a bien été ajouté');
+      } else if (mediaTypeCode === ArticleMediaTypeCodeEnum.PDF) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier des paroles a bien été ajouté');
       }
-    });
+    } catch (e) {
+      snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, e.response.data.detail);
+    }
   };
 
-  public updateArticleMedia = (file, articleMediaId) => {
+  public saveArticleMediaMultiple = async (fileList, articleId, hasSuccessMessage = true) => {
+    if (fileList.length > 0) {
+      fileList.map(async file => {
+        const formData = new FormData();
+        formData.append('articleMediaFile', file);
+        formData.append('name', file.name);
+        formData.append('fileType', file.type);
+
+        try {
+          await axios.post(`${apiURl}/${articleId}`, formData, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          articleStore.article = await articleApi.getArticle(articleId);
+          articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(articleId);
+        } catch (e) {
+          snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, e.response.data.detail);
+        }
+      });
+      if (hasSuccessMessage) {
+        if (fileList.length > 1) {
+          snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Les fichiers ont bien été ajoutés');
+        } else {
+          snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier a bien été ajouté');
+        }
+      }
+    }
+  };
+
+  public updateArticleMedia = async (file, articleMedia: IArticleMedia, articleId: number) => {
     const formData = new FormData();
     formData.append('articleMediaFile', file);
     formData.append('name', file.name);
     formData.append('fileType', file.type);
 
-    return axios.put(`${apiURl}/${articleMediaId}`, formData, {
-      headers: {
-        'Content-Type': 'application/json'
+    try {
+      await axios.put(`${apiURl}/${articleMedia.id}`, formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      articleStore.article = await articleApi.getArticle(articleId);
+      articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(articleId);
+      if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.AUDIO) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier audio a bien été mis à jour');
+      } else if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.PDF) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier des paroles a bien été mis à jour');
       }
-    });
+    } catch (e) {
+      snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, e.response.data.detail);
+    }
   };
 
   public getArticleMediaSrcFile = async articleMediaId => {
@@ -75,9 +130,19 @@ class ArticleMediaApi {
     return response.data;
   };
 
-  public deleteArticleMedia = async articleMediaId => {
-    const response = await axios.delete(`${apiURl}/${articleMediaId}`);
-    return response.data;
+  public deleteArticleMedia = async (articleMedia: IArticleMedia, articleId: number) => {
+    try {
+      await axios.delete(`${apiURl}/${articleMedia.id}`);
+      articleStore.article = await articleApi.getArticle(articleId);
+      articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(articleId);
+      if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.AUDIO) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier audio a bien été supprimé');
+      } else if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.PDF) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier des paroles a bien été supprimé');
+      }
+    } catch (e) {
+      snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, e.response.data.detail);
+    }
   };
 }
 
