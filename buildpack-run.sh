@@ -1,0 +1,1 @@
+rm -rf ./target/* && mvn package -Pprod -DskipTests
