@@ -18,6 +18,7 @@ import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 import { audioStore } from 'app/stores/audio-store';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Spinner } from 'app/components/spinner/spinner';
+import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -198,13 +199,10 @@ export class AudioCard extends React.Component<IAudioCardProps> {
     this.isLoading = true;
     articleMediaStore.isAMediaLoading = this.isLoading;
     if (this.media) {
-      await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.media.id);
+      await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.media, this.article.id);
     } else {
-      await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id);
+      await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id, ArticleMediaTypeCodeEnum.AUDIO);
     }
-
-    articleStore.article = await articleApi.getArticle(this.article.id);
-    articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
     this.isLoading = false;
     articleMediaStore.isAMediaLoading = this.isLoading;
   };
@@ -240,10 +238,8 @@ export class AudioCard extends React.Component<IAudioCardProps> {
     this.isLoading = true;
     articleMediaStore.isAMediaLoading = this.isLoading;
     if (this.media) {
-      await articleMediaApi.deleteArticleMedia(this.media.id);
+      await articleMediaApi.deleteArticleMedia(this.media, this.article.id);
     }
-    articleStore.article = await articleApi.getArticle(this.article.id);
-    articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
     this.isLoading = false;
     articleMediaStore.isAMediaLoading = this.isLoading;
   };

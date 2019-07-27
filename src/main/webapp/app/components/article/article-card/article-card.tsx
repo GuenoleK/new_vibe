@@ -174,12 +174,10 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
     this.isLoading = true;
     articleMediaStore.isAMediaLoading = this.isLoading;
     if (this.pdfMedia) {
-      await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.pdfMedia.id);
+      await articleMediaApi.updateArticleMedia(acceptedFiles[0], this.pdfMedia, this.article.id);
     } else {
-      await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id);
+      await articleMediaApi.saveArticleMedia(acceptedFiles[0], this.article.id, ArticleMediaTypeCodeEnum.PDF);
     }
-    articleStore.article = await articleApi.getArticle(this.article.id);
-    articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
     this.isLoading = false;
     articleMediaStore.isAMediaLoading = this.isLoading;
   };
@@ -188,10 +186,8 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
     this.isLoading = true;
     articleMediaStore.isAMediaLoading = this.isLoading;
     if (this.pdfMedia) {
-      await articleMediaApi.deleteArticleMedia(this.pdfMedia.id);
+      await articleMediaApi.deleteArticleMedia(this.pdfMedia, this.article.id);
     }
-    articleStore.article = await articleApi.getArticle(this.article.id);
-    articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(this.article.id);
     this.isLoading = false;
     articleMediaStore.isAMediaLoading = this.isLoading;
   };

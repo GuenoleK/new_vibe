@@ -66,7 +66,7 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
             {/* PDF DROPZONE */}
             <div className="upload-dropzone">
               <div className="label">Paroles du chant (PDF)</div>
-              <Dropzone accept="application/pdf" onDrop={this.onDrop}>
+              <Dropzone multiple={false} accept="application/pdf" onDrop={this.onDrop}>
                 {({ getRootProps, getInputProps, isDragActive }) => (
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
@@ -132,9 +132,7 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
 
   saveArticle = () => {
     articleApi.saveArticle(this.article).then(article => {
-      this.articleMediaFileList.forEach(articleMediaFile => {
-        articleMediaApi.saveArticleMedia(articleMediaFile, article.id);
-      });
+      articleMediaApi.saveArticleMediaMultiple(this.articleMediaFileList, article.id, false);
       this.articleMediaFileList = [];
       this.article = this.defaultValue;
       this.closePopin();

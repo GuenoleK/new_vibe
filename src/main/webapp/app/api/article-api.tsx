@@ -85,7 +85,7 @@ class ArticleApi {
           .post(`api/articles`, article)
           .then(response => {
             if (response && response.status === 201) {
-              snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, "L'article a été créé");
+              snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, "L'article a bien été créé");
               return response.data;
             } else if (response && response.status !== 201) {
               snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);
