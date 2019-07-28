@@ -16,6 +16,7 @@ import { articleStore } from 'app/stores/article-store';
 import { orderBy } from 'lodash';
 import Fuse from 'fuse.js';
 import { headerStore } from 'app/stores/header-store';
+import { translationUtil } from 'app/translation/translation-util';
 
 interface ISearchAppBarProps {
   classes: any;
@@ -67,7 +68,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
                     <SearchIcon />
                   </div>
                   <InputBase
-                    placeholder="Rechercher..."
+                    placeholder={translationUtil.translate('header.searchBar.placeholder')}
                     onChange={this.searchArticle}
                     className="search-input"
                     classes={{
@@ -94,7 +95,7 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
                     horizontal: 'right'
                   }}
                 >
-                  <MenuItem onClick={this.onLogout}>Déconnexion</MenuItem>
+                  <MenuItem onClick={this.onLogout}>{translationUtil.translate('header.menu.logout')}</MenuItem>
                 </Menu>
               </IconButton>
             )}

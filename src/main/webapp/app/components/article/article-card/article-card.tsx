@@ -15,6 +15,7 @@ import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { articleMediaApi } from 'app/api/article-media-api';
 import { articleApi } from 'app/api/article-api';
 import { Spinner } from 'app/components/spinner/spinner';
+import { translationUtil } from 'app/translation/translation-util';
 
 interface IArticleCardProps {
   isLoadingData: boolean;
@@ -54,7 +55,7 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
         {this.article && (
           <CardContent className="content">
             <Typography className="card-title" gutterBottom variant="h5" component="h2">
-              Paroles
+              {translationUtil.translate('article.detail.pdfCard.header.title')}
             </Typography>
             <Typography component="p">{this.article.description}</Typography>
             {this.pdfMedia && (
@@ -79,8 +80,12 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
                       horizontal: 'right'
                     }}
                   >
-                    <MenuItem onClick={this.onChangePdfSelected}>Modifier les paroles</MenuItem>
-                    <MenuItem onClick={this.deletePdfFile}>Supprimer les paroles</MenuItem>
+                    <MenuItem onClick={this.onChangePdfSelected}>
+                      {translationUtil.translate('article.detail.pdfCard.header.menu.modify')}
+                    </MenuItem>
+                    <MenuItem onClick={this.deletePdfFile}>
+                      {translationUtil.translate('article.detail.pdfCard.header.menu.delete')}
+                    </MenuItem>
                   </Menu>
                 </IconButton>
               </div>
@@ -131,9 +136,9 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
 
   get uploadDescriptionText() {
     if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
-      return 'Appuyer pour charger le fichier de paroles (PDF)';
+      return translationUtil.translate('article.detail.pdfCard.uploadZone.description.mobile');
     }
-    return 'Cliquer ou déposer pour charger le fichier de paroles (PDF)';
+    return translationUtil.translate('article.detail.pdfCard.uploadZone.description.common');
   }
 
   renderPdfZone() {

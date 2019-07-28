@@ -7,6 +7,7 @@ import './home.scss';
 import { ButtonLink } from 'app/components/button-link/button-link';
 import { observable } from 'mobx';
 import { headerStore } from 'app/stores/header-store';
+import { translationUtil } from 'app/translation/translation-util';
 
 @observer
 export class VibeHome extends React.Component {
@@ -17,7 +18,7 @@ export class VibeHome extends React.Component {
     return (
       <form className="login-form" method="post" autoComplete="off">
         <TextField
-          label="Nom d'utilisateur"
+          label={translationUtil.translate('home.fields.username.placeholder')}
           onChange={this.handleChange('login')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -27,7 +28,7 @@ export class VibeHome extends React.Component {
         />
 
         <TextField
-          label="Mot de passe"
+          label={translationUtil.translate('home.fields.password.placeholder')}
           onChange={this.handleChange('password')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -38,14 +39,14 @@ export class VibeHome extends React.Component {
         />
         <div className="buttons">
           <Button disabled={this.isLoading} variant="contained" color="primary" onClick={this.login}>
-            Connexion
+            {translationUtil.translate('home.buttons.login')}
           </Button>
           <ButtonLink
             disabled={this.isLoading}
             buttonClassName="register-redirection-button"
             variant="text"
             link="/register"
-            label="S'inscrire"
+            label={translationUtil.translate('home.buttons.register')}
           />
         </div>
         <div className="loading-zone" data-loading={this.isLoading}>

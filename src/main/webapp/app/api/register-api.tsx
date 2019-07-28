@@ -4,6 +4,7 @@ import { Storage } from 'react-jhipster';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 import { articleStore } from 'app/stores/article-store';
+import { translationUtil } from 'app/translation/translation-util';
 
 export const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
@@ -32,7 +33,7 @@ class RegisterApi {
         })
         .catch(e => {
           const error = e.response;
-          snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `Error status: ${error.status}, error text: ${error.statusText}`);
+          snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate(error.data.message));
           throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
         });
     } else {

@@ -9,6 +9,7 @@ import { observer } from 'mobx-react';
 import { articleStore } from 'app/stores/article-store';
 import { userStore } from 'app/stores/user-store';
 import { articleMediaApi } from 'app/api/article-media-api';
+import { translationUtil } from 'app/translation/translation-util';
 
 type IArticle = ArticleInterface.IArticle;
 
@@ -35,14 +36,14 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
       <VibeDialog
         className="create-article-dialog"
         Buttons={this.CreateArticleButtons}
-        title="Créer un article"
+        title={translationUtil.translate('createArticlePopin.header.title')}
         close={this.closePopin}
         isOpen={this.isPopinOpen}
       >
         <div className="create-article-content">
           <TextField
             className="article-name"
-            label="Nom de la chanson"
+            label={translationUtil.translate('createArticlePopin.fields.songName')}
             margin="normal"
             variant="outlined"
             style={{ marginTop: 'unset' }}
@@ -53,7 +54,7 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
 
           <TextField
             className="article-description"
-            label="Description"
+            label={translationUtil.translate('createArticlePopin.fields.description')}
             margin="normal"
             variant="outlined"
             multiline
@@ -65,13 +66,13 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
           <div className="file-upload-zone">
             {/* PDF DROPZONE */}
             <div className="upload-dropzone">
-              <div className="label">Paroles du chant (PDF)</div>
+              <div className="label">{translationUtil.translate('createArticlePopin.uploadZone.lyrics.label')}</div>
               <Dropzone multiple={false} accept="application/pdf" onDrop={this.onDrop}>
                 {({ getRootProps, getInputProps, isDragActive }) => (
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <Fab size="small" variant="extended" color="primary">
-                      Charger
+                      {translationUtil.translate('createArticlePopin.buttons.upload')}
                     </Fab>
                     {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
                   </div>
@@ -81,13 +82,13 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
 
             {/* Voix */}
             <div className="upload-dropzone">
-              <div className="label">Audio du chant (TOUS)</div>
+              <div className="label">{translationUtil.translate('createArticlePopin.uploadZone.audio.label')}</div>
               <Dropzone accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3" onDrop={this.onDrop}>
                 {({ getRootProps, getInputProps, isDragActive }) => (
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <Fab size="small" variant="extended" color="primary">
-                      Charger
+                      {translationUtil.translate('createArticlePopin.buttons.upload')}
                     </Fab>
                     {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
                   </div>
@@ -121,10 +122,10 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
     return (
       <div>
         <Button onClick={this.closePopin} color="primary">
-          Annuler
+          {translationUtil.translate('createArticlePopin.buttons.cancel')}
         </Button>
         <Button onClick={this.saveArticle} color="primary">
-          Créer
+          {translationUtil.translate('createArticlePopin.buttons.create')}
         </Button>
       </div>
     );

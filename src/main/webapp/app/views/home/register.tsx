@@ -13,6 +13,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import { Tooltip } from 'react-tippy';
 // tslint:disable-next-line: no-submodule-imports
 import 'react-tippy/dist/tippy.css';
+import { translationUtil } from 'app/translation/translation-util';
 
 @observer
 class Register extends React.Component<{ classes: any }> {
@@ -36,7 +37,7 @@ class Register extends React.Component<{ classes: any }> {
         <div className="rich-field">
           <TextField
             className="username-field"
-            label="Nom d'utilisateur"
+            label={translationUtil.translate('registration.fields.username.placeholder')}
             onChange={this.handleChange('login')}
             onKeyPress={this.fireLoginOnEnterKey}
             margin="normal"
@@ -52,8 +53,8 @@ class Register extends React.Component<{ classes: any }> {
             interactive
             html={
               <div className="tooltip-text">
-                <div>Le nom d'utilisateur ne peut contenir</div>
-                <div>de majusucle ou d'espace</div>
+                <div>{translationUtil.translate('registration.fields.username.info.tooltip.sentence.partOne')}</div>
+                <div>{translationUtil.translate('registration.fields.username.info.tooltip.sentence.partTwo')}</div>
               </div>
             }
           >
@@ -62,7 +63,7 @@ class Register extends React.Component<{ classes: any }> {
         </div>
 
         <TextField
-          label="Email"
+          label={translationUtil.translate('registration.fields.email.placeholder')}
           onChange={this.handleChange('email')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -72,7 +73,7 @@ class Register extends React.Component<{ classes: any }> {
         />
 
         <TextField
-          label="Mot de passe"
+          label={translationUtil.translate('registration.fields.password.placeholder')}
           onChange={this.handleChange('password')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -82,7 +83,7 @@ class Register extends React.Component<{ classes: any }> {
         />
 
         <TextField
-          label="Validation mot de passe"
+          label={translationUtil.translate('registration.fields.password.validationPlaceholder')}
           onChange={this.onValidationChange('validate_password')}
           onKeyPress={this.fireLoginOnEnterKey}
           margin="normal"
@@ -93,7 +94,7 @@ class Register extends React.Component<{ classes: any }> {
 
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="structure-input-label" htmlFor="outlined-language" required>
-            Structure
+            {translationUtil.translate('registration.fields.structure.placeholder')}
           </InputLabel>
           <Select
             value={this.selectedStructureName}
@@ -106,20 +107,20 @@ class Register extends React.Component<{ classes: any }> {
 
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="language-input-label" htmlFor="outlined-language" required>
-            Langue
+            {translationUtil.translate('registration.fields.language.placeholder')}
           </InputLabel>
           <Select
             value={userStore.user.langKey}
             onChange={this.onSelectChange}
             input={<OutlinedInput name="language" labelWidth={this.labelWidth} id="outlined-language" />}
           >
-            <MenuItem value={LanguageEnum.FRANCAIS}>Français</MenuItem>
-            <MenuItem value={LanguageEnum.ENGLISH}>English</MenuItem>
+            <MenuItem value={LanguageEnum.FRANCAIS}>{translationUtil.translate('registration.fields.structure.options.french')}</MenuItem>
+            <MenuItem value={LanguageEnum.ENGLISH}>{translationUtil.translate('registration.fields.structure.options.english')}</MenuItem>
           </Select>
         </FormControl>
 
         <Button variant="contained" color="primary" onClick={this.register}>
-          Inscription
+          {translationUtil.translate('registration.buttons.register')}
         </Button>
       </form>
     );

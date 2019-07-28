@@ -8,6 +8,7 @@ import * as ArticleMediaInterface from 'app/shared/model/article-media.model';
 import { articleStore } from 'app/stores/article-store';
 import { articleApi } from './article-api';
 import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
+import { translationUtil } from 'app/translation/translation-util';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -62,12 +63,16 @@ class ArticleMediaApi {
       articleStore.article = await articleApi.getArticle(articleId);
       articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(articleId);
       if (mediaTypeCode === ArticleMediaTypeCodeEnum.AUDIO) {
-        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier audio a bien été ajouté');
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, translationUtil.translate('articleMedia.api.audio.save.success'));
       } else if (mediaTypeCode === ArticleMediaTypeCodeEnum.PDF) {
-        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier des paroles a bien été ajouté');
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, translationUtil.translate('articleMedia.api.pdf.save.success'));
       }
     } catch (e) {
-      snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, e.response.data.detail);
+      if (mediaTypeCode === ArticleMediaTypeCodeEnum.AUDIO) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('articleMedia.api.audio.save.fail'));
+      } else if (mediaTypeCode === ArticleMediaTypeCodeEnum.PDF) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('articleMedia.api.pdf.save.fail'));
+      }
     }
   };
 
@@ -88,14 +93,17 @@ class ArticleMediaApi {
           articleStore.article = await articleApi.getArticle(articleId);
           articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(articleId);
         } catch (e) {
-          snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, e.response.data.detail);
+          snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('articleMedia.api.common.multipleSave.fail'));
         }
       });
       if (hasSuccessMessage) {
         if (fileList.length > 1) {
-          snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Les fichiers ont bien été ajoutés');
+          snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, translationUtil.translate('articleMedia.api.common.multipleSave.success'));
         } else {
-          snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier a bien été ajouté');
+          snackbarStore.openSnackbar(
+            SnackbarTypeEnum.SUCCESS,
+            translationUtil.translate('articleMedia.api.common.multipleSave.singleSuccess')
+          );
         }
       }
     }
@@ -116,12 +124,16 @@ class ArticleMediaApi {
       articleStore.article = await articleApi.getArticle(articleId);
       articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(articleId);
       if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.AUDIO) {
-        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier audio a bien été mis à jour');
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, translationUtil.translate('articleMedia.api.audio.update.success'));
       } else if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.PDF) {
-        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier des paroles a bien été mis à jour');
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, translationUtil.translate('articleMedia.api.pdf.update.success'));
       }
     } catch (e) {
-      snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, e.response.data.detail);
+      if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.AUDIO) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('articleMedia.api.audio.update.fail'));
+      } else if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.PDF) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('articleMedia.api.pdf.update.fail'));
+      }
     }
   };
 
@@ -136,12 +148,16 @@ class ArticleMediaApi {
       articleStore.article = await articleApi.getArticle(articleId);
       articleMediaStore.articleMediaList = await articleMediaApi.getArticleMediaListByArticleId(articleId);
       if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.AUDIO) {
-        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier audio a bien été supprimé');
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, translationUtil.translate('articleMedia.api.audio.delete.success'));
       } else if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.PDF) {
-        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, 'Le fichier des paroles a bien été supprimé');
+        snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, translationUtil.translate('articleMedia.api.pdf.delete.success'));
       }
     } catch (e) {
-      snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, e.response.data.detail);
+      if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.AUDIO) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('articleMedia.api.audio.delete.fail'));
+      } else if (articleMedia.articleMediaType.code === ArticleMediaTypeCodeEnum.PDF) {
+        snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('articleMedia.api.pdf.delete.fail'));
+      }
     }
   };
 }
