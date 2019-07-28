@@ -1,6 +1,7 @@
 import { AppBar, IconButton, InputBase, Toolbar, Typography, Menu, MenuItem } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
+import LanguageIcon from '@material-ui/icons/Language';
 import SearchIcon from '@material-ui/icons/Search';
 import { headerSearchStyles } from 'app/components/layout-components/header/search-header-jss';
 import React from 'react';
@@ -11,12 +12,12 @@ import { userStore } from 'app/stores/user-store';
 import { observer } from 'mobx-react';
 import { observable, computed, toJS } from 'mobx';
 import { Storage } from 'react-jhipster';
-import { AUTH_TOKEN_KEY } from 'app/api/login-api';
+import { AUTH_TOKEN_KEY, loginApi } from 'app/api/login-api';
 import { articleStore } from 'app/stores/article-store';
-import { orderBy } from 'lodash';
 import Fuse from 'fuse.js';
 import { headerStore } from 'app/stores/header-store';
 import { translationUtil } from 'app/translation/translation-util';
+import { LanguageEnum } from 'app/enums/LanguageEnum';
 
 interface ISearchAppBarProps {
   classes: any;
@@ -28,7 +29,13 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
   isMenuOpen = false;
 
   @observable
-  menuAnchorElement: any;
+  isLanguageMenuOpen = false;
+
+  @observable
+  accountMenuAnchorElement: any;
+
+  @observable
+  languageMenuAnchorElement: any;
 
   fuseOptions = {
     shouldSort: true,
@@ -80,11 +87,45 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
               )}
             <div className="after-bar-separator" />
             {userStore.isConnected && (
-              <IconButton className="header-account-icon-button" onClick={this.openMenu}>
+              <IconButton className="header-language-icon-button" onClick={this.openLanguageMenu}>
+                <LanguageIcon className="header-language-icon" />
+                <Menu
+                  className="language-menu"
+                  open={this.isLanguageMenuOpen}
+                  anchorEl={this.languageMenuAnchorElement}
+                  getContentAnchorEl={null}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center'
+                  }}
+                >
+                  <MenuItem
+                    disabled={LanguageEnum.FRANCAIS === userStore.user.langKey}
+                    onClick={userStore.changeLanguage.bind(this, LanguageEnum.FRANCAIS)}
+                    value={LanguageEnum.FRANCAIS}
+                  >
+                    {translationUtil.translate('common.enum.language.fr')}
+                  </MenuItem>
+                  <MenuItem
+                    disabled={LanguageEnum.ENGLISH === userStore.user.langKey}
+                    onClick={userStore.changeLanguage.bind(this, LanguageEnum.ENGLISH)}
+                    value={LanguageEnum.ENGLISH}
+                  >
+                    {translationUtil.translate('common.enum.language.en')}
+                  </MenuItem>
+                </Menu>
+              </IconButton>
+            )}
+            {userStore.isConnected && (
+              <IconButton className="header-account-icon-button" onClick={this.openAccountMenu}>
                 <AccountCircleIcon className="header-account-icon" />
                 <Menu
                   open={this.isMenuOpen}
-                  anchorEl={this.menuAnchorElement}
+                  anchorEl={this.accountMenuAnchorElement}
                   getContentAnchorEl={null}
                   anchorOrigin={{
                     vertical: 'bottom',
@@ -129,9 +170,14 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
     window.location.reload();
   }
 
-  openMenu = event => {
+  openAccountMenu = event => {
     this.isMenuOpen = !this.isMenuOpen;
-    this.menuAnchorElement = event.currentTarget;
+    this.accountMenuAnchorElement = event.currentTarget;
+  };
+
+  openLanguageMenu = event => {
+    this.isLanguageMenuOpen = !this.isLanguageMenuOpen;
+    this.languageMenuAnchorElement = event.currentTarget;
   };
 
   get homeLink() {

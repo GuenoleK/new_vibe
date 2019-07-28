@@ -114,8 +114,8 @@ class Register extends React.Component<{ classes: any }> {
             onChange={this.onSelectChange}
             input={<OutlinedInput name="language" labelWidth={this.labelWidth} id="outlined-language" />}
           >
-            <MenuItem value={LanguageEnum.FRANCAIS}>{translationUtil.translate('registration.fields.structure.options.french')}</MenuItem>
-            <MenuItem value={LanguageEnum.ENGLISH}>{translationUtil.translate('registration.fields.structure.options.english')}</MenuItem>
+            <MenuItem value={LanguageEnum.FRANCAIS}>{translationUtil.translate('common.enum.language.fr')}</MenuItem>
+            <MenuItem value={LanguageEnum.ENGLISH}>{translationUtil.translate('common.enum.language.en')}</MenuItem>
           </Select>
         </FormControl>
 
