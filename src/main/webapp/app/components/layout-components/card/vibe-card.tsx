@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import * as ArticleInterface from 'app/shared/model/article.model';
 import './vibe-card.scss';
 import { computed } from 'mobx';
+import { translationUtil } from 'app/translation/translation-util';
 
 type IArticle = ArticleInterface.IArticle;
 
@@ -32,7 +33,11 @@ export class VibeCard extends React.Component<IVibeCardProps> {
         </CardContent>
         <CardActions className="actions">
           <div className="button-actions">
-            <ButtonLink buttonClassName="card-consult-button" label="Voir" link={`/article/${this.article.id}`} />
+            <ButtonLink
+              buttonClassName="card-consult-button"
+              label={translationUtil.translate('articleList.card.see')}
+              link={`/article/${this.article.id}`}
+            />
           </div>
         </CardActions>
       </Card>

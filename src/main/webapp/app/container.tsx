@@ -8,6 +8,8 @@ import { userStore } from './stores/user-store';
 import { observable } from 'mobx';
 import { userApi } from './api/user-apix';
 import { observer } from 'mobx-react';
+import { initializeTranslation } from './translation/translation-initializer';
+import i18next from 'i18next';
 
 @observer
 export class Container extends React.Component {
@@ -30,6 +32,11 @@ export class Container extends React.Component {
     userStore.user = await userStore.initUserStore();
     if (userStore.user && userStore.user.id) {
       userStore.extendedUser = await userApi.getExtendedUser(userStore.user.id);
+      if (userStore.user.langKey) {
+        initializeTranslation(userStore.user.langKey);
+      }
+    } else {
+      initializeTranslation();
     }
     this.canRenderChildren = true;
   }

@@ -19,6 +19,7 @@ import { audioStore } from 'app/stores/audio-store';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Spinner } from 'app/components/spinner/spinner';
 import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
+import { translationUtil } from 'app/translation/translation-util';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -95,8 +96,12 @@ export class AudioCard extends React.Component<IAudioCardProps> {
                           horizontal: 'right'
                         }}
                       >
-                        <MenuItem onClick={this.onChangeAudioSelected}>Modifier l'audio</MenuItem>
-                        <MenuItem onClick={this.deleteFile}>Supprimer l'audio</MenuItem>
+                        <MenuItem onClick={this.onChangeAudioSelected}>
+                          {translationUtil.translate('article.detail.audioCard.header.menu.modify')}{' '}
+                        </MenuItem>
+                        <MenuItem onClick={this.deleteFile}>
+                          {translationUtil.translate('article.detail.audioCard.header.menu.delete')}
+                        </MenuItem>
                       </Menu>
                     </IconButton>
                   </div>
@@ -183,7 +188,7 @@ export class AudioCard extends React.Component<IAudioCardProps> {
     if (this.props.media) {
       return articleMediaUtils.processArticleMediaName(this.props.media);
     }
-    return 'Audio à uploader';
+    return translationUtil.translate('article.detail.audioCard.header.title');
   }
 
   get article() {

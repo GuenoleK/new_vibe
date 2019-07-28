@@ -13,6 +13,7 @@ import { headerStore } from 'app/stores/header-store';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import { translationUtil } from 'app/translation/translation-util';
 
 @observer
 export class ArticleListView extends React.Component {
@@ -60,7 +61,7 @@ export class ArticleListView extends React.Component {
         <div className="title">Aucun contenu</div>
         <div className="description">
           <div className="text">
-            <div>Vous pouvez créer un nouvel article grâce au bouton situé au bas de la page.</div>
+            <div>{translationUtil.translate('articleList.emptyState.description')}</div>
           </div>
         </div>
       </div>
@@ -72,7 +73,7 @@ export class ArticleListView extends React.Component {
       return (
         <Fab onClick={this.openPopin} className="create-button" color="primary" variant="extended">
           <AddIcon className="add-icon" />
-          <div className="button-text">Créer un article</div>
+          <div className="button-text">{translationUtil.translate('articleList.button.createArticle')}</div>
         </Fab>
       );
     }
