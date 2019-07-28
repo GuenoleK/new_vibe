@@ -11,7 +11,7 @@ export const article = {
       uploadZone: {
         description: {
           mobile: "Touch to upload the lyrics' file (PDF)",
-          common: "Click ou drop the lyrics' file to upload it (PDF)"
+          common: "Click or drop the lyrics' file to upload it (PDF)"
         }
       }
     },

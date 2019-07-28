@@ -3,6 +3,7 @@ import * as ExtendedUserInterface from 'app/shared/model/extended-user.model';
 import { computed, observable, action } from 'mobx';
 import { AUTH_TOKEN_KEY, loginApi } from 'app/api/login-api';
 import { Storage } from 'react-jhipster';
+import { LanguageEnum } from 'app/enums/LanguageEnum';
 
 type IUser = UserInterface.IUser;
 type IExtendedUser = ExtendedUserInterface.IExtendedUser;
@@ -55,6 +56,13 @@ class UserStore {
   clearUser() {
     this.innerUser = {};
   }
+
+  changeLanguage = (language: LanguageEnum) => {
+    this.user.langKey = language;
+    loginApi.updateUser(userStore.user).then(() => {
+      window.location.reload();
+    });
+  };
 }
 
 export const userStore = new UserStore();

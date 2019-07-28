@@ -1,6 +1,6 @@
 import i18next from 'i18next';
-import { frenchTranslation } from './fr/french-translation';
-import { englishTranslation } from './en/english-translation';
+import { frenchTranslation } from './french-translation';
+import { englishTranslation } from './english-translation';
 export const initializeTranslation = (language?: string) => {
   i18next.init(getTranslationRessources(language));
 };
