@@ -13,6 +13,12 @@ export const article = {
           mobile: 'Appuyer pour charger le fichier de paroles (PDF)',
           common: 'Cliquer ou déposer pour charger le fichier de paroles (PDF)'
         }
+      },
+      mobile: {
+        pdfZone: {
+          descriptionText: 'Ouvrir le fichier des paroles',
+          linkText: 'VOIR LES PAROLES'
+        }
       }
     },
     audioCard: {

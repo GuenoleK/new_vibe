@@ -13,6 +13,12 @@ export const article = {
           mobile: "Touch to upload the lyrics' file (PDF)",
           common: "Click or drop the lyrics' file to upload it (PDF)"
         }
+      },
+      mobile: {
+        pdfZone: {
+          descriptionText: 'Ouvrir le fichier des paroles',
+          linkText: 'VOIR LES PAROLES'
+        }
       }
     },
     audioCard: {

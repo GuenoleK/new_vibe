@@ -1,5 +1,6 @@
 export const articleList = {
   emptyState: {
+    title: 'No content yet',
     description: 'You can create a new article thanks to the bottom button.'
   },
   button: {

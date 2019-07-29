@@ -58,7 +58,7 @@ export class ArticleListView extends React.Component {
     return (
       <div data-component="empty-state">
         <AssignmentIcon className="file-icon" />
-        <div className="title">Aucun contenu</div>
+        <div className="title">{translationUtil.translate('articleList.emptyState.title')}</div>
         <div className="description">
           <div className="text">
             <div>{translationUtil.translate('articleList.emptyState.description')}</div>
