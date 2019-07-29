@@ -15,10 +15,8 @@ export const article = {
         }
       },
       mobile: {
-        pdfZone: {
-          descriptionText: 'Ouvrir le fichier des paroles',
-          linkText: 'VOIR LES PAROLES'
-        }
+        descriptionText: "Open the lyrics' file",
+        linkText: 'SEE THE LYRICS'
       }
     },
     audioCard: {
