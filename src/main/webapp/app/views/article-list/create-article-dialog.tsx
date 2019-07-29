@@ -83,7 +83,7 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
             {/* Voix */}
             <div className="upload-dropzone">
               <div className="label">{translationUtil.translate('createArticlePopin.uploadZone.audio.label')}</div>
-              <Dropzone accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3" onDrop={this.onDrop}>
+              <Dropzone accept="audio/*" onDrop={this.onDrop}>
                 {({ getRootProps, getInputProps, isDragActive }) => (
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />

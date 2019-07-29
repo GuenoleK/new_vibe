@@ -74,13 +74,7 @@ export class AudioCard extends React.Component<IAudioCardProps> {
                 </div>
                 {this.media && (
                   <div className="audio-menu">
-                    <input
-                      id="upload-updated-audio"
-                      multiple={false}
-                      type="file"
-                      accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3"
-                      onChange={this.onAudioChange}
-                    />
+                    <input id="upload-updated-audio" multiple={false} type="file" accept="audio/*" onChange={this.onAudioChange} />
                     <IconButton
                       disabled={this.isLoading || this.props.isAMediaLoading}
                       className="article-more-button"
@@ -136,12 +130,7 @@ export class AudioCard extends React.Component<IAudioCardProps> {
         </Card>
         {!this.media && (
           <div className="audio-upload-dropzone">
-            <Dropzone
-              disabled={this.props.isAMediaLoading}
-              multiple={false}
-              accept="audio/wav, audio/mpeg, audio/aac, audio/midi, audio/x-midi, audio/mp3"
-              onDrop={this.onDrop}
-            >
+            <Dropzone disabled={this.props.isAMediaLoading} multiple={false} accept="audio/*" onDrop={this.onDrop}>
               {({ getRootProps, getInputProps, isDragActive }) => (
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
