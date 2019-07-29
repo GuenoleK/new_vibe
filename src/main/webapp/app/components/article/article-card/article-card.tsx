@@ -94,7 +94,7 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
         )}
         <div className="title-divider" />
         <div className="pdf-zone">
-          {this.isLoading && <Spinner hasDescription loadingText="Chargement..." />}
+          {this.isLoading && <Spinner hasDescription loadingText={translationUtil.translate('loader.description.isLoading')} />}
           {!this.isLoadingData && !this.isLoading && this.pdfMedia && <div className="responsive-iframe">{this.renderPdfZone()}</div>}
           {!this.isLoadingData && !this.isLoading && !this.pdfMedia && this.UploadComponent}
         </div>

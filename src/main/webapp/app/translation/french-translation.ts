@@ -7,6 +7,7 @@ import { home } from './fr/home-translation';
 import { registration } from './fr/registration-translation';
 import { common } from './common-translation';
 import { account } from './fr/account-translation';
+import { loader } from './fr/loader-translation';
 
 export const frenchTranslation = {
   lng: 'fr',
@@ -22,6 +23,7 @@ export const frenchTranslation = {
         error,
         header,
         home,
+        loader,
         registration
       }
     }
