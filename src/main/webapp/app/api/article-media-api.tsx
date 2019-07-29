@@ -160,6 +160,11 @@ class ArticleMediaApi {
       }
     }
   };
+
+  public downloadFile = (articleMediaUrl: string) => {
+    window.location.href = articleMediaUrl;
+    // window.open(articleMediaUrl, '_blank');
+  };
 }
 
 export const articleMediaApi = new ArticleMediaApi();

@@ -45,9 +45,13 @@ export class AudioCard extends React.Component<IAudioCardProps> {
   @observable
   isLoading = false;
 
+  @observable
+  audioSrc;
+
   reaction = autorun(async () => {
     if (this.media) {
-      this.audio = new Audio(await articleMediaApi.getArticleMediaSrcFile(this.media.id));
+      this.audioSrc = await articleMediaApi.getArticleMediaSrcFile(this.media.id);
+      this.audio = new Audio(this.audioSrc);
       this.audio.addEventListener('ended', audioStore.audioEnded);
       this.audio.ontimeupdate = () => (this.completed = this.setCompleted());
     }
@@ -102,6 +106,9 @@ export class AudioCard extends React.Component<IAudioCardProps> {
                         <MenuItem onClick={this.deleteFile}>
                           {translationUtil.translate('article.detail.audioCard.header.menu.delete')}
                         </MenuItem>
+                        <a className="menu-option-download download-audio" href={this.audioSrc} download={this.media.name}>
+                          <MenuItem>{translationUtil.translate('article.detail.audioCard.header.menu.download')}</MenuItem>
+                        </a>
                       </Menu>
                     </IconButton>
                   </div>

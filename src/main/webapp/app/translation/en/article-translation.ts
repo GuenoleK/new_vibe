@@ -5,7 +5,8 @@ export const article = {
         title: 'Lyrics',
         menu: {
           modify: 'Update the lyrics',
-          delete: 'Delete the lyrics'
+          delete: 'Delete the lyrics',
+          download: 'Download'
         }
       },
       uploadZone: {
@@ -24,7 +25,8 @@ export const article = {
         title: 'Audio to upload',
         menu: {
           modify: 'Update the audio',
-          delete: 'Delete the audio'
+          delete: 'Delete the audio',
+          download: 'Download'
         }
       }
     }
