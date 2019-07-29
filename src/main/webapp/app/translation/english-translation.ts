@@ -7,6 +7,7 @@ import { home } from './en/home-translation';
 import { registration } from './en/registration-translation';
 import { common } from './common-translation';
 import { account } from './en/account-translation';
+import { loader } from './en/loader-translation';
 
 export const englishTranslation = {
   lng: 'en',
@@ -22,6 +23,7 @@ export const englishTranslation = {
         error,
         header,
         home,
+        loader,
         registration
       }
     }
