@@ -12,6 +12,6 @@ function getTranslationRessources(language?: string) {
     case 'en':
       return englishTranslation;
     default:
-      return englishTranslation;
+      return frenchTranslation;
   }
 }

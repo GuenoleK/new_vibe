@@ -145,11 +145,11 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
     return (
       <object data={this.pdfFileSrc} type="application/pdf">
         <div className="pdf-mobile-zone">
-          <p className="zone-description-text">Ouvrir le fichier des paroles</p>
+          <p className="zone-description-text">{translationUtil.translate('article.detail.mobile.pdfZone.descriptionText')}</p>
           <ArrowDownward className="down-arrow" />
           <img className="pdf-icon" src="https://img.icons8.com/material/96/000000/pdf-2.png" />
           <Button className="open-button" color="primary" onClick={this.openPdf}>
-            VOIR LES PAROLES
+            {translationUtil.translate('article.detail.mobile.pdfZone.linkText')}
             <OpenInNew className="open-in-new-icon" />
           </Button>
         </div>
