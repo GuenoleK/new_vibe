@@ -86,6 +86,9 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
                     <MenuItem onClick={this.deletePdfFile}>
                       {translationUtil.translate('article.detail.pdfCard.header.menu.delete')}
                     </MenuItem>
+                    <a className="menu-option-download download-pdf" href={this.pdfFileSrc} download={this.pdfMedia.name}>
+                      <MenuItem>{translationUtil.translate('article.detail.pdfCard.header.menu.download')}</MenuItem>
+                    </a>
                   </Menu>
                 </IconButton>
               </div>
