@@ -10,9 +10,11 @@ export const article = {
         }
       },
       uploadZone: {
+        title: 'Paroles manquantes',
         description: {
           mobile: 'Appuyer pour charger le fichier de paroles (PDF)',
-          common: 'Cliquer ou déposer pour charger le fichier de paroles (PDF)'
+          common: 'Cliquer ou déposer pour charger le fichier de paroles (PDF)',
+          commonViewer: "Les paroles n'ont pas encore été ajoutées pour cette chanson."
         }
       },
       mobile: {

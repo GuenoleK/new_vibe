@@ -142,8 +142,9 @@ public class UserService {
         UserRoleStructure userRoleStructure = new UserRoleStructure();
         userRoleStructure.setUser(newUser);
 
-        // We get the wanted role (HERE IT WILL BE "EDITOR")
-        Role role = roleRepository.getOne(1L);
+        // In the registration, everyone will be simple viewer
+        // Users will have to ask for greater roles if they want so
+        Role role = roleRepository.getOne(2L);
         userRoleStructure.setRole(role);
 
         // We set the structure

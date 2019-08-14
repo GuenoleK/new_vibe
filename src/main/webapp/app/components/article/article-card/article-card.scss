@@ -5,6 +5,27 @@
   display: flex;
   flex-direction: column;
 
+  [data-component='empty-state'] {
+    .file-icon {
+      font-size: 70px;
+      margin-bottom: 25px;
+      color: $black-icon-grey-color;
+    }
+
+    .title {
+      font-size: 23px;
+      margin-bottom: 10px;
+      color: $description-text-header-color;
+    }
+
+    .description {
+      color: $description-text-color;
+      width: 270px;
+      font-size: 15px;
+      text-align: center;
+    }
+  }
+
   .content {
     display: flex;
 
