@@ -14,6 +14,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { translationUtil } from 'app/translation/translation-util';
+import { roleUtils } from 'app/utils/RoleUtils';
 
 @observer
 export class ArticleListView extends React.Component {
@@ -30,11 +31,13 @@ export class ArticleListView extends React.Component {
     return (
       <div data-component="article-list" data-has-list={articleStore.articleList.length > 0}>
         {this.ArticleList}
-        {articleStore.articleList.length === 0 && this.ArrowIcon}
-        <div id="create-article-button" className="hide" data-is-clicked={this.isButtonClicked}>
-          {this.CreateArticleButton}
-          <CreateArticleDialog isPopinOpen={this.isPopinOpen} closePopin={this.closePopin} />
-        </div>
+        {articleStore.articleList.length === 0 && roleUtils.canEdit() && this.ArrowIcon}
+        {roleUtils.canEdit() && (
+          <div id="create-article-button" className="hide" data-is-clicked={this.isButtonClicked}>
+            {this.CreateArticleButton}
+            <CreateArticleDialog isPopinOpen={this.isPopinOpen} closePopin={this.closePopin} />
+          </div>
+        )}
       </div>
     );
   }
@@ -55,13 +58,14 @@ export class ArticleListView extends React.Component {
   }
 
   get EmptyState() {
+    const description = roleUtils.canEdit() ? 'articleList.emptyState.description' : 'articleList.emptyState.descriptionViewer';
     return (
       <div data-component="empty-state">
         <AssignmentIcon className="file-icon" />
         <div className="title">{translationUtil.translate('articleList.emptyState.title')}</div>
         <div className="description">
           <div className="text">
-            <div>{translationUtil.translate('articleList.emptyState.description')}</div>
+            <div>{translationUtil.translate(description)}</div>
           </div>
         </div>
       </div>

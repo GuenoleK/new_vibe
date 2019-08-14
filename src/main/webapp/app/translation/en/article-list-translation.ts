@@ -1,7 +1,8 @@
 export const articleList = {
   emptyState: {
     title: 'No content yet',
-    description: 'You can create a new article thanks to the bottom button.'
+    description: 'You can create a new article thanks to the bottom button.',
+    descriptionViewer: 'No content has been added yet.'
   },
   button: {
     createArticle: 'Create an article'

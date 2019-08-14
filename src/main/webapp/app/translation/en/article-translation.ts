@@ -10,9 +10,11 @@ export const article = {
         }
       },
       uploadZone: {
+        title: 'Missing lyrics',
         description: {
           mobile: "Touch to upload the lyrics' file (PDF)",
-          common: "Click or drop the lyrics' file to upload it (PDF)"
+          common: "Click or drop the lyrics' file to upload it (PDF)",
+          commonViewer: 'The lyrics have not been added yet for this song.'
         }
       },
       mobile: {

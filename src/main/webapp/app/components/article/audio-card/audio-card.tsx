@@ -20,6 +20,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Spinner } from 'app/components/spinner/spinner';
 import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { translationUtil } from 'app/translation/translation-util';
+import { roleUtils } from 'app/utils/RoleUtils';
 
 type IArticleMedia = ArticleMediaInterface.IArticleMedia;
 
@@ -94,12 +95,16 @@ export class AudioCard extends React.Component<IAudioCardProps> {
                           horizontal: 'right'
                         }}
                       >
-                        <MenuItem onClick={this.onChangeAudioSelected}>
-                          {translationUtil.translate('article.detail.audioCard.header.menu.modify')}{' '}
-                        </MenuItem>
-                        <MenuItem onClick={this.deleteFile}>
-                          {translationUtil.translate('article.detail.audioCard.header.menu.delete')}
-                        </MenuItem>
+                        {roleUtils.canEdit() && (
+                          <MenuItem onClick={this.onChangeAudioSelected}>
+                            {translationUtil.translate('article.detail.audioCard.header.menu.modify')}{' '}
+                          </MenuItem>
+                        )}
+                        {roleUtils.canEdit() && (
+                          <MenuItem onClick={this.deleteFile}>
+                            {translationUtil.translate('article.detail.audioCard.header.menu.delete')}
+                          </MenuItem>
+                        )}
                         <a className="menu-option-download download-audio" href={this.audioSrc} download={this.media.name}>
                           <MenuItem>{translationUtil.translate('article.detail.audioCard.header.menu.download')}</MenuItem>
                         </a>
@@ -128,20 +133,21 @@ export class AudioCard extends React.Component<IAudioCardProps> {
           </div>
           {/* <CardMedia className="media" image="../static/images/Music-icon.png" /> */}
         </Card>
-        {!this.media && (
-          <div className="audio-upload-dropzone">
-            <Dropzone disabled={this.props.isAMediaLoading} multiple={false} accept="audio/*" onDrop={this.onDrop}>
-              {({ getRootProps, getInputProps, isDragActive }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <Fab disabled={this.props.isAMediaLoading} color="secondary" className="add-audio-button">
-                    <AddIcon />
-                  </Fab>
-                </div>
-              )}
-            </Dropzone>
-          </div>
-        )}
+        {!this.media &&
+          roleUtils.canEdit() && (
+            <div className="audio-upload-dropzone">
+              <Dropzone disabled={this.props.isAMediaLoading} multiple={false} accept="audio/*" onDrop={this.onDrop}>
+                {({ getRootProps, getInputProps, isDragActive }) => (
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <Fab disabled={this.props.isAMediaLoading} color="secondary" className="add-audio-button">
+                      <AddIcon />
+                    </Fab>
+                  </div>
+                )}
+              </Dropzone>
+            </div>
+          )}
       </div>
     );
   }

@@ -8,7 +8,6 @@ CREATE UNIQUE INDEX UK_ARTICLE_TITLE_STRUCTURE_ID ON ARTICLE (title, structure_i
 -- ARTICLE MEDIA
 CREATE UNIQUE INDEX UK_ARTICLE_ID_ARTICLE_MEDIA_NAME ON ARTICLE_MEDIA (article_id, name);
 
-
 insert into structure (id, name, owner_id) values 
 (0, 'Praise and Worship Team', 3),
 (1, 'Chorale', 3),
@@ -32,6 +31,7 @@ alter table user_role_structure drop constraint ux_user_role_structure_user_id;
 alter table user_role_structure drop constraint ux_user_role_structure_role_id;
 alter table user_role_structure drop constraint ux_user_role_structure_structure_id;
 alter table extended_user drop constraint ux_extended_user_user_id;
+alter table extended_user drop constraint ux_extended_user_current_structure_id;
 
 -- TODO: AJOUTER UNE CLÉ UNIQUE SUR LE TRIPLET USERID/ROLEID/STRUCTUREID
 -- UN UTILISATEUR A UN ROLE PAR STRUCTURR

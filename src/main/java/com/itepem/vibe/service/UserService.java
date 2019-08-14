@@ -2,6 +2,7 @@ package com.itepem.vibe.service;
 
 import com.itepem.vibe.config.Constants;
 import com.itepem.vibe.domain.*;
+import com.itepem.vibe.domain.enumeration.RoleEnum;
 import com.itepem.vibe.repository.*;
 import com.itepem.vibe.security.AuthoritiesConstants;
 import com.itepem.vibe.security.SecurityUtils;
@@ -142,8 +143,9 @@ public class UserService {
         UserRoleStructure userRoleStructure = new UserRoleStructure();
         userRoleStructure.setUser(newUser);
 
-        // We get the wanted role (HERE IT WILL BE "EDITOR")
-        Role role = roleRepository.getOne(1L);
+        // In the registration, everyone will be simple viewer
+        // Users will have to ask for greater roles if they want so
+        Role role = roleRepository.getRoleByName(RoleEnum.VIEWER.toString());
         userRoleStructure.setRole(role);
 
         // We set the structure

@@ -13,9 +13,10 @@ import OpenInNew from '@material-ui/icons/OpenInNew';
 import { articleMediaStore } from 'app/stores/article-media-store';
 import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { articleMediaApi } from 'app/api/article-media-api';
-import { articleApi } from 'app/api/article-api';
 import { Spinner } from 'app/components/spinner/spinner';
 import { translationUtil } from 'app/translation/translation-util';
+import { roleUtils } from 'app/utils/RoleUtils';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 interface IArticleCardProps {
   isLoadingData: boolean;
@@ -80,12 +81,16 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
                       horizontal: 'right'
                     }}
                   >
-                    <MenuItem onClick={this.onChangePdfSelected}>
-                      {translationUtil.translate('article.detail.pdfCard.header.menu.modify')}
-                    </MenuItem>
-                    <MenuItem onClick={this.deletePdfFile}>
-                      {translationUtil.translate('article.detail.pdfCard.header.menu.delete')}
-                    </MenuItem>
+                    {roleUtils.canEdit() && (
+                      <MenuItem onClick={this.onChangePdfSelected}>
+                        {translationUtil.translate('article.detail.pdfCard.header.menu.modify')}
+                      </MenuItem>
+                    )}
+                    {roleUtils.canEdit() && (
+                      <MenuItem onClick={this.deletePdfFile}>
+                        {translationUtil.translate('article.detail.pdfCard.header.menu.delete')}
+                      </MenuItem>
+                    )}
                     <a className="menu-option-download download-pdf" href={this.pdfFileSrc} download={this.pdfMedia.name}>
                       <MenuItem>{translationUtil.translate('article.detail.pdfCard.header.menu.download')}</MenuItem>
                     </a>
@@ -99,7 +104,7 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
         <div className="pdf-zone">
           {this.isLoading && <Spinner hasDescription loadingText={translationUtil.translate('loader.description.isLoading')} />}
           {!this.isLoadingData && !this.isLoading && this.pdfMedia && <div className="responsive-iframe">{this.renderPdfZone()}</div>}
-          {!this.isLoadingData && !this.isLoading && !this.pdfMedia && this.UploadComponent}
+          {this.EmptyCardContent}
         </div>
       </Card>
     );
@@ -113,6 +118,14 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
   @computed
   get isLoadingData() {
     return this.props.isLoadingData;
+  }
+
+  get EmptyCardContent() {
+    if (!this.isLoadingData && !this.isLoading && !this.pdfMedia && roleUtils.canEdit()) {
+      return this.UploadComponent;
+    } else if (!this.isLoadingData && !this.isLoading && !this.pdfMedia && !roleUtils.canEdit()) {
+      return this.EmptyState;
+    }
   }
 
   get UploadComponent() {
@@ -133,6 +146,23 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
             </div>
           )}
         </Dropzone>
+      </div>
+    );
+  }
+
+  get EmptyState() {
+    const description = roleUtils.canEdit()
+      ? 'article.detail.pdfCard.uploadZone.description.common'
+      : 'article.detail.pdfCard.uploadZone.description.commonViewer';
+    return (
+      <div data-component="empty-state">
+        <AssignmentIcon className="file-icon" />
+        <div className="title">{translationUtil.translate('article.detail.pdfCard.uploadZone.title')}</div>
+        <div className="description">
+          <div className="text">
+            <div>{translationUtil.translate(description)}</div>
+          </div>
+        </div>
       </div>
     );
   }

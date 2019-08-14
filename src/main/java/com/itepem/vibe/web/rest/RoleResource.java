@@ -85,6 +85,17 @@ public class RoleResource {
     }
 
     /**
+     * Get the role for a user in its current company
+     * @param userId
+     * @param structureId
+     * @return the wanted role
+     */
+    @GetMapping("/roles/{userId}/{structureId}")
+    public Role getRole(@PathVariable Long userId, @PathVariable Long structureId) {
+        return roleRepository.getRoleByUserAndStructure(userId, structureId);
+    }
+
+    /**
      * GET  /roles/:id : get the "id" role.
      *
      * @param id the id of the role to retrieve
