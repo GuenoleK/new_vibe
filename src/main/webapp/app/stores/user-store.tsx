@@ -1,14 +1,28 @@
 import * as UserInterface from 'app/shared/model/user.model';
 import * as ExtendedUserInterface from 'app/shared/model/extended-user.model';
-import { computed, observable, action } from 'mobx';
+import * as RoleInterface from 'app/shared/model/role.model';
+import { computed, observable } from 'mobx';
 import { AUTH_TOKEN_KEY, loginApi } from 'app/api/login-api';
 import { Storage } from 'react-jhipster';
 import { LanguageEnum } from 'app/enums/LanguageEnum';
 
 type IUser = UserInterface.IUser;
 type IExtendedUser = ExtendedUserInterface.IExtendedUser;
+type IRole = RoleInterface.IRole;
 
 class UserStore {
+  @observable
+  private innerUserRole: IRole = {};
+
+  @computed
+  get userRole(): IRole {
+    return this.innerUserRole;
+  }
+
+  set userRole(userRole: IRole) {
+    this.innerUserRole = { ...this.innerUserRole, ...userRole };
+  }
+
   @observable
   private innerExtendedUser: IExtendedUser = {};
 

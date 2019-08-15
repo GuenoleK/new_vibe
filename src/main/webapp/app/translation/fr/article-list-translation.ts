@@ -1,7 +1,8 @@
 export const articleList = {
   emptyState: {
     title: 'Aucun contenu',
-    description: 'Vous pouvez créer un nouvel article grâce au bouton situé au bas de la page.'
+    description: 'Vous pouvez créer un nouvel article grâce au bouton situé au bas de la page.',
+    descriptionViewer: "Aucun contenu n'a été ajouté pour le moment."
   },
   button: {
     createArticle: 'Créer un article'
