@@ -6,7 +6,7 @@ import { Switch } from 'react-router-dom';
 import { CustomRoute } from 'app/components/custom-route/custom-route';
 import { RegisterView } from 'app/views/home/register';
 import './routes.scss';
-import { ActivationView } from 'app/views/activation/activation';
+import { ActivationView } from 'app/views/activation/ActivationView';
 
 // const store = initStore();
 

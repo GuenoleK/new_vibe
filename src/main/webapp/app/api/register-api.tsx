@@ -1,9 +1,12 @@
+import React from 'react';
 import { userStore } from 'app/stores/user-store';
 import axios from 'axios';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 import { translationUtil } from 'app/translation/translation-util';
-import React from 'react';
+import SecurityIcon from '@material-ui/icons/Security';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import { EmptyState } from 'app/components/empty-state/empty-state';
 
 export const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
@@ -42,19 +45,32 @@ class RegisterApi {
 
   public activateAccount = (activationKey: string, push: Function) => {
     // tslint:disable-next-line: ter-arrow-body-style
+    const emptyStateTitle = translationUtil.translate('registration.activation.emptyState.title');
     return axios
       .get(`api/activate/?key=${activationKey}`)
       .then(() => {
         setTimeout(() => {
           push('/home');
         }, 5000);
-        return <div>{translationUtil.translate('registration.activation.success')}</div>;
+        return (
+          <EmptyState
+            icon={<VerifiedUserIcon />}
+            description={<div>{translationUtil.translate('registration.activation.success')}</div>}
+            title={emptyStateTitle}
+          />
+        );
       })
       .catch(() => (
-        <div className="error-text">
-          <div>{translationUtil.translate('registration.activation.errorFirstSentence')}</div>
-          <div>{translationUtil.translate('registration.activation.errorSecondSentence')}</div>
-        </div>
+        <EmptyState
+          icon={<SecurityIcon />}
+          description={
+            <div className="error-text">
+              <div>{translationUtil.translate('registration.activation.errorFirstSentence')}</div>
+              <div>{translationUtil.translate('registration.activation.errorSecondSentence')}</div>
+            </div>
+          }
+          title={emptyStateTitle}
+        />
       ));
   };
 }

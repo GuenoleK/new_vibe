@@ -15,6 +15,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { translationUtil } from 'app/translation/translation-util';
 import { roleUtils } from 'app/utils/RoleUtils';
+import { EmptyState } from 'app/components/empty-state/empty-state';
 
 @observer
 export class ArticleListView extends React.Component {
@@ -54,20 +55,20 @@ export class ArticleListView extends React.Component {
     if (articleStore.searchableArticleList.length > 0) {
       return <CardContainer />;
     }
-    return this.EmptyState;
+    return (
+      <EmptyState
+        title={translationUtil.translate('articleList.emptyState.title')}
+        description={this.DescriptionComponent}
+        icon={<AssignmentIcon className="file-icon" />}
+      />
+    );
   }
 
-  get EmptyState() {
+  get DescriptionComponent() {
     const description = roleUtils.canEdit() ? 'articleList.emptyState.description' : 'articleList.emptyState.descriptionViewer';
     return (
-      <div data-component="empty-state">
-        <AssignmentIcon className="file-icon" />
-        <div className="title">{translationUtil.translate('articleList.emptyState.title')}</div>
-        <div className="description">
-          <div className="text">
-            <div>{translationUtil.translate(description)}</div>
-          </div>
-        </div>
+      <div className="text">
+        <div>{translationUtil.translate(description)}</div>
       </div>
     );
   }

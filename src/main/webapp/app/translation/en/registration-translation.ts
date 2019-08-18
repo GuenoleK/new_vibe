@@ -41,6 +41,9 @@ export const registration = {
     success: 'Your account is now active. You will be redirected to the login page.',
     errorFirstSentence: 'An error occrured.',
     errorSecondSentence: 'Please contact the administrators.',
-    inProgress: 'Account activation in progress, please wait.'
+    inProgress: 'Account activation in progress, please wait.',
+    emptyState: {
+      title: 'Account validation'
+    }
   }
 };
