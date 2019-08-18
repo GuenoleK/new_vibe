@@ -10,7 +10,7 @@ import { headerStore } from 'app/stores/header-store';
 import { translationUtil } from 'app/translation/translation-util';
 
 @observer
-export class VibeHome extends React.Component {
+export class HomeView extends React.Component {
   @observable
   isLoading = false;
 

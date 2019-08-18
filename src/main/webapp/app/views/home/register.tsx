@@ -29,6 +29,17 @@ class Register extends React.Component<{ classes: any }> {
   @observable
   selectedStructureName = '';
 
+  // Component life cycle
+  async componentDidMount() {
+    this.labelWidth = document.getElementById('language-input-label').offsetWidth;
+    this.structureNameList = await structureApi.getAllStructuresNames();
+  }
+
+  componentWillMount() {
+    userStore.clearUser();
+    userStore.user.langKey = '';
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -132,16 +143,6 @@ class Register extends React.Component<{ classes: any }> {
         {name}
       </MenuItem>
     ));
-  }
-
-  async componentDidMount() {
-    this.labelWidth = document.getElementById('language-input-label').offsetWidth;
-    this.structureNameList = await structureApi.getAllStructuresNames();
-  }
-
-  componentWillMount() {
-    userStore.clearUser();
-    userStore.user.langKey = '';
   }
 
   register = () => {
