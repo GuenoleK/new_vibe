@@ -31,5 +31,19 @@ export const registration = {
   },
   buttons: {
     register: "S'inscrire"
+  },
+  message: {
+    success: "Inscription réussie. Vous receverai un mail afin d'activer votre compte Vibe",
+    warningFields: 'Vous devez remplir tous les champs',
+    error: "Une erreur s'est produite lors de votre inscription"
+  },
+  activation: {
+    success: 'Votre compte a bien été activé, vous allez être redirigé vers la page de connexion',
+    errorFirstSentence: "Une erreur s'est produite lors de l'activation de votre compte.",
+    errorSecondSentence: 'Veulliez contacter les administrateurs afin de rélger la situation',
+    inProgress: 'Activation du compte en cours, veuillez patienter.',
+    emptyState: {
+      title: 'Validation du compte'
+    }
   }
 };

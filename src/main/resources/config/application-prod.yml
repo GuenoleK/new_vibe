@@ -47,10 +47,15 @@ spring:
     liquibase:
         contexts: prod
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.gmail.com
+        port: 587
+        username: ${VIBE_EMAIL_ADRESS}
+        password: ${VIBE_EMAIL_PASSWORD}
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
     thymeleaf:
         cache: true
 
@@ -109,7 +114,7 @@ jhipster:
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: vibe@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
+        base-url: https://epem-vibe.herokuapp.com
     metrics:
         logs: # Reports metrics in the logs
             enabled: false
