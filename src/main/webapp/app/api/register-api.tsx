@@ -22,11 +22,9 @@ class RegisterApi {
         })
         .then(response => {
           if (response && response.status >= 200 && response.status <= 300) {
-            // LOGIN NOW ?
-            snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, `Inscription réussi`);
-            // articleStore.articleList = response.data;
+            snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, translationUtil.translate('registration.message.success'));
           } else if (response && response.status !== 200) {
-            snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `Status error ${response.status}`);
+            snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('registration.message.error'));
             throw new Error(`Status error ${response.status}`);
           }
         })
@@ -37,20 +35,25 @@ class RegisterApi {
         });
     } else {
       // When the user has filled no input, we inform him to do so
-      snackbarStore.openSnackbar(SnackbarTypeEnum.WARNING, `You have to fill all the inputs`);
+      snackbarStore.openSnackbar(SnackbarTypeEnum.WARNING, translationUtil.translate('registration.message.warningFields'));
       throw new Error(`You have to fill all the inputs`);
     }
   };
 
-  public activateAccount = (activationKey: string) => {
+  public activateAccount = (activationKey: string, push: Function) => {
     // tslint:disable-next-line: ter-arrow-body-style
     return axios
       .get(`api/activate/?key=${activationKey}`)
-      .then(() => <div>A TRADUIRE : Votre compte a bie été activé, vous allez être redirigé vers la page d'accueil</div>)
+      .then(() => {
+        setTimeout(() => {
+          push('/home');
+        }, 5000);
+        return <div>{translationUtil.translate('registration.activation.success')}</div>;
+      })
       .catch(() => (
         <div className="error-text">
-          <div>A traduire: une erreur s'est produite lors de l'activation de votre compte.</div>
-          <div>A traduire: Veulliez contacter les administrateurs afin de rélger la situation</div>
+          <div>{translationUtil.translate('registration.activation.errorFirstSentence')}</div>
+          <div>{translationUtil.translate('registration.activation.errorSecondSentence')}</div>
         </div>
       ));
   };

@@ -5,6 +5,7 @@ import { observable, computed } from 'mobx';
 import { AxiosResponse } from 'axios';
 import { observer } from 'mobx-react';
 import { IActivateProps } from 'app/modules/account/activate/activate';
+import { translationUtil } from 'app/translation/translation-util';
 
 @observer
 export class ActivationView extends React.Component<IActivateProps> {
@@ -14,10 +15,7 @@ export class ActivationView extends React.Component<IActivateProps> {
   async componentDidMount() {
     const key = this.props.location.search.split('=').find(data => data !== '?key');
     if (key) {
-      this.informationText = await registerApi.activateAccount(key);
-      // setTimeout(() => {
-      //     this.props.history.push('/home');
-      // }, 5000);
+      this.informationText = await registerApi.activateAccount(key, this.props.history.push);
     }
   }
 
@@ -31,6 +29,6 @@ export class ActivationView extends React.Component<IActivateProps> {
       return this.informationText;
     }
 
-    return <div>A TRADUIRE : Votre compte a bie été activé, vous allez être redirigé vers la page d'accueil</div>;
+    return <div>{translationUtil.translate('registration.activation.inProgress')}</div>;
   }
 }
