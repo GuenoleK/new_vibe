@@ -13,24 +13,37 @@ import { ResetPasswordView } from 'app/views/reset-password/reset/ResetPasswordV
 // const store = initStore();
 
 // tslint:enable
-export const AppRoutes = () => (
-  <div className="view-routes">
-    <div className="routes">
-      <Switch>
-        <CustomRoute path="/article-list" component={ArticleListView} />
-        <CustomRoute path="/home" component={ArticleListView} />
-        <CustomRoute path="/article/:id" component={ArticleView} />
-        <CustomRoute path="/activate" component={ActivationView} />
-        <CustomRoute path="/reset-password-request" component={ResetPasswordRequestView} />
-        <CustomRoute path="/reset-password" component={ResetPasswordView} />
-        <CustomRoute path="/register" component={RegisterView} />
-        <CustomRoute path="/" component={HomeView} />
-      </Switch>
-    </div>
-    {/* <Provider store={store}>
-      <div>
-        <AppComponent />
+export class AppRoutes extends React.Component {
+  componentDidMount() {
+    const routes = document.querySelector('.view-routes') as HTMLElement;
+    const header = document.querySelector('header') as HTMLElement;
+    if (routes && header) {
+      routes.style.height = `calc(100% - ${header.offsetHeight}px`;
+      routes.style.paddingTop = `${header.offsetHeight}px`;
+    }
+  }
+
+  render() {
+    return (
+      <div className="view-routes">
+        <div className="routes">
+          <Switch>
+            <CustomRoute path="/article-list" component={ArticleListView} />
+            <CustomRoute path="/home" component={ArticleListView} />
+            <CustomRoute path="/article/:id" component={ArticleView} />
+            <CustomRoute path="/activate" component={ActivationView} />
+            <CustomRoute path="/reset-password-request" component={ResetPasswordRequestView} />
+            <CustomRoute path="/reset-password" component={ResetPasswordView} />
+            <CustomRoute path="/register" component={RegisterView} />
+            <CustomRoute path="/" component={HomeView} />
+          </Switch>
+        </div>
+        {/* <Provider store={store}>
+        <div>
+          <AppComponent />
+        </div>
+      </Provider> */}
       </div>
-    </Provider> */}
-  </div>
-);
+    );
+  }
+}

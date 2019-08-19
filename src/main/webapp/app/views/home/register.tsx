@@ -47,6 +47,7 @@ class Register extends React.Component<{ classes: any }> {
       <form className="register-form" method="post" autoComplete="off">
         <div className="rich-field">
           <TextField
+            inputProps={{ autoCorrect: 'off', autoCapitalize: 'none' }}
             className="username-field"
             label={translationUtil.translate('registration.fields.username.placeholder')}
             onChange={this.handleChange('login')}

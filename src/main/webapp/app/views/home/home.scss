@@ -10,7 +10,8 @@
 
 .login-form {
   justify-content: center;
-  height: calc(100% - 200px);
+  height: 100%;
+  margin-top: unset;
 
   .loading-zone {
     margin-top: 35px;
