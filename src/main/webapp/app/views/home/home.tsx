@@ -49,6 +49,13 @@ export class HomeView extends React.Component {
             label={translationUtil.translate('home.buttons.register')}
           />
         </div>
+        <ButtonLink
+          disabled={this.isLoading}
+          buttonClassName="reset-password-request-button"
+          variant="text"
+          link="/reset-password-request"
+          label={translationUtil.translate('home.buttons.resetPassword')}
+        />
         <div className="loading-zone" data-loading={this.isLoading}>
           <CircularProgress className="circular-progress" variant={this.isLoading ? 'indeterminate' : 'static'} />
         </div>

@@ -9,6 +9,7 @@ export const home = {
   },
   buttons: {
     login: 'Log in',
-    register: 'Register'
+    register: 'Register',
+    resetPassword: 'Reset password'
   }
 };

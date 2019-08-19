@@ -26,7 +26,7 @@ export class CustomRoute extends React.Component<ICustomRouteProps> {
       );
     }
 
-    if (path === '/' || path === '/register' || path === '/activate') {
+    if (path === '/' || path === '/register' || path === '/activate' || path === '/reset-password-request' || path === '/reset-password') {
       // tslint:disable-next-line: jsx-no-lambda
       return <Route exact path={path} component={props => this.renderComponent(component, props)} />;
     }

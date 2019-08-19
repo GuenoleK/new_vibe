@@ -9,6 +9,7 @@ export const home = {
   },
   buttons: {
     login: 'Connexion',
-    register: "S'inscrire"
+    register: "S'inscrire",
+    resetPassword: 'Réinitialiser le mot de passe'
   }
 };

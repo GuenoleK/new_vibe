@@ -52,8 +52,12 @@ class LoginApi {
         throw new Error(`Status error ${response.status}`);
       } else {
         // When it failed, we inform the user something wrong append
-        snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, `Error status: ${error.status}, error text: ${error.statusText}`);
-        throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
+        if (error) {
+          if (error.data.detail === 'Bad credentials') {
+            snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('account.login.badCredentialsError'));
+          }
+          throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
+        }
       }
     } else {
       // When the user has filled no input, we inform him to do so
