@@ -14,10 +14,23 @@ export class HomeView extends React.Component {
   @observable
   isLoading = false;
 
+  @observable
+  usernameTextField;
+
+  @observable
+  passwordTextfield;
+
+  // Component life cycle
+  componentWillMount() {
+    userStore.clearUser();
+    headerStore.headerTitle = 'Vibe';
+  }
+
   render() {
     return (
       <form className="login-form" method="post" autoComplete="off">
         <TextField
+          inputProps={{ autoCorrect: 'off', autoCapitalize: 'none' }}
           label={translationUtil.translate('home.fields.username.placeholder')}
           onChange={this.handleChange('login')}
           onKeyPress={this.fireLoginOnEnterKey}
@@ -25,6 +38,7 @@ export class HomeView extends React.Component {
           variant="outlined"
           required
           disabled={this.isLoading}
+          ref={this.createRef('usernameTextField')}
         />
 
         <TextField
@@ -36,7 +50,9 @@ export class HomeView extends React.Component {
           type="password"
           required
           disabled={this.isLoading}
+          ref={this.createRef('passwordTextfield')}
         />
+
         <div className="buttons">
           <Button disabled={this.isLoading} variant="contained" color="primary" onClick={this.login}>
             {translationUtil.translate('home.buttons.login')}
@@ -63,10 +79,9 @@ export class HomeView extends React.Component {
     );
   }
 
-  componentWillMount() {
-    userStore.clearUser();
-    headerStore.headerTitle = 'Vibe';
-  }
+  createRef = name => target => {
+    this[name] = target;
+  };
 
   /**
    * Call the auth + login function
@@ -85,7 +100,7 @@ export class HomeView extends React.Component {
   };
 
   handleChange = name => event => {
-    userStore.user[name] = event.target.value;
+    userStore.user[name] = event.target.value.toLowerCase();
   };
 
   fireLoginOnEnterKey = event => {

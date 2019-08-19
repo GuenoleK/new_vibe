@@ -1,8 +1,9 @@
 $header-height: 80px;
 
 .view-routes {
-  height: calc(100% - #{$header-height});
+  height: 100%;
   padding-top: 65px;
+  transition: 0.8s padding-top, height;
 
   .routes {
     height: 100%;
