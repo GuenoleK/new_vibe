@@ -55,6 +55,8 @@ class LoginApi {
         if (error) {
           if (error.data.detail === 'Bad credentials') {
             snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('account.login.badCredentialsError'));
+          } else {
+            snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('account.login.impossibleToConnectError'));
           }
           throw new Error(`Error status: ${error.status}, error text: ${error.statusText}`);
         }

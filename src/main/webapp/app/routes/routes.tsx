@@ -19,7 +19,7 @@ export const AppRoutes = () => (
       <Switch>
         <CustomRoute path="/article-list" component={ArticleListView} />
         <CustomRoute path="/home" component={ArticleListView} />
-        <CustomRoute path="/article" component={ArticleView} />
+        <CustomRoute path="/article/:id" component={ArticleView} />
         <CustomRoute path="/activate" component={ActivationView} />
         <CustomRoute path="/reset-password-request" component={ResetPasswordRequestView} />
         <CustomRoute path="/reset-password" component={ResetPasswordView} />

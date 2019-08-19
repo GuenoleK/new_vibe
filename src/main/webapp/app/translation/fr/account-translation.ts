@@ -1,6 +1,7 @@
 export const account = {
   login: {
-    badCredentialsError: 'Mauvais identifiant ou mot de passe.'
+    badCredentialsError: 'Mauvais identifiant ou mot de passe.',
+    impossibleToConnectError: "Can't login to Vibe"
   },
   update: {
     user: {
