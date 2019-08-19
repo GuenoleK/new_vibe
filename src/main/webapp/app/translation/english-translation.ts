@@ -8,6 +8,7 @@ import { registration } from './en/registration-translation';
 import { common } from './common-translation';
 import { account } from './en/account-translation';
 import { loader } from './en/loader-translation';
+import { passwordManagement } from './en/password-management-translation';
 
 export const englishTranslation = {
   lng: 'en',
@@ -24,7 +25,8 @@ export const englishTranslation = {
         header,
         home,
         loader,
-        registration
+        registration,
+        passwordManagement
       }
     }
   }

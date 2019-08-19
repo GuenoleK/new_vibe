@@ -7,6 +7,8 @@ import { CustomRoute } from 'app/components/custom-route/custom-route';
 import { RegisterView } from 'app/views/home/register';
 import './routes.scss';
 import { ActivationView } from 'app/views/activation/ActivationView';
+import { ResetPasswordRequestView } from 'app/views/reset-password/request/ResetPasswordRequestView';
+import { ResetPasswordView } from 'app/views/reset-password/reset/ResetPasswordView';
 
 // const store = initStore();
 
@@ -19,6 +21,8 @@ export const AppRoutes = () => (
         <CustomRoute path="/home" component={ArticleListView} />
         <CustomRoute path="/article" component={ArticleView} />
         <CustomRoute path="/activate" component={ActivationView} />
+        <CustomRoute path="/reset-password-request" component={ResetPasswordRequestView} />
+        <CustomRoute path="/reset-password" component={ResetPasswordView} />
         <CustomRoute path="/register" component={RegisterView} />
         <CustomRoute path="/" component={HomeView} />
       </Switch>
