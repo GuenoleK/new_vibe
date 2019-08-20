@@ -1,6 +1,7 @@
 export const passwordManagement = {
   resetPassword: {
     request: {
+      title: 'Récupération du compte',
       description: 'En entrant votre adresse mail, vous receverez un message afin de réinitialiser votre mot de passe.',
       fields: {
         email: {

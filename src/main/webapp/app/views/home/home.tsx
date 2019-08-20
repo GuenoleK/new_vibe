@@ -8,6 +8,7 @@ import { ButtonLink } from 'app/components/button-link/button-link';
 import { observable } from 'mobx';
 import { headerStore } from 'app/stores/header-store';
 import { translationUtil } from 'app/translation/translation-util';
+import { FormTitle } from 'app/components/form-title/FormTitle';
 
 @observer
 export class HomeView extends React.Component {
@@ -29,6 +30,7 @@ export class HomeView extends React.Component {
   render() {
     return (
       <form className="login-form" method="post" autoComplete="off">
+        <FormTitle text={translationUtil.translate('home.form.title')} />
         <TextField
           inputProps={{ autoCorrect: 'off', autoCapitalize: 'none' }}
           label={translationUtil.translate('home.fields.username.placeholder')}
