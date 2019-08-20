@@ -1,4 +1,7 @@
 export const home = {
+  form: {
+    title: 'Connexion'
+  },
   fields: {
     username: {
       placeholder: "Nom d'utilisateur"

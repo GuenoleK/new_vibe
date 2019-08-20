@@ -7,6 +7,7 @@ import { observable } from 'mobx';
 import { passwordManagementApi } from 'app/api/reset-password';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
+import { FormTitle } from 'app/components/form-title/FormTitle';
 
 @observer
 export class ResetPasswordRequestView extends React.Component {
@@ -18,6 +19,7 @@ export class ResetPasswordRequestView extends React.Component {
   render() {
     return (
       <div className="reset-password-request-view">
+        <FormTitle text={translationUtil.translate('passwordManagement.resetPassword.request.title')} />
         <div className="request-password-description">
           {translationUtil.translate('passwordManagement.resetPassword.request.description')}
         </div>

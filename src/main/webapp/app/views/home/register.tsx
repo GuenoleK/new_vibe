@@ -14,6 +14,7 @@ import { Tooltip } from 'react-tippy';
 // tslint:disable-next-line: no-submodule-imports
 import 'react-tippy/dist/tippy.css';
 import { translationUtil } from 'app/translation/translation-util';
+import { FormTitle } from 'app/components/form-title/FormTitle';
 
 @observer
 class Register extends React.Component<{ classes: any }> {
@@ -45,6 +46,7 @@ class Register extends React.Component<{ classes: any }> {
 
     return (
       <form className="register-form" method="post" autoComplete="off">
+        <FormTitle text={translationUtil.translate('registration.form.title')} />
         <div className="rich-field">
           <TextField
             inputProps={{ autoCorrect: 'off', autoCapitalize: 'none' }}

@@ -1,4 +1,7 @@
 export const registration = {
+  form: {
+    title: 'Inscription'
+  },
   fields: {
     username: {
       placeholder: "Nom d'utilisateur",

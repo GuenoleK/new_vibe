@@ -1,6 +1,7 @@
 export const passwordManagement = {
   resetPassword: {
     request: {
+      title: 'Password request',
       description: 'You will recieve a email to reset your password',
       fields: {
         email: {
