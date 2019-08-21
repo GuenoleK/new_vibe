@@ -16,9 +16,10 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { translationUtil } from 'app/translation/translation-util';
 import { roleUtils } from 'app/utils/RoleUtils';
 import { EmptyState } from 'app/components/empty-state/empty-state';
+import { IActivateProps } from 'app/modules/account/activate/activate';
 
 @observer
-export class ArticleListView extends React.Component {
+export class ArticleListView extends React.Component<IActivateProps> {
   @observable
   isPopinOpen = false;
 
@@ -36,7 +37,7 @@ export class ArticleListView extends React.Component {
         {roleUtils.canEdit() && (
           <div id="create-article-button" className="hide" data-is-clicked={this.isButtonClicked}>
             {this.CreateArticleButton}
-            <CreateArticleDialog isPopinOpen={this.isPopinOpen} closePopin={this.closePopin} />
+            <CreateArticleDialog isPopinOpen={this.isPopinOpen} closePopin={this.closePopin} routerProps={this.props} />
           </div>
         )}
       </div>

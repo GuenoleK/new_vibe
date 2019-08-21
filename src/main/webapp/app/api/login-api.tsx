@@ -19,7 +19,7 @@ class LoginApi {
   public authenticate = async () => {
     // The user have to fill all inputs to try a login
     if (userStore.user.login && userStore.user.password) {
-      const rememberMe = false;
+      const rememberMe = true;
 
       let response;
       let error;
