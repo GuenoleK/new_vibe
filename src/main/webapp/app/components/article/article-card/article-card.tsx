@@ -58,7 +58,6 @@ export class ArticleCard extends React.Component<IArticleCardProps> {
             <Typography className="card-title" gutterBottom variant="h5" component="h2">
               {translationUtil.translate('article.detail.pdfCard.header.title')}
             </Typography>
-            <Typography component="p">{this.article.description}</Typography>
             {this.pdfMedia && (
               <div className="card-menu">
                 <input id="upload-updated-pdf" multiple={false} type="file" accept="application/pdf" onChange={this.onChangeLyrics} />

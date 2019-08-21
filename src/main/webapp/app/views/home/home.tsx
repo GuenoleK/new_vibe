@@ -27,6 +27,10 @@ export class HomeView extends React.Component {
     headerStore.headerTitle = 'Vibe';
   }
 
+  componentWillUnmount() {
+    headerStore.headerTitle = '';
+  }
+
   render() {
     return (
       <form className="login-form" method="post" autoComplete="off">

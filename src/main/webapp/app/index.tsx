@@ -13,14 +13,13 @@ import ErrorBoundary from './shared/error/error-boundary';
 import { loadIcons } from './config/icon-loader';
 import { Container } from 'app/container';
 import { createMuiTheme } from '@material-ui/core/styles';
+import amber from '@material-ui/core/colors/amber';
 import axios from 'axios';
 
-// Will get the application every 5 minutes to keep it awake (for heroku)
-setInterval(() => {
-  axios.get('https://epem-vibe.herokuapp.com/#/');
-}, 300000); // every 5 minutes (300000)
-
 export const theme = createMuiTheme({
+  palette: {
+    secondary: amber
+  },
   typography: {
     // Use the system font.
     fontFamily: '"Product Sans"'

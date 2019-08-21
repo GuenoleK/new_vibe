@@ -67,7 +67,13 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
             <IconButtonLink link={this.homeLink} buttonClassName={classes.menuButton}>
               <HomeIcon />
             </IconButtonLink>
-            {!headerStore.canShowSearchBar && <div className="header-title">{headerStore.headerTitle}</div>}
+            {!headerStore.canShowSearchBar && (
+              <div className="title-description-zone">
+                <div className="header-title">{headerStore.headerTitle}</div>
+                {articleStore.article &&
+                  articleStore.article.description && <div className="header-description">{articleStore.article.description}</div>}
+              </div>
+            )}
             {headerStore.canShowSearchBar &&
               userStore.isConnected && (
                 <div data-component="search-bar" className={classes.search}>

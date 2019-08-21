@@ -10,6 +10,17 @@
 
   .content {
     height: 60px;
+
+    .title,
+    .description {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .description {
+      font-style: italic;
+    }
   }
 
   .media {
@@ -17,8 +28,6 @@
   }
 
   .actions {
-    .button-actions {
-      flex: 1;
-    }
+    justify-content: flex-end;
   }
 }
