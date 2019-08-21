@@ -29,6 +29,36 @@ export class ArticleListView extends React.Component<IActivateProps> {
   @observable
   showArrow = false;
 
+  componentWillMount() {
+    headerStore.headerTitle = '';
+  }
+
+  async componentDidMount() {
+    if (userStore.isConnected) {
+      headerStore.canShowSearchBar = true;
+    }
+
+    window.scroll(0, 0);
+    articleStore.articleList = await articleApi.getArticleListByStructureId(userStore.extendedUser.currentStructure.id);
+    articleStore.searchableArticleList = articleStore.articleList;
+
+    setTimeout(() => {
+      const t = document.getElementById('create-article-button');
+      t.className = 'show';
+    }, 250);
+
+    setTimeout(() => {
+      if (articleStore.articleList.length === 0) {
+        this.showArrow = true;
+      }
+    }, 650);
+  }
+
+  componentWillUnmount() {
+    articleStore.articleList = [];
+    articleStore.searchableArticleList = [];
+  }
+
   render() {
     return (
       <div data-component="article-list" data-has-list={articleStore.articleList.length > 0}>
@@ -77,7 +107,7 @@ export class ArticleListView extends React.Component<IActivateProps> {
   get CreateArticleButton() {
     if (!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
       return (
-        <Fab onClick={this.openPopin} className="create-button" color="primary" variant="extended">
+        <Fab onClick={this.openPopin} className="create-button" color="secondary" variant="extended">
           <AddIcon className="add-icon" />
           <div className="button-text">{translationUtil.translate('articleList.button.createArticle')}</div>
         </Fab>
@@ -85,7 +115,7 @@ export class ArticleListView extends React.Component<IActivateProps> {
     }
 
     return (
-      <Fab onClick={this.openPopin} color="primary">
+      <Fab onClick={this.openPopin} color="secondary">
         <AddIcon className="add-icon" />
       </Fab>
     );
@@ -109,30 +139,4 @@ export class ArticleListView extends React.Component<IActivateProps> {
   closePopin = () => {
     this.isPopinOpen = false;
   };
-
-  async componentDidMount() {
-    if (userStore.isConnected) {
-      headerStore.canShowSearchBar = true;
-    }
-
-    window.scroll(0, 0);
-    articleStore.articleList = await articleApi.getArticleListByStructureId(userStore.extendedUser.currentStructure.id);
-    articleStore.searchableArticleList = articleStore.articleList;
-
-    setTimeout(() => {
-      const t = document.getElementById('create-article-button');
-      t.className = 'show';
-    }, 250);
-
-    setTimeout(() => {
-      if (articleStore.articleList.length === 0) {
-        this.showArrow = true;
-      }
-    }, 650);
-  }
-
-  componentWillUnmount() {
-    articleStore.articleList = [];
-    articleStore.searchableArticleList = [];
-  }
 }

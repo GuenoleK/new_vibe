@@ -1,9 +1,16 @@
 [data-component='vibe-header'] {
-  .header-title {
+  .title-description-zone {
     cursor: default;
     user-select: none;
-    font-size: 1.25rem;
     width: 100%;
+  }
+
+  .header-title {
+    font-size: 1.25rem;
+  }
+
+  .header-description {
+    font-size: 0.9rem;
   }
 
   [data-component='search-bar'] {

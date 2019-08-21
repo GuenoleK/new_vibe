@@ -16,7 +16,13 @@ export class ButtonLink extends React.Component<IButtonLinkProps> {
     const { buttonClassName, ...otherProps } = this.props;
     const CustomLink = props => <Link to={link} className={this.linkClassName} {...props} />;
     return (
-      <Button {...otherProps} className={this.buttonClassName} component={CustomLink} size="small" color="primary">
+      <Button
+        {...otherProps}
+        className={this.buttonClassName}
+        component={CustomLink}
+        size="small"
+        color={this.props.color ? this.props.color : 'primary'}
+      >
         {label}
       </Button>
     );
