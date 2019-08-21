@@ -101,8 +101,8 @@ export class HomeView extends React.Component {
       });
   };
 
-  handleChange = name => event => {
-    userStore.user[name] = event.target.value.toLowerCase();
+  handleChange = (name: 'login' | 'password') => event => {
+    userStore.user[name] = name === 'login' ? event.target.value.toLowerCase().trim() : event.target.value.trim();
   };
 
   fireLoginOnEnterKey = event => {

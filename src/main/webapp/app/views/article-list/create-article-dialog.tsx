@@ -10,12 +10,14 @@ import { articleStore } from 'app/stores/article-store';
 import { userStore } from 'app/stores/user-store';
 import { articleMediaApi } from 'app/api/article-media-api';
 import { translationUtil } from 'app/translation/translation-util';
+import { IActivateProps } from 'app/modules/account/activate/activate';
 
 type IArticle = ArticleInterface.IArticle;
 
 interface ICreateArticleDialogProps {
   isPopinOpen: boolean;
   closePopin: () => void;
+  routerProps: IActivateProps;
 }
 
 @observer
@@ -26,10 +28,10 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
   };
 
   @observable
-  articleMediaFileList = [];
+  article: IArticle = this.defaultValue;
 
   @observable
-  article: IArticle = this.defaultValue;
+  isLoading = false;
 
   render() {
     return (
@@ -62,40 +64,6 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
             onChange={this.onChange('description')}
             value={this.article.description}
           />
-
-          <div className="file-upload-zone">
-            {/* PDF DROPZONE */}
-            <div className="upload-dropzone">
-              <div className="label">{translationUtil.translate('createArticlePopin.uploadZone.lyrics.label')}</div>
-              <Dropzone multiple={false} accept="application/pdf" onDrop={this.onDrop}>
-                {({ getRootProps, getInputProps, isDragActive }) => (
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <Fab size="small" variant="extended" color="primary">
-                      {translationUtil.translate('createArticlePopin.buttons.upload')}
-                    </Fab>
-                    {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
-                  </div>
-                )}
-              </Dropzone>
-            </div>
-
-            {/* Voix */}
-            <div className="upload-dropzone">
-              <div className="label">{translationUtil.translate('createArticlePopin.uploadZone.audio.label')}</div>
-              <Dropzone accept="audio/*" onDrop={this.onDrop}>
-                {({ getRootProps, getInputProps, isDragActive }) => (
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <Fab size="small" variant="extended" color="primary">
-                      {translationUtil.translate('createArticlePopin.buttons.upload')}
-                    </Fab>
-                    {/* {isDragActive ? "Drop it like it's hot!" : 'Click me or drag a file to upload!'} */}
-                  </div>
-                )}
-              </Dropzone>
-            </div>
-          </div>
         </div>
       </VibeDialog>
     );
@@ -114,17 +82,13 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
     this.article[name] = event.target.value;
   };
 
-  onDrop = (acceptedFiles: any, rejectedFiles: any) => {
-    this.articleMediaFileList = [...this.articleMediaFileList, ...acceptedFiles];
-  };
-
   get CreateArticleButtons() {
     return (
       <div>
-        <Button onClick={this.closePopin} color="primary">
+        <Button disabled={this.isLoading} onClick={this.closePopin} color="primary">
           {translationUtil.translate('createArticlePopin.buttons.cancel')}
         </Button>
-        <Button onClick={this.saveArticle} color="primary">
+        <Button disabled={this.isLoading} onClick={this.saveArticle} color="primary">
           {translationUtil.translate('createArticlePopin.buttons.create')}
         </Button>
       </div>
@@ -132,16 +96,16 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
   }
 
   saveArticle = () => {
+    this.isLoading = true;
     articleApi.saveArticle(this.article).then(article => {
-      articleMediaApi.saveArticleMediaMultiple(this.articleMediaFileList, article.id, false);
-      this.articleMediaFileList = [];
-      this.article = this.defaultValue;
-      this.closePopin();
-
       setTimeout(() => {
         articleApi.getArticleListByStructureId(userStore.extendedUser.currentStructure.id).then(articleList => {
           articleStore.articleList = articleList;
           articleStore.searchableArticleList = articleList;
+
+          this.props.routerProps.history.push(`/article/${article.id}`);
+          this.closePopin();
+          this.isLoading = false;
         });
       }, 100);
     });

@@ -23,6 +23,7 @@ export const passwordManagement = {
       }
     },
     reset: {
+      title: 'Nouveau mot de passe',
       description: 'Veuillez entrer votre nouveau mot de passe',
       fields: {
         password: {
@@ -36,7 +37,7 @@ export const passwordManagement = {
         confirm: 'Confirmer'
       },
       messages: {
-        success: 'Votre nouveau mot de passe a été créé avec succes.',
+        success: "Votre nouveau mot de passe a été créé avec succes. Vous allez être redirigé vers la page d'accueil.",
         warningNotEqual: 'Veuillez entrez le même mot de passe.',
         warningEmptyField: 'Veuillez remplir tous les champs.',
         error: "Une erreur s'est produite lors de la création du mot de passe.",

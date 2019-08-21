@@ -1,6 +1,6 @@
 export const home = {
   form: {
-    title: 'Login'
+    title: 'Sign in'
   },
   fields: {
     username: {
