@@ -1,5 +1,11 @@
 export const article = {
   detail: {
+    content: {
+      emptyState: {
+        title: 'No content',
+        description: 'There is no content yet for this song'
+      }
+    },
     pdfCard: {
       header: {
         title: 'Lyrics',

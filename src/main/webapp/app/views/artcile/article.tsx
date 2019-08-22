@@ -16,6 +16,7 @@ import { EmptyState } from 'app/components/empty-state/empty-state';
 import { translationUtil } from 'app/translation/translation-util';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { roleUtils } from 'app/utils/RoleUtils';
+import { Spinner } from 'app/components/spinner/spinner';
 
 @observer
 export class ArticleView extends React.Component<RouteComponentProps<any>> {
@@ -60,7 +61,12 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
   }
 
   render() {
-    return <div data-component="vibe-article">{this.MediaContent}</div>;
+    return (
+      <div data-component="vibe-article">
+        {this.isLoading && <Spinner hasDescription loadingText={translationUtil.translate('loader.description.isLoading')} />}
+        {!this.isLoading && this.MediaContent}
+      </div>
+    );
   }
 
   get MediaContent() {
@@ -81,8 +87,8 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
     return (
       <div className="article-content-empty-state">
         <EmptyState
-          title={translationUtil.translate('Titre à traduire')}
-          description={translationUtil.translate('Description à traduire')}
+          title={translationUtil.translate('article.detail.content.emptyState.title')}
+          description={translationUtil.translate('article.detail.content.emptyState.description')}
           icon={<AssignmentIcon className="file-icon" />}
         />
       </div>
