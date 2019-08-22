@@ -1,7 +1,7 @@
 import { error } from './en/error-translation';
 import { articleMedia } from './en/article-media-translation';
 import { article } from './en/article-translation';
-import { articleList, createArticlePopin } from './en/article-list-translation';
+import { articleList, createNewSongPopin } from './en/article-list-translation';
 import { header } from './en/header-translation';
 import { home } from './en/home-translation';
 import { registration } from './en/registration-translation';
@@ -19,7 +19,7 @@ export const englishTranslation = {
         article,
         articleList,
         articleMedia,
-        createArticlePopin,
+        createNewSongPopin,
         common,
         error,
         header,

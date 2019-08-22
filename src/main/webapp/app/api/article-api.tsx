@@ -3,9 +3,9 @@ import axios from 'axios';
 import { Storage } from 'react-jhipster';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
-import { articleStore } from 'app/stores/article-store';
 import * as ArticleInterface from 'app/shared/model/article.model';
 import { apiUtil } from 'app/utils/ApiUtil';
+import { translationUtil } from 'app/translation/translation-util';
 
 type IArticle = ArticleInterface.IArticle;
 
@@ -85,7 +85,7 @@ class ArticleApi {
           .post(`api/articles`, article)
           .then(response => {
             if (response && response.status === 201) {
-              snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, "L'article a bien été créé");
+              snackbarStore.openSnackbar(SnackbarTypeEnum.SUCCESS, translationUtil.translate('createNewSongPopin.message.success'));
               return response.data;
             } else if (response && response.status !== 201) {
               snackbarStore.openSnackbar(SnackbarTypeEnum.INFO, `Status error ${response.status}`);

@@ -1,20 +1,20 @@
 export const articleList = {
   emptyState: {
     title: 'No content yet',
-    description: 'You can create a new article thanks to the bottom button.',
+    description: 'You can create a new song thanks to the bottom button.',
     descriptionViewer: 'No content has been added yet.'
   },
   button: {
-    createArticle: 'Create an article'
+    createNewSong: 'Add a new song'
   },
   card: {
     see: 'See'
   }
 };
 
-export const createArticlePopin = {
+export const createNewSongPopin = {
   header: {
-    title: 'Create an article'
+    title: 'New song'
   },
   fields: {
     songName: "Song's name",
@@ -32,5 +32,8 @@ export const createArticlePopin = {
     cancel: 'Cancel',
     create: 'Create',
     upload: 'Upload'
+  },
+  message: {
+    success: 'The song has been created.'
   }
 };

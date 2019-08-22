@@ -1,23 +1,23 @@
 export const articleList = {
   emptyState: {
     title: 'Aucun contenu',
-    description: 'Vous pouvez créer un nouvel article grâce au bouton situé au bas de la page.',
+    description: 'Vous pouvez ajouter un nouveau chant grâce au bouton situé au bas de la page.',
     descriptionViewer: "Aucun contenu n'a été ajouté pour le moment."
   },
   button: {
-    createArticle: 'Créer un article'
+    createNewSong: 'Ajouter un chant'
   },
   card: {
     see: 'Voir'
   }
 };
 
-export const createArticlePopin = {
+export const createNewSongPopin = {
   header: {
-    title: 'Créer un article'
+    title: 'Nouveau chant'
   },
   fields: {
-    songName: 'Nom de la chanson',
+    songName: 'Nom du chant',
     description: 'Description'
   },
   uploadZone: {
@@ -32,5 +32,8 @@ export const createArticlePopin = {
     cancel: 'Annuler',
     create: 'Créer',
     upload: 'Charger'
+  },
+  message: {
+    success: 'Le chant a bien été créé.'
   }
 };

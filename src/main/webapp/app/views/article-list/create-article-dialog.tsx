@@ -38,14 +38,14 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
       <VibeDialog
         className="create-article-dialog"
         Buttons={this.CreateArticleButtons}
-        title={translationUtil.translate('createArticlePopin.header.title')}
+        title={translationUtil.translate('createNewSongPopin.header.title')}
         close={this.closePopin}
         isOpen={this.isPopinOpen}
       >
         <div className="create-article-content">
           <TextField
             className="article-name"
-            label={translationUtil.translate('createArticlePopin.fields.songName')}
+            label={translationUtil.translate('createNewSongPopin.fields.songName')}
             margin="normal"
             variant="outlined"
             style={{ marginTop: 'unset' }}
@@ -56,7 +56,7 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
 
           <TextField
             className="article-description"
-            label={translationUtil.translate('createArticlePopin.fields.description')}
+            label={translationUtil.translate('createNewSongPopin.fields.description')}
             margin="normal"
             variant="outlined"
             multiline
@@ -86,10 +86,10 @@ export class CreateArticleDialog extends React.Component<ICreateArticleDialogPro
     return (
       <div>
         <Button disabled={this.isLoading} onClick={this.closePopin} color="primary">
-          {translationUtil.translate('createArticlePopin.buttons.cancel')}
+          {translationUtil.translate('createNewSongPopin.buttons.cancel')}
         </Button>
         <Button disabled={this.isLoading} onClick={this.saveArticle} color="primary">
-          {translationUtil.translate('createArticlePopin.buttons.create')}
+          {translationUtil.translate('createNewSongPopin.buttons.create')}
         </Button>
       </div>
     );
