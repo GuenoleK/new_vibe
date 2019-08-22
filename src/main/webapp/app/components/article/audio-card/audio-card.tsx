@@ -69,7 +69,7 @@ export class AudioCard extends React.Component<IAudioCardProps> {
                   <Typography className="audio-name" component="h5" variant="h5">
                     {this.audioName}
                   </Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
+                  <Typography className="article-name" variant="subtitle1" color="textSecondary">
                     {this.articleName}
                   </Typography>
                 </div>

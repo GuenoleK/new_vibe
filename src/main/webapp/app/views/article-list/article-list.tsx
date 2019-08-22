@@ -43,8 +43,10 @@ export class ArticleListView extends React.Component<IActivateProps> {
     articleStore.searchableArticleList = articleStore.articleList;
 
     setTimeout(() => {
-      const t = document.getElementById('create-article-button');
-      t.className = 'show';
+      const createArticleButton = document.getElementById('create-article-button');
+      if (createArticleButton) {
+        createArticleButton.className = 'show';
+      }
     }, 250);
 
     setTimeout(() => {

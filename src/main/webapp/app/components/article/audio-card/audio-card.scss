@@ -12,16 +12,22 @@
       .card-header {
         display: flex;
 
+        @media (max-width: 490px) {
+          .information-zone {
+            width: 320px;
+          }
+        }
+
         .information-zone {
-          width: 85%;
           padding-top: 8px;
+          overflow: hidden;
+          flex: 0.9;
         }
 
         .audio-menu {
-          width: 50px;
+          width: 0px;
           display: flex;
-          justify-content: flex-end;
-          align-items: flex-start;
+          height: 50px;
         }
       }
 
@@ -72,6 +78,10 @@
 
   .audio-name {
     text-transform: capitalize;
+  }
+
+  .audio-name,
+  .article-name {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
