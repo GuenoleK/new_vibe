@@ -5,6 +5,18 @@
     width: 100%;
   }
 
+  @media (max-width: 520px) {
+    .title-description-zone {
+      overflow: hidden;
+      .header-title,
+      .header-description {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
   .header-title {
     font-size: 1.25rem;
   }
