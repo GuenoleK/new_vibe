@@ -1,6 +1,10 @@
 [data-component='vibe-article'] {
-  .article-content-empty-state {
+  .article-content-empty-state,
+  .spinner-component {
     height: 85vh;
+  }
+
+  .article-content-empty-state {
     display: flex;
     justify-content: center;
   }
