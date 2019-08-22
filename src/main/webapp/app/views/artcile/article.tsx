@@ -12,6 +12,10 @@ import { ArticleMediaTypeCodeEnum } from 'app/enums/ArticleMediaTypeCodeEnum';
 import { AudioCardList } from './article-audio-list';
 import { headerStore } from 'app/stores/header-store';
 import { audioStore } from 'app/stores/audio-store';
+import { EmptyState } from 'app/components/empty-state/empty-state';
+import { translationUtil } from 'app/translation/translation-util';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import { roleUtils } from 'app/utils/RoleUtils';
 
 @observer
 export class ArticleView extends React.Component<RouteComponentProps<any>> {
@@ -56,12 +60,31 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
   }
 
   render() {
+    return <div data-component="vibe-article">{this.MediaContent}</div>;
+  }
+
+  get MediaContent() {
+    if (articleMediaStore.articleMediaList.length === 0 && !roleUtils.hasRole(roleUtils.rolesForEdition)) {
+      return this.ContentEmptyState;
+    }
     return (
-      <div data-component="vibe-article">
+      <div>
         <ArticleCard isLoadingData={this.isLoading} />
         <div className="audio-list">
           <AudioCardList audioList={this.audioList} />
         </div>
+      </div>
+    );
+  }
+
+  get ContentEmptyState() {
+    return (
+      <div className="article-content-empty-state">
+        <EmptyState
+          title={translationUtil.translate('Titre à traduire')}
+          description={translationUtil.translate('Description à traduire')}
+          icon={<AssignmentIcon className="file-icon" />}
+        />
       </div>
     );
   }

@@ -1,41 +1,49 @@
 [data-component='vibe-article'] {
-  height: 100%;
-  @media (min-width: 1000px) {
+  .article-content-empty-state {
+    height: 85vh;
     display: flex;
     justify-content: center;
-    margin: 15px 0;
-
-    [data-component='article-card'] {
-      width: 40%;
-      margin-right: 15px;
-    }
-
-    .audio-list {
-      width: 30%;
-    }
   }
 
-  @media (max-width: 999px) {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: 15px 0;
+  > div {
+    @media (min-width: 1000px) {
+      display: flex;
+      justify-content: center;
+      margin: 15px 0;
 
-    [data-component='article-card'],
-    .audio-list {
-      width: 90%;
+      [data-component='article-card'] {
+        width: 40%;
+        margin-right: 15px;
+        height: 625px;
+      }
+
+      .audio-list {
+        width: 30%;
+      }
     }
 
-    .audio-list {
-      .list {
-        flex-flow: row wrap !important;
+    @media (max-width: 999px) {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin: 15px 0;
 
-        [data-component='audio-card'] {
-          width: 100%;
-          margin: 25px 20px;
+      [data-component='article-card'],
+      .audio-list {
+        width: 90%;
+      }
 
-          @media (min-width: 750px) {
-            width: 40%;
+      .audio-list {
+        .list {
+          flex-flow: row wrap !important;
+
+          [data-component='audio-card'] {
+            width: 100%;
+            margin: 25px 20px;
+
+            @media (min-width: 750px) {
+              width: 40%;
+            }
           }
         }
       }
