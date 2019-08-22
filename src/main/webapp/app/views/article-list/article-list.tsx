@@ -109,7 +109,7 @@ export class ArticleListView extends React.Component<IActivateProps> {
       return (
         <Fab onClick={this.openPopin} className="create-button" color="secondary" variant="extended">
           <AddIcon className="add-icon" />
-          <div className="button-text">{translationUtil.translate('articleList.button.createArticle')}</div>
+          <div className="button-text">{translationUtil.translate('articleList.button.createNewSong')}</div>
         </Fab>
       );
     }
