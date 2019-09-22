@@ -14,7 +14,6 @@ import { observable, computed, toJS } from 'mobx';
 import { Storage } from 'react-jhipster';
 import { AUTH_TOKEN_KEY, loginApi } from 'app/api/login-api';
 import { articleStore } from 'app/stores/article-store';
-import Fuse from 'fuse.js';
 import { headerStore } from 'app/stores/header-store';
 import { translationUtil } from 'app/translation/translation-util';
 import { LanguageEnum } from 'app/enums/LanguageEnum';
@@ -36,23 +35,6 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
 
   @observable
   languageMenuAnchorElement: any;
-
-  fuseOptions = {
-    shouldSort: true,
-    threshold: 0.6,
-    location: 0,
-    // Here the parameter to be more or less exigent for the titles
-    // Max : 1000 min 0
-    distance: 25,
-    maxPatternLength: 32,
-    minMatchCharLength: 1,
-    keys: ['title']
-  };
-
-  @computed
-  get fuse() {
-    return new Fuse(articleStore.articleList, this.fuseOptions);
-  }
 
   @observable
   articleList = [];
@@ -154,7 +136,9 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
 
   searchArticle = event => {
     window.scroll(0, 0);
-    const results = this.fuse.search(event.target.value);
+    const results = articleStore.articleList.filter(article => {
+      return article.title.toLowerCase().includes(event.target.value.toLowerCase());
+    });
 
     // tslint:disable-next-line: prefer-conditional-expression
     if (event.target.value.trim() === '' || event.target.value === undefined) {
