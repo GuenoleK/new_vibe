@@ -1,7 +1,7 @@
-import { AppBar, IconButton, InputBase, Toolbar, Typography, Menu, MenuItem } from '@material-ui/core';
+import { AppBar, IconButton, InputBase, Toolbar, Menu, MenuItem } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
-import LanguageIcon from '@material-ui/icons/Language';
+import BusinessIcon from '@material-ui/icons/Business';
 import SearchIcon from '@material-ui/icons/Search';
 import { headerSearchStyles } from 'app/components/layout-components/header/search-header-jss';
 import React from 'react';
@@ -17,6 +17,9 @@ import { articleStore } from 'app/stores/article-store';
 import { headerStore } from 'app/stores/header-store';
 import { translationUtil } from 'app/translation/translation-util';
 import { LanguageEnum } from 'app/enums/LanguageEnum';
+import { userRoleStructureApi } from 'app/api/user-role-structure-api';
+import { IStructure } from 'app/shared/model/structure.model';
+import { IUserRoleStructure } from 'app/shared/model/user-role-structure.model';
 
 interface ISearchAppBarProps {
   classes: any;
@@ -38,6 +41,15 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
 
   @observable
   articleList = [];
+
+  @observable
+  structureList: IStructure[] = [];
+
+  componentDidMount() {
+    userRoleStructureApi.getUserRoleStructureListByUserId(userStore.user.id).then((userRoleStructureList: IUserRoleStructure[]) => {
+      this.structureList = userRoleStructureList.map(urs => urs.structure);
+    });
+  }
 
   render() {
     const { classes } = this.props;
@@ -74,40 +86,36 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
                 </div>
               )}
             <div className="after-bar-separator" />
-            {userStore.isConnected && (
-              <IconButton className="header-language-icon-button" onClick={this.openLanguageMenu}>
-                <LanguageIcon className="header-language-icon" />
-                <Menu
-                  className="language-menu"
-                  open={this.isLanguageMenuOpen}
-                  anchorEl={this.languageMenuAnchorElement}
-                  getContentAnchorEl={null}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center'
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center'
-                  }}
-                >
-                  <MenuItem
-                    disabled={LanguageEnum.FRANCAIS === userStore.user.langKey}
-                    onClick={userStore.changeLanguage.bind(this, LanguageEnum.FRANCAIS)}
-                    value={LanguageEnum.FRANCAIS}
+            {userStore.isConnected &&
+              this.structureList.length > 0 && (
+                <IconButton className="header-language-icon-button" onClick={this.openLanguageMenu}>
+                  <BusinessIcon className="header-language-icon" />
+                  <Menu
+                    className="language-menu"
+                    open={this.isLanguageMenuOpen}
+                    anchorEl={this.languageMenuAnchorElement}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'center'
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'center'
+                    }}
                   >
-                    {translationUtil.translate('common.enum.language.fr')}
-                  </MenuItem>
-                  <MenuItem
-                    disabled={LanguageEnum.ENGLISH === userStore.user.langKey}
-                    onClick={userStore.changeLanguage.bind(this, LanguageEnum.ENGLISH)}
-                    value={LanguageEnum.ENGLISH}
-                  >
-                    {translationUtil.translate('common.enum.language.en')}
-                  </MenuItem>
-                </Menu>
-              </IconButton>
-            )}
+                    {this.structureList.map(structure => (
+                      <MenuItem
+                        disabled={userStore.extendedUser.currentStructure.name === structure.name}
+                        onClick={userStore.changeCurrentStructure.bind(this, toJS(structure))}
+                        value={structure.id}
+                      >
+                        {structure.name}
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </IconButton>
+              )}
             {userStore.isConnected && (
               <IconButton className="header-account-icon-button" onClick={this.openAccountMenu}>
                 <AccountCircleIcon className="header-account-icon" />
@@ -124,6 +132,20 @@ class SearchAppBar extends React.Component<ISearchAppBarProps> {
                     horizontal: 'right'
                   }}
                 >
+                  <MenuItem
+                    disabled={LanguageEnum.FRANCAIS === userStore.user.langKey}
+                    onClick={userStore.changeLanguage.bind(this, LanguageEnum.FRANCAIS)}
+                    value={LanguageEnum.FRANCAIS}
+                  >
+                    {translationUtil.translate('common.enum.language.fr')}
+                  </MenuItem>
+                  <MenuItem
+                    disabled={LanguageEnum.ENGLISH === userStore.user.langKey}
+                    onClick={userStore.changeLanguage.bind(this, LanguageEnum.ENGLISH)}
+                    value={LanguageEnum.ENGLISH}
+                  >
+                    {translationUtil.translate('common.enum.language.en')}
+                  </MenuItem>
                   <MenuItem onClick={this.onLogout}>{translationUtil.translate('header.menu.logout')}</MenuItem>
                 </Menu>
               </IconButton>

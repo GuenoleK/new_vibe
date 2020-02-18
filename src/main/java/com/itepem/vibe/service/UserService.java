@@ -135,7 +135,7 @@ public class UserService {
 
         // We get the structure
         Structure structure = structureRepository.findByName(structureName).get();
-
+ 
         // After saving the user, we save the extended user
         createExtendedUser(newUser, structure);
 
