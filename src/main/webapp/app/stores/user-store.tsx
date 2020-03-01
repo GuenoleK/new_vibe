@@ -1,10 +1,11 @@
 import * as UserInterface from 'app/shared/model/user.model';
 import * as ExtendedUserInterface from 'app/shared/model/extended-user.model';
 import * as RoleInterface from 'app/shared/model/role.model';
-import { computed, observable } from 'mobx';
+import { computed, observable, toJS } from 'mobx';
 import { AUTH_TOKEN_KEY, loginApi } from 'app/api/login-api';
 import { Storage } from 'react-jhipster';
 import { LanguageEnum } from 'app/enums/LanguageEnum';
+import { IStructure } from 'app/shared/model/structure.model';
 
 type IUser = UserInterface.IUser;
 type IExtendedUser = ExtendedUserInterface.IExtendedUser;
@@ -74,6 +75,15 @@ class UserStore {
   changeLanguage = (language: LanguageEnum) => {
     this.user.langKey = language;
     loginApi.updateUser(userStore.user).then(() => {
+      window.location.reload();
+    });
+  };
+
+  changeCurrentStructure = (structure: IStructure) => {
+    const extendedUser = toJS(this.extendedUser);
+    extendedUser.currentStructure = structure;
+
+    loginApi.updateExtendedUser(extendedUser).then(() => {
       window.location.reload();
     });
   };

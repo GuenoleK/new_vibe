@@ -1,14 +1,14 @@
 import { userStore } from 'app/stores/user-store';
-import * as UserInterface from 'app/shared/model/user.model';
 import axios from 'axios';
 import { Storage } from 'react-jhipster';
 import { snackbarStore } from 'app/stores/snackbar-store';
 import { SnackbarTypeEnum } from 'app/enums/SnackbarEnum';
 import { translationUtil } from 'app/translation/translation-util';
+import { IUser } from 'app/shared/model/user.model';
+import { IExtendedUser } from 'app/shared/model/extended-user.model';
 
 const apiUrl = 'api/account';
-
-type IUser = UserInterface.IUser;
+const extendedUserapiUrl = 'api/extended-users';
 
 export const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
@@ -120,6 +120,15 @@ class LoginApi {
   public updateUser = async (user: IUser) => {
     try {
       await axios.post(apiUrl, user);
+    } catch (e) {
+      snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('account.update.user.error'));
+      throw new Error(`Status error ${e.message}`);
+    }
+  };
+
+  public updateExtendedUser = async (extendedUser: IExtendedUser) => {
+    try {
+      await axios.put(extendedUserapiUrl, extendedUser);
     } catch (e) {
       snackbarStore.openSnackbar(SnackbarTypeEnum.ERROR, translationUtil.translate('account.update.user.error'));
       throw new Error(`Status error ${e.message}`);

@@ -97,6 +97,19 @@ public class UserRoleStructureResource {
     }
 
     /**
+     * GET  /user-role-structures/:userID : get the "userId" userRoleStructure.
+     *
+     * @param userId the id of the userRoleStructure to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the userRoleStructure, or with status 404 (Not Found)
+     */
+    @GetMapping("/user-role-structures/user/{userId}")
+    public List<UserRoleStructure> getUserRoleStructureListByUserId(@PathVariable Long userId) {
+        log.debug("REST request to get UserRoleStructure : {}", userId);
+        List<UserRoleStructure> userRoleStructureList = userRoleStructureRepository.getUserRoleStructureListByUserId(userId);
+        return userRoleStructureList;
+    }
+
+    /**
      * DELETE  /user-role-structures/:id : delete the "id" userRoleStructure.
      *
      * @param id the id of the userRoleStructure to delete
