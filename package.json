@@ -23,7 +23,7 @@
     "loaders.css": "0.1.2",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
-    "moment": "2.22.2",
+    "moment": "2.29.2",
     "react": "16.8.6",
     "react-addons-css-transition-group": "16.0.0-alpha.3",
     "react-addons-transition-group": "16.0.0-alpha.3",
